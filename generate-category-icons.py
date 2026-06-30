@@ -1,0 +1,135 @@
+#!/usr/bin/env python3
+"""Generate Nutterly category SVG icons (GreenPath flat style) + manifest."""
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).parent
+GP = json.loads((ROOT / "greenpath-category-svgs.json").read_text(encoding="utf-8"))
+
+# Hand-crafted flat icons ~48px, semantically matched to category names.
+ICONS = {
+    "dry-fruits": (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+        '<ellipse cx="24" cy="30" rx="18" ry="10" fill="#f5e6d3"/>'
+        '<ellipse cx="16" cy="28" rx="5" ry="7" fill="#d4843a"/>'
+        '<ellipse cx="24" cy="26" rx="5" ry="7" fill="#c96d35"/>'
+        '<ellipse cx="32" cy="28" rx="5" ry="7" fill="#e8a04a"/>'
+        '<path fill="#8c5a2b" d="M14 22c2-4 4-6 6-6s3 1 4 3"/>'
+        '<path fill="#8c5a2b" d="M22 20c1-5 3-7 6-6 2 1 3 3 2 6"/>'
+        '<path fill="#8c5a2b" d="M30 22c2-4 5-6 7-5 2 1 2 4 0 6"/>'
+        '</svg>'
+    ),
+    "almonds": (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+        '<path fill="#e8c9a0" d="M24 6c-8 0-14 10-14 18 0 10 6 18 14 18s14-8 14-18C38 16 32 6 24 6z"/>'
+        '<path fill="#d4a574" d="M24 6c6 0 10 8 11 15 1 7-2 14-7 17-5-3-8-10-7-17C21 14 18 6 24 6z"/>'
+        '<path fill="#c4956a" d="M24 14c-2 4-3 8-3 12 0 4 1 8 3 10 2-2 3-6 3-10 0-4-1-8-3-12z"/>'
+        '<ellipse cx="24" cy="10" rx="3" ry="2" fill="#b8864f"/>'
+        '</svg>'
+    ),
+    "cashews": (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+        '<path fill="#f0d5a8" d="M10 28c0-10 8-18 16-16 6 1 10 6 12 12 2 8-2 16-10 18-10 2-18-6-18-14z"/>'
+        '<path fill="#e8c08a" d="M18 14c8-2 14 4 16 12 2 8-2 14-8 15-4 1-8-2-10-8-2-6 0-14 2-19z"/>'
+        '<path fill="#d4a86a" d="M22 18c4-1 8 2 9 8 1 5-2 9-6 9-3 0-5-4-5-9 0-3 1-6 2-8z"/>'
+        '</svg>'
+    ),
+    "khishmish": (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+        '<ellipse cx="24" cy="30" rx="14" ry="8" fill="#f5e6c8"/>'
+        '<ellipse cx="14" cy="28" rx="3.5" ry="5" fill="#c9a227"/>'
+        '<ellipse cx="22" cy="26" rx="3.5" ry="5" fill="#d4ad3a"/>'
+        '<ellipse cx="30" cy="28" rx="3.5" ry="5" fill="#b8922a"/>'
+        '<ellipse cx="18" cy="32" rx="3" ry="4.5" fill="#e8c04a"/>'
+        '<ellipse cx="26" cy="32" rx="3" ry="4.5" fill="#c9a227"/>'
+        '<ellipse cx="34" cy="32" rx="3" ry="4.5" fill="#d4ad3a"/>'
+        '<path fill="#8b5a2b" d="M24 10c0 0-1 3-2 5-1 2-3 3-3 3s2-1 3-3 2-5 2-5z"/>'
+        '</svg>'
+    ),
+    "cranberry": (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+        '<circle cx="18" cy="28" r="8" fill="#c41e3a"/>'
+        '<circle cx="30" cy="28" r="8" fill="#d42b47"/>'
+        '<circle cx="24" cy="20" r="7" fill="#b81830"/>'
+        '<ellipse cx="22" cy="26" rx="2" ry="3" fill="#e84d63" opacity=".5"/>'
+        '<ellipse cx="30" cy="26" rx="2" ry="3" fill="#e84d63" opacity=".5"/>'
+        '<path fill="#4a8c3a" d="M24 10c-2 2-4 4-6 3 2 3 4 5 6 5s4-2 6-5c-2 1-4-1-6-3z"/>'
+        '<path fill="#3d7a30" d="M24 10v4"/>'
+        '</svg>'
+    ),
+    "walnuts": (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+        '<path fill="#8b5a2b" d="M24 8c-10 0-16 10-16 18 0 10 7 16 16 16s16-6 16-16C40 18 34 8 24 8z"/>'
+        '<path fill="#a06830" d="M24 12c-6 0-10 6-11 12-1 6 2 12 7 14 5-2 8-8 7-14-1-6-5-12-3-12z"/>'
+        '<path fill="#6b4020" d="M24 16c0 0-4 6-4 12 0 4 2 8 4 10 2-2 4-6 4-10 0-6-4-12-4-12z"/>'
+        '<path fill="#5a3518" d="M22 20v16M26 20v16M24 18v20"/>'
+        '</svg>'
+    ),
+    "chips": (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+        '<ellipse cx="24" cy="28" rx="16" ry="10" fill="#f5d76e"/>'
+        '<path fill="#e8c04a" d="M10 28c2-6 8-10 14-10s12 4 14 10"/>'
+        '<path fill="#f0d060" d="M14 24c4-2 8-3 12-2 2 1 3 3 2 5-3 1-7 0-10-1 0-1-1-2-4-2z"/>'
+        '<path fill="#d4a830" d="M22 20c3-1 6 0 8 3 1 2 0 4-2 5-2 1-5 0-7-2-1-2 0-4 1-6z"/>'
+        '<path fill="#c49520" d="M30 26c2-1 4 0 5 2 1 2 0 4-2 4-2 0-4-1-5-3 0-1 0-2 2-3z"/>'
+        '<circle cx="18" cy="30" r="1.5" fill="#c49520" opacity=".6"/>'
+        '<circle cx="28" cy="32" r="1.5" fill="#c49520" opacity=".6"/>'
+        '</svg>'
+    ),
+    "mixes": (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+        '<ellipse cx="24" cy="32" rx="16" ry="8" fill="#f0e0c8"/>'
+        '<path fill="#e8d4b8" d="M8 32c0-12 8-20 16-20s16 8 16 20"/>'
+        '<circle cx="16" cy="26" r="3" fill="#c96d35"/>'
+        '<circle cx="24" cy="24" r="3" fill="#e8a04a"/>'
+        '<circle cx="32" cy="26" r="3" fill="#8b5a2b"/>'
+        '<circle cx="20" cy="30" r="2.5" fill="#d4843a"/>'
+        '<circle cx="28" cy="30" r="2.5" fill="#f0d5a8"/>'
+        '<circle cx="24" cy="28" r="2" fill="#6b3f8f"/>'
+        '</svg>'
+    ),
+    "brittles": (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+        '<rect x="8" y="18" width="32" height="14" rx="3" fill="#e8a04a"/>'
+        '<rect x="8" y="18" width="32" height="6" rx="3" fill="#f5c86a"/>'
+        '<circle cx="14" cy="26" r="2" fill="#c96d35"/>'
+        '<circle cx="22" cy="27" r="2" fill="#8b5a2b"/>'
+        '<circle cx="30" cy="26" r="2" fill="#c96d35"/>'
+        '<circle cx="36" cy="27" r="1.5" fill="#8b5a2b"/>'
+        '<path fill="#d4843a" d="M8 32h32v2c0 2-2 4-4 4H12c-2 0-4-2-4-4v-2z"/>'
+        '</svg>'
+    ),
+    "mouth-fresheners": (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">'
+        '<ellipse cx="24" cy="30" rx="14" ry="9" fill="#e8f5e0"/>'
+        '<path fill="#5cb85c" d="M16 28c0-8 4-14 8-14s8 6 8 14c0 4-3 8-8 8s-8-4-8-8z"/>'
+        '<path fill="#4a9c4a" d="M20 16c2-2 4-2 6 0 1 1 2 4 1 7-1 2-3 3-4 2-1-1-2-4-3-9z"/>'
+        '<path fill="#6fcf6f" d="M28 16c2-2 4-1 5 2 1 3 0 6-2 8-2 2-4 1-5-1 1-3 2-6 2-9z"/>'
+        '<path fill="#3d8a3d" d="M24 12c0 0 1 4 0 7"/>'
+        '<circle cx="20" cy="30" r="2" fill="#f0c040"/>'
+        '<circle cx="26" cy="32" r="2" fill="#e8a830"/>'
+        '<circle cx="30" cy="28" r="1.5" fill="#d49520"/>'
+        '</svg>'
+    ),
+}
+
+BG = {
+    "dry-fruits": "rgb(251,247,242)",
+    "almonds": "rgb(252,247,241)",
+    "cashews": "rgb(249,249,249)",
+    "khishmish": "rgb(249,251,231)",
+    "cranberry": "rgb(241,248,233)",
+    "walnuts": "rgb(252,244,235)",
+    "chips": "rgb(241,248,233)",
+    "mixes": "rgb(255,253,231)",
+    "brittles": "rgb(252,244,235)",
+    "mouth-fresheners": "rgb(255,253,231)",
+}
+
+manifest = {}
+for slug, svg in ICONS.items():
+    manifest[slug] = {"svg": svg, "bg": BG[slug]}
+
+out = ROOT / "nutterly-category-icons.json"
+out.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+print(f"Wrote {out} ({len(manifest)} icons)")

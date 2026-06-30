@@ -1,0 +1,1548 @@
+/* Farmley checkout — matches contact / account theme */
+
+:root {
+	--ng-checkout-green: #0c533d;
+	--ng-checkout-green-dark: #094432;
+	--ng-checkout-gold: #b99531;
+	--ng-checkout-cream: #fcf4eb;
+	--ng-checkout-bg: #fbf8f1;
+	--ng-checkout-muted: #5c6b64;
+	--ng-checkout-border: rgba(12, 83, 61, 0.1);
+	--ng-checkout-radius: 16px;
+	--ng-checkout-radius-lg: 22px;
+}
+
+/* Page shell */
+body.ng-farmley-checkout-page,
+body.ng-farmley-order-received-page {
+	background: var(--ng-checkout-bg);
+}
+
+body.ng-farmley-checkout-page #qodef-page-inner,
+body.ng-farmley-order-received-page #qodef-page-inner {
+	width: 100% !important;
+	max-width: none !important;
+	padding: 28px 0 72px !important;
+}
+
+body.ng-farmley-checkout-page #qodef-page-content.qodef-grid,
+body.ng-farmley-order-received-page #qodef-page-content.qodef-grid {
+	display: block;
+	width: 100%;
+}
+
+body.ng-farmley-checkout-page .qodef-grid.qodef-layout--template > .qodef-grid-inner,
+body.ng-farmley-order-received-page .qodef-grid.qodef-layout--template > .qodef-grid-inner {
+	display: block;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout,
+body.ng-farmley-order-received-page #qodef-woo-page.qodef--checkout {
+	max-width: 1160px;
+	margin: 0 auto;
+	padding: 0 22px;
+	box-sizing: border-box;
+}
+
+/* Hero */
+.ng-farmley-checkout {
+	margin: 0;
+	padding: 0 0 28px;
+	box-sizing: border-box;
+}
+
+.ng-farmley-checkout__hero {
+	text-align: center;
+	max-width: 680px;
+	margin: 0 auto 32px;
+}
+
+.ng-farmley-checkout__eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 12px;
+	font-family: "Manrope", sans-serif;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--ng-checkout-gold);
+}
+
+.ng-farmley-checkout__eyebrow::before,
+.ng-farmley-checkout__eyebrow::after {
+	content: "";
+	width: 22px;
+	height: 2px;
+	border-radius: 999px;
+	background: rgba(185, 149, 49, 0.55);
+}
+
+.ng-farmley-checkout__title {
+	margin: 0 0 10px;
+	font-family: "Manrope", sans-serif;
+	font-size: clamp(28px, 4vw, 40px);
+	font-weight: 800;
+	line-height: 1.12;
+	letter-spacing: -0.03em;
+	color: var(--ng-checkout-green);
+}
+
+.ng-farmley-checkout__lead {
+	margin: 0 auto 18px;
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	line-height: 1.65;
+	color: var(--ng-checkout-muted);
+}
+
+.ng-farmley-checkout__trust {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px 14px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ng-farmley-checkout__trust li {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 14px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.85);
+	border: 1px solid var(--ng-checkout-border);
+	font-family: "Manrope", sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	color: #183b2f;
+}
+
+.ng-farmley-checkout__trust li::before {
+	content: "";
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--ng-checkout-gold);
+	box-shadow: inset 0 0 0 2px rgba(12, 83, 61, 0.15);
+}
+
+/* Main checkout grid */
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout {
+	display: grid;
+	grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+	grid-template-areas: "details summary";
+	gap: 20px 24px;
+	align-items: start;
+	margin-top: 0 !important;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout #customer_details {
+	grid-area: details;
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 18px;
+	float: none !important;
+	width: 100% !important;
+	margin: 0 !important;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .ng-farmley-checkout__summary {
+	grid-area: summary;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	align-self: start;
+	position: sticky;
+	top: 96px;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout #customer_details .col-1,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout #customer_details .col-2 {
+	float: none !important;
+	width: 100% !important;
+	margin: 0 !important;
+	padding: 22px 22px 8px;
+	border-radius: var(--ng-checkout-radius);
+	background: var(--ng-checkout-cream);
+	border: 1px solid var(--ng-checkout-border);
+	box-sizing: border-box;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout #order_review_heading {
+	margin: 0 !important;
+	padding: 0 4px;
+	font-family: "Manrope", sans-serif;
+	font-size: 20px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	color: var(--ng-checkout-green);
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout #order_review {
+	position: static;
+	top: auto;
+	margin: 0;
+	padding: 22px;
+	border-radius: var(--ng-checkout-radius-lg);
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	box-shadow: 0 16px 42px rgba(12, 83, 61, 0.08);
+}
+
+/* Section headings */
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-billing-fields > h3,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-shipping-fields > h3,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout #customer_details h3 {
+	margin: 0 0 18px !important;
+	font-family: "Manrope", sans-serif !important;
+	font-size: 18px !important;
+	font-weight: 800 !important;
+	line-height: 1.25 !important;
+	letter-spacing: -0.02em !important;
+	color: var(--ng-checkout-green) !important;
+}
+
+/* Form fields */
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .form-row {
+	margin-bottom: 16px !important;
+	padding: 0;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .form-row label {
+	margin-bottom: 7px;
+	font-family: "Manrope", sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	color: #183b2f;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .form-row .required {
+	color: #b45309;
+	text-decoration: none;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .form-row input.input-text,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .form-row select,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .form-row textarea,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .select2-container .select2-selection--single {
+	width: 100% !important;
+	min-height: 48px;
+	height: auto;
+	padding: 0 14px !important;
+	border: 1.5px solid rgba(12, 83, 61, 0.16) !important;
+	border-radius: 10px !important;
+	background: #fff !important;
+	font-family: "Manrope", sans-serif !important;
+	font-size: 14px !important;
+	color: #1a1a1a !important;
+	box-shadow: none !important;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .form-row textarea {
+	min-height: 96px;
+	padding: 12px 14px !important;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .form-row input.input-text:focus,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .form-row select:focus,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .form-row textarea:focus {
+	outline: none;
+	border-color: var(--ng-checkout-green) !important;
+	box-shadow: 0 0 0 3px rgba(12, 83, 61, 0.12) !important;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .select2-container--default .select2-selection--single .select2-selection__rendered {
+	line-height: 46px !important;
+	padding-left: 0 !important;
+	color: #1a1a1a !important;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .select2-container--default .select2-selection--single .select2-selection__arrow {
+	height: 46px !important;
+}
+
+/* Coupon (outside form, inside checkout wrapper) */
+.ng-farmley-checkout .woocommerce-form-coupon-toggle {
+	margin: 0 0 16px;
+}
+
+.ng-farmley-checkout .woocommerce-form-coupon-toggle .woocommerce-info {
+	margin: 0;
+	padding: 14px 16px;
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.9);
+	border: 1px solid var(--ng-checkout-border);
+	font-size: 14px;
+}
+
+.ng-farmley-checkout .checkout_coupon,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .checkout_coupon {
+	margin: 0 0 18px;
+	padding: 18px;
+	border-radius: var(--ng-checkout-radius);
+	background: #fff;
+	border: 1px dashed rgba(12, 83, 61, 0.22);
+}
+
+.ng-farmley-checkout .checkout_coupon .button,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .checkout_coupon .button {
+	border-radius: 999px !important;
+	background: var(--ng-checkout-green) !important;
+	color: #fff !important;
+	font-weight: 700 !important;
+	padding: 10px 20px !important;
+}
+
+/* Order review table */
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-review-order-table {
+	border: 0;
+	border-collapse: collapse;
+	margin: 0 0 16px;
+	width: 100%;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-review-order-table th,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-review-order-table td {
+	padding: 12px 0;
+	border-bottom: 1px solid rgba(12, 83, 61, 0.08);
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	vertical-align: top;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-review-order-table thead th {
+	font-size: 11px;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: #8a7a68;
+	border-bottom-width: 1px;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-review-order-table .product-name {
+	color: #1a1a1a;
+	font-weight: 600;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-review-order-table .product-total,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-review-order-table tfoot td {
+	text-align: right;
+	font-weight: 700;
+	color: var(--ng-checkout-green);
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-review-order-table tfoot th {
+	font-weight: 700;
+	color: #183b2f;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-review-order-table .order-total th,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-review-order-table .order-total td {
+	font-size: 16px;
+	font-weight: 800;
+	color: var(--ng-checkout-green);
+	border-bottom: 0;
+	padding-top: 16px;
+}
+
+/* Payment */
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-payment {
+	margin-top: 8px !important;
+	padding-top: 16px;
+	border-top: 1px solid rgba(12, 83, 61, 0.08);
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .wc_payment_methods {
+	margin: 0 0 12px !important;
+	padding: 0 !important;
+	list-style: none;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .wc_payment_methods li {
+	margin: 0 0 10px !important;
+	padding: 14px 14px 14px 38px !important;
+	border: 1px solid rgba(12, 83, 61, 0.12) !important;
+	border-radius: 12px !important;
+	background: #fbf8f1;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .wc_payment_methods .input-radio {
+	top: 18px !important;
+	left: 14px !important;
+	accent-color: var(--ng-checkout-green);
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .wc_payment_methods label {
+	font-family: "Manrope", sans-serif !important;
+	font-size: 14px !important;
+	font-weight: 700 !important;
+	line-height: 1.4 !important;
+	color: #183b2f !important;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .payment_box {
+	margin-top: 10px !important;
+	padding: 12px !important;
+	border-radius: 10px !important;
+	background: #fff !important;
+	font-size: 13px;
+	line-height: 1.55;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-terms-and-conditions-wrapper {
+	margin-bottom: 14px !important;
+	font-size: 13px;
+	line-height: 1.55;
+	color: var(--ng-checkout-muted);
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout #place_order,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout-payment .button.alt {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 52px;
+	margin: 0 !important;
+	padding: 0 24px !important;
+	border: 0 !important;
+	border-radius: 999px !important;
+	background: var(--ng-checkout-green) !important;
+	color: #fff !important;
+	font-family: "Manrope", sans-serif !important;
+	font-size: 14px !important;
+	font-weight: 800 !important;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	box-shadow: 0 12px 24px rgba(12, 83, 61, 0.2) !important;
+	transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout #place_order:hover {
+	background: var(--ng-checkout-green-dark) !important;
+	transform: translateY(-1px);
+	box-shadow: 0 16px 28px rgba(12, 83, 61, 0.24) !important;
+}
+
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-info,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-error,
+body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-message {
+	border-radius: 12px;
+	font-family: "Manrope", sans-serif;
+}
+
+/* Thank you page */
+body.ng-farmley-order-received-page .woocommerce-order {
+	max-width: 760px;
+	margin: 0 auto;
+	padding: 28px 24px;
+	border-radius: var(--ng-checkout-radius-lg);
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	box-shadow: 0 16px 42px rgba(12, 83, 61, 0.08);
+}
+
+body.ng-farmley-order-received-page .woocommerce-thankyou-order-received {
+	font-family: "Manrope", sans-serif;
+	font-size: 22px;
+	font-weight: 800;
+	color: var(--ng-checkout-green);
+	text-align: center;
+	margin: 0 0 24px;
+}
+
+/* Thank you accordions */
+.ng-farmley-thankyou-accordions {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin: 0 0 24px;
+}
+
+.ng-farmley-thankyou-accordion {
+	border: 1px solid rgba(12, 83, 61, 0.12);
+	border-radius: 14px;
+	background: #faf8f3;
+	overflow: hidden;
+}
+
+.ng-farmley-thankyou-accordion__summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 16px 18px;
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	font-weight: 700;
+	color: var(--ng-checkout-green, #0c533d);
+	cursor: pointer;
+	list-style: none;
+	user-select: none;
+}
+
+.ng-farmley-thankyou-accordion__summary::-webkit-details-marker {
+	display: none;
+}
+
+.ng-farmley-thankyou-accordion__icon {
+	flex: 0 0 24px;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: rgba(12, 83, 61, 0.08);
+	position: relative;
+	transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.ng-farmley-thankyou-accordion__icon::before,
+.ng-farmley-thankyou-accordion__icon::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 10px;
+	height: 2px;
+	background: var(--ng-checkout-green, #0c533d);
+	border-radius: 2px;
+	transform: translate(-50%, -50%);
+}
+
+.ng-farmley-thankyou-accordion__icon::after {
+	transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.ng-farmley-thankyou-accordion[open] .ng-farmley-thankyou-accordion__icon {
+	transform: rotate(180deg);
+	background: rgba(12, 83, 61, 0.14);
+}
+
+.ng-farmley-thankyou-accordion[open] .ng-farmley-thankyou-accordion__icon::after {
+	opacity: 0;
+}
+
+.ng-farmley-thankyou-accordion__panel {
+	padding: 0 18px 18px;
+	border-top: 1px solid rgba(12, 83, 61, 0.08);
+}
+
+.ng-farmley-thankyou-accordion__empty {
+	margin: 16px 0 4px;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	color: var(--ng-checkout-muted, #6b7280);
+}
+
+body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-order-overview {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px 20px;
+	margin: 16px 0 0;
+	padding: 0;
+	list-style: none;
+	border: 0;
+}
+
+body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-order-overview li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	line-height: 1.5;
+	color: var(--ng-checkout-muted, #6b7280);
+}
+
+body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-order-overview strong {
+	display: block;
+	margin-top: 4px;
+	font-size: 15px;
+	font-weight: 700;
+	color: #1f2937;
+}
+
+body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-order-details__title,
+body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-column__title {
+	display: none;
+}
+
+body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-order-details,
+body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-customer-details {
+	margin: 12px 0 0;
+	padding: 0;
+}
+
+body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-table--order-details {
+	margin: 0;
+	border: 0;
+	border-radius: 12px;
+	overflow: hidden;
+	background: #fff;
+}
+
+body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-customer-details address {
+	font-family: "Manrope", sans-serif;
+	font-style: normal;
+	font-size: 14px;
+	line-height: 1.65;
+	color: #374151;
+}
+
+body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-columns--addresses {
+	margin-top: 8px;
+}
+
+.ng-farmley-thankyou-actions {
+	display: flex;
+	justify-content: center;
+	margin: 8px 0 0;
+	padding-top: 8px;
+}
+
+.ng-farmley-thankyou-continue {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	min-height: 48px;
+	padding: 0 28px !important;
+	border-radius: 999px !important;
+	background: var(--ng-checkout-green, #0c533d) !important;
+	border: 1.5px solid var(--ng-checkout-green, #0c533d) !important;
+	color: #fff !important;
+	font-family: "Manrope", sans-serif !important;
+	font-size: 14px !important;
+	font-weight: 800 !important;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	text-decoration: none !important;
+	box-shadow: 0 12px 24px rgba(12, 83, 61, 0.2);
+	transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ng-farmley-thankyou-continue:hover {
+	background: var(--ng-checkout-green-dark, #094432) !important;
+	border-color: var(--ng-checkout-green-dark, #094432) !important;
+	color: #fff !important;
+	transform: translateY(-1px);
+}
+
+body.ng-farmley-order-received-page .ng-farmley-create-account {
+	margin-bottom: 20px;
+}
+
+@media (max-width: 680px) {
+	body.ng-farmley-order-received-page .ng-farmley-thankyou-accordions .woocommerce-order-overview {
+		grid-template-columns: 1fr;
+	}
+
+	.ng-farmley-thankyou-continue {
+		width: 100%;
+	}
+}
+
+@media (max-width: 980px) {
+	body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .woocommerce-checkout {
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			"summary"
+			"details";
+	}
+
+	body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout .ng-farmley-checkout__summary {
+		position: static;
+		top: auto;
+	}
+}
+
+@media (max-width: 680px) {
+	body.ng-farmley-checkout-page #qodef-woo-page.qodef--checkout {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.ng-farmley-checkout__trust {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.ng-farmley-checkout__trust li {
+		justify-content: center;
+	}
+}
+
+/* Order pay / Razorpay receipt */
+body.ng-farmley-order-pay-page {
+	background: var(--ng-checkout-bg);
+}
+
+body.ng-farmley-order-pay-page #qodef-page-inner {
+	width: 100% !important;
+	max-width: none !important;
+	padding: 28px 0 72px !important;
+}
+
+body.ng-farmley-order-pay-page #qodef-page-content.qodef-grid,
+body.ng-farmley-order-pay-page .qodef-grid.qodef-layout--template > .qodef-grid-inner {
+	display: block;
+	width: 100%;
+}
+
+body.ng-farmley-order-pay-page #qodef-woo-page.qodef--checkout {
+	max-width: 1080px;
+	margin: 0 auto;
+	padding: 0 22px;
+	box-sizing: border-box;
+}
+
+body.ng-farmley-order-pay-page .woocommerce-notices-wrapper {
+	max-width: 1080px;
+	margin: 0 auto 18px;
+	padding: 0 22px;
+	box-sizing: border-box;
+}
+
+body.ng-farmley-order-pay-page .woocommerce-notices-wrapper .woocommerce-message,
+body.ng-farmley-order-pay-page .woocommerce-notices-wrapper .woocommerce-info,
+body.ng-farmley-order-pay-page .woocommerce-notices-wrapper .woocommerce-error {
+	border-radius: 12px;
+	font-family: "Manrope", sans-serif;
+}
+
+.ng-farmley-order-pay {
+	margin: 0 auto;
+	padding: 0;
+	max-width: 1080px;
+	box-sizing: border-box;
+}
+
+.ng-farmley-order-pay .ng-farmley-checkout__hero {
+	max-width: 720px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 8px;
+}
+
+.ng-farmley-order-pay__layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+	gap: 24px;
+	align-items: stretch;
+	margin-top: 4px;
+}
+
+.ng-farmley-order-pay__card {
+	display: flex;
+	flex-direction: column;
+	padding: 26px 24px;
+	border-radius: var(--ng-checkout-radius-lg);
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	box-shadow: 0 12px 32px rgba(12, 83, 61, 0.06);
+	box-sizing: border-box;
+	min-height: 100%;
+}
+
+.ng-farmley-order-pay__payment {
+	justify-content: flex-start;
+}
+
+.ng-farmley-order-pay__summary .ng-farmley-order-pay__card-title {
+	margin-bottom: 16px;
+}
+
+.ng-farmley-order-pay__meta,
+.ng-farmley-order-pay__breakdown {
+	display: grid;
+	gap: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.ng-farmley-order-pay__meta {
+	margin-bottom: 20px;
+	padding-bottom: 4px;
+	border-bottom: 1px solid rgba(12, 83, 61, 0.08);
+}
+
+.ng-farmley-order-pay__breakdown {
+	margin-top: 18px;
+	padding-top: 4px;
+	border-top: 1px solid rgba(12, 83, 61, 0.08);
+}
+
+.ng-farmley-order-pay__meta-row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 12px 20px;
+	margin: 0;
+	padding: 11px 0;
+	border-bottom: 1px solid rgba(12, 83, 61, 0.06);
+}
+
+.ng-farmley-order-pay__breakdown .ng-farmley-order-pay__meta-row:last-child {
+	border-bottom: 0;
+}
+
+.ng-farmley-order-pay__meta-row dt {
+	margin: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ng-checkout-muted);
+}
+
+.ng-farmley-order-pay__meta-row dd {
+	margin: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	color: #183b2f;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.ng-farmley-order-pay__meta-row dd .woocommerce-Price-amount,
+.ng-farmley-order-pay__meta-row dd amount {
+	font-weight: inherit;
+}
+
+.ng-farmley-order-pay__meta-row--total {
+	padding-top: 14px;
+	margin-top: 4px;
+	border-top: 1px dashed rgba(12, 83, 61, 0.14);
+	border-bottom: 0;
+}
+
+.ng-farmley-order-pay__meta-row--total dt,
+.ng-farmley-order-pay__meta-row--total dd {
+	font-size: 17px;
+	font-weight: 800;
+	color: var(--ng-checkout-green);
+}
+
+.ng-farmley-order-pay__items-title {
+	margin: 0 0 12px;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--ng-checkout-gold);
+}
+
+.ng-farmley-order-pay__item-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 12px;
+}
+
+.ng-farmley-order-pay__item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 14px;
+	padding: 12px;
+	border-radius: 12px;
+	background: var(--ng-checkout-cream);
+	border: 1px solid rgba(12, 83, 61, 0.06);
+}
+
+.ng-farmley-order-pay__item-main {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+}
+
+.ng-farmley-order-pay__item-thumb {
+	flex-shrink: 0;
+	width: 52px;
+	height: 52px;
+	border-radius: 10px;
+	overflow: hidden;
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+}
+
+.ng-farmley-order-pay__item-thumb img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.ng-farmley-order-pay__item-name {
+	display: block;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.35;
+	color: #183b2f;
+}
+
+.ng-farmley-order-pay__item-qty {
+	display: block;
+	margin-top: 2px;
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--ng-checkout-muted);
+}
+
+.ng-farmley-order-pay__item-total {
+	flex-shrink: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	font-weight: 800;
+	color: var(--ng-checkout-green);
+}
+
+.ng-farmley-order-pay__totals {
+	display: none !important;
+}
+
+.ng-farmley-order-pay__card-title {
+	margin: 0 0 18px;
+	font-family: "Manrope", sans-serif;
+	font-size: 18px;
+	font-weight: 800;
+	color: var(--ng-checkout-green);
+	letter-spacing: -0.02em;
+}
+
+.ng-farmley-order-pay__payment-lead {
+	margin: -4px 0 20px;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	line-height: 1.65;
+	color: var(--ng-checkout-muted);
+}
+
+.ng-farmley-order-pay__gateway {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	margin-top: auto;
+}
+
+.ng-farmley-order-pay__gateway .ng-farmley-order-pay__legacy-note {
+	display: none !important;
+}
+
+.ng-farmley-order-pay__gateway #msg-razorpay-success {
+	display: none !important;
+}
+
+.ng-farmley-order-pay__actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 16px;
+	width: 100%;
+}
+
+.ng-farmley-order-pay__btn {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 52px;
+	margin: 0 !important;
+	padding: 0 20px !important;
+	border-radius: 999px !important;
+	font-family: "Manrope", sans-serif !important;
+	font-size: 13px !important;
+	font-weight: 800 !important;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	cursor: pointer;
+	box-sizing: border-box;
+	transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.ng-farmley-order-pay__btn--primary {
+	border: 0 !important;
+	background: var(--ng-checkout-green) !important;
+	color: #fff !important;
+	box-shadow: none !important;
+}
+
+.ng-farmley-order-pay__btn--primary:hover:not(:disabled):not(.ng-btn-loading) {
+	background: var(--ng-checkout-green-dark) !important;
+}
+
+.ng-farmley-order-pay__btn--primary:disabled,
+.ng-farmley-order-pay__btn--primary.ng-btn-loading {
+	opacity: 0.88;
+	cursor: wait;
+}
+
+.ng-farmley-order-pay__btn--ghost {
+	border: 2px solid rgba(12, 83, 61, 0.2) !important;
+	background: #fff !important;
+	color: var(--ng-checkout-green) !important;
+	box-shadow: none !important;
+}
+
+.ng-farmley-order-pay__btn--ghost:hover:not(:disabled):not(.ng-btn-loading) {
+	border-color: rgba(12, 83, 61, 0.35) !important;
+	background: rgba(252, 244, 235, 0.85) !important;
+}
+
+.ng-farmley-order-pay__banner {
+	margin: 0 0 14px;
+	padding: 12px 14px;
+	border-radius: 12px;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	line-height: 1.55;
+	opacity: 0;
+	transform: translateY(-6px);
+	transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.ng-farmley-order-pay__banner.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.ng-farmley-order-pay__banner--info {
+	background: rgba(185, 149, 49, 0.12);
+	border: 1px solid rgba(185, 149, 49, 0.28);
+	color: #5c4a12;
+}
+
+/* form-pay fallback (pay for order link) */
+body.ng-farmley-order-pay-page #order_review.shop_table,
+body.ng-farmley-order-pay-page #order_review .shop_table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 18px;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+}
+
+body.ng-farmley-order-pay-page #order_review {
+	padding: 24px 22px;
+	border-radius: var(--ng-checkout-radius-lg);
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	box-shadow: 0 16px 42px rgba(12, 83, 61, 0.07);
+}
+
+body.ng-farmley-order-pay-page #order_review #payment #place_order {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 50px;
+	border: 0 !important;
+	border-radius: 999px !important;
+	background: var(--ng-checkout-green) !important;
+	color: #fff !important;
+	font-family: "Manrope", sans-serif !important;
+	font-weight: 800 !important;
+	text-transform: uppercase;
+}
+
+/* Payment status overlay */
+.ng-farmley-payment-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	background: rgba(12, 38, 29, 0.52);
+	backdrop-filter: blur(6px);
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.ng-farmley-payment-overlay.is-visible {
+	opacity: 1;
+	visibility: visible;
+}
+
+.ng-farmley-payment-overlay__panel {
+	width: min(420px, 100%);
+	padding: 32px 28px 26px;
+	border-radius: 22px;
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.1);
+	box-shadow: 0 24px 60px rgba(12, 83, 61, 0.18);
+	text-align: center;
+	transform: translateY(16px) scale(0.98);
+	animation: ngFarmleyOverlayIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes ngFarmleyOverlayIn {
+	to {
+		transform: translateY(0) scale(1);
+	}
+}
+
+.ng-farmley-payment-overlay__icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 72px;
+	margin-bottom: 14px;
+}
+
+.ng-farmley-payment-overlay__spinner {
+	width: 52px;
+	height: 52px;
+	border: 4px solid rgba(12, 83, 61, 0.12);
+	border-top-color: var(--ng-checkout-green);
+	border-radius: 50%;
+	animation: ngFarmleySpin 0.85s linear infinite;
+}
+
+@keyframes ngFarmleySpin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.ng-farmley-payment-overlay__mark {
+	display: block;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	position: relative;
+	margin: 0 auto;
+}
+
+.ng-farmley-payment-overlay__mark--cancel {
+	background: rgba(185, 80, 60, 0.12);
+	border: 2px solid rgba(185, 80, 60, 0.35);
+}
+
+.ng-farmley-payment-overlay__mark--cancel::before,
+.ng-farmley-payment-overlay__mark--cancel::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 22px;
+	height: 3px;
+	border-radius: 999px;
+	background: #b54a38;
+	transform-origin: center;
+}
+
+.ng-farmley-payment-overlay__mark--cancel::before {
+	transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.ng-farmley-payment-overlay__mark--cancel::after {
+	transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.ng-farmley-payment-overlay__title {
+	margin: 0 0 8px;
+	font-family: "Manrope", sans-serif;
+	font-size: 22px;
+	font-weight: 800;
+	color: var(--ng-checkout-green);
+}
+
+.ng-farmley-payment-overlay__text {
+	margin: 0 0 18px;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	line-height: 1.65;
+	color: var(--ng-checkout-muted);
+}
+
+.ng-farmley-payment-overlay__actions .ng-farmley-order-pay__btn {
+	max-width: 220px;
+	margin: 0 auto !important;
+}
+
+/* Shared button loading spinner */
+@keyframes ngFarmleyBtnSpin {
+	to {
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
+}
+
+.ng-btn-loading,
+body.ng-farmley-checkout-page #place_order.processing,
+body.ng-farmley-order-pay-page #btn-razorpay.processing {
+	position: relative;
+	pointer-events: none;
+	cursor: wait;
+}
+
+.ng-btn-loading::after,
+body.ng-farmley-checkout-page #place_order.processing::after,
+body.ng-farmley-order-pay-page #btn-razorpay.processing::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 18px;
+	height: 18px;
+	border: 2px solid rgba(255, 255, 255, 0.35);
+	border-top-color: #fff;
+	border-radius: 50%;
+	animation: ngFarmleyBtnSpin 0.65s linear infinite;
+	transform: translate(-50%, -50%);
+}
+
+.ng-btn-loading.ng-farmley-order-pay__btn--ghost::after,
+.ng-farmley-checkout-login__form-wrap .ng-btn-loading::after,
+.woocommerce-form-login__submit.ng-btn-loading::after,
+.woocommerce-form-register .ng-btn-loading::after,
+.ng-farmley-create-account__btn.ng-btn-loading::after {
+	border-color: rgba(12, 83, 61, 0.18);
+	border-top-color: var(--ng-checkout-green);
+}
+
+.ng-btn-loading .qodef-m-text,
+#place_order.processing .qodef-m-text {
+	opacity: 0.25;
+}
+
+body.ng-farmley-order-pay-page .order_details,
+body.ng-farmley-order-pay-page ul.order_details {
+	display: none !important;
+}
+
+@media (max-width: 900px) {
+	.ng-farmley-order-pay__layout {
+		grid-template-columns: 1fr;
+	}
+
+	.ng-farmley-order-pay__payment {
+		order: 2;
+	}
+}
+
+@media (max-width: 680px) {
+	body.ng-farmley-order-pay-page #qodef-woo-page.qodef--checkout,
+	body.ng-farmley-order-pay-page .woocommerce-notices-wrapper,
+	.ng-farmley-order-pay {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+}
+
+/* Hybrid accounts — checkout login banner */
+.ng-farmley-checkout-login {
+	max-width: 1160px;
+	margin: 0 auto 22px;
+	padding: 0 22px;
+	box-sizing: border-box;
+}
+
+.ng-farmley-checkout-login__banner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 16px 18px;
+	border-radius: 16px;
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(252, 244, 235, 0.92) 100%);
+	border: 1px solid rgba(12, 83, 61, 0.12);
+	box-shadow: 0 10px 28px rgba(12, 83, 61, 0.06);
+}
+
+.ng-farmley-checkout-login__eyebrow {
+	margin: 0 0 4px;
+	font-family: "Manrope", sans-serif;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--ng-checkout-gold);
+}
+
+.ng-farmley-checkout-login__text {
+	margin: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	color: var(--ng-checkout-muted);
+}
+
+.ng-farmley-checkout-login__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.ng-farmley-checkout-login__toggle,
+.ng-farmley-checkout-login__signup {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 42px;
+	padding: 0 18px;
+	border-radius: 999px;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 800;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.ng-farmley-checkout-login__toggle {
+	border: 0;
+	background: var(--ng-checkout-green);
+	color: #fff;
+	box-shadow: 0 8px 18px rgba(12, 83, 61, 0.18);
+}
+
+.ng-farmley-checkout-login__toggle:hover {
+	background: var(--ng-checkout-green-dark);
+	transform: translateY(-1px);
+}
+
+.ng-farmley-checkout-login__signup {
+	border: 2px solid rgba(12, 83, 61, 0.16);
+	background: #fff;
+	color: var(--ng-checkout-green);
+}
+
+.ng-farmley-checkout-login__signup:hover {
+	border-color: rgba(12, 83, 61, 0.32);
+	background: rgba(252, 244, 235, 0.7);
+	color: var(--ng-checkout-green-dark);
+}
+
+.ng-farmley-checkout-login__form-wrap {
+	overflow: hidden;
+	max-height: 0;
+	opacity: 0;
+	margin-top: 0;
+	transition: max-height 0.4s ease, opacity 0.35s ease, margin-top 0.35s ease;
+}
+
+.ng-farmley-checkout-login__form-wrap.is-open {
+	max-height: 520px;
+	opacity: 1;
+	margin-top: 14px;
+}
+
+.ng-farmley-checkout-login__form-wrap .woocommerce-form-login {
+	margin: 0;
+	padding: 20px 18px;
+	border-radius: 16px;
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.1);
+	box-shadow: 0 8px 24px rgba(12, 83, 61, 0.05);
+}
+
+.ng-farmley-checkout-login__form-wrap .woocommerce-form-login .form-row-first,
+.ng-farmley-checkout-login__form-wrap .woocommerce-form-login .form-row-last {
+	width: 100%;
+	float: none;
+}
+
+.ng-farmley-checkout-login__form-wrap .woocommerce-form-login label {
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 700;
+	color: #183b2f;
+}
+
+.ng-farmley-checkout-login__form-wrap .woocommerce-form-login .input-text {
+	min-height: 46px;
+	border-radius: 12px !important;
+	border: 1px solid rgba(12, 83, 61, 0.14) !important;
+	font-family: "Manrope", sans-serif;
+}
+
+.ng-farmley-checkout-login__form-wrap .woocommerce-form-login .woocommerce-form-login__submit {
+	min-height: 44px;
+	border: 0 !important;
+	border-radius: 999px !important;
+	background: var(--ng-checkout-green) !important;
+	color: #fff !important;
+	font-family: "Manrope", sans-serif !important;
+	font-weight: 800 !important;
+	text-transform: uppercase;
+}
+
+/* Post-order create account */
+.ng-farmley-create-account {
+	max-width: 640px;
+	margin: 24px auto 0;
+	padding: 28px 24px;
+	border-radius: var(--ng-checkout-radius-lg);
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.1);
+	box-shadow: 0 16px 42px rgba(12, 83, 61, 0.08);
+	text-align: center;
+	animation: ngFarmleyOverlayIn 0.5s ease both;
+}
+
+.ng-farmley-create-account__icon {
+	width: 56px;
+	height: 56px;
+	margin: 0 auto 14px;
+	border-radius: 50%;
+	background: rgba(12, 83, 61, 0.08);
+	border: 2px solid rgba(12, 83, 61, 0.14);
+	position: relative;
+}
+
+.ng-farmley-create-account__icon::before {
+	content: "";
+	position: absolute;
+	inset: 14px;
+	border-radius: 50%;
+	border: 3px solid var(--ng-checkout-green);
+	border-top-color: transparent;
+	transform: rotate(25deg);
+}
+
+.ng-farmley-create-account__icon--success {
+	background: rgba(12, 83, 61, 0.1);
+	border-color: rgba(12, 83, 61, 0.22);
+}
+
+.ng-farmley-create-account__icon--success::before {
+	content: "";
+	position: absolute;
+	left: 18px;
+	top: 24px;
+	width: 12px;
+	height: 22px;
+	border: 3px solid var(--ng-checkout-green);
+	border-top: 0;
+	border-left: 0;
+	transform: rotate(45deg);
+	inset: auto;
+	border-radius: 0;
+}
+
+.ng-farmley-create-account__title {
+	margin: 0 0 10px;
+	font-family: "Manrope", sans-serif;
+	font-size: clamp(20px, 3vw, 26px);
+	font-weight: 800;
+	color: var(--ng-checkout-green);
+}
+
+.ng-farmley-create-account__text {
+	margin: 0 0 16px;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	line-height: 1.65;
+	color: var(--ng-checkout-muted);
+}
+
+.ng-farmley-create-account__benefits {
+	list-style: none;
+	margin: 0 0 20px;
+	padding: 0;
+	display: grid;
+	gap: 8px;
+	text-align: left;
+}
+
+.ng-farmley-create-account__benefits li {
+	position: relative;
+	padding-left: 26px;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #183b2f;
+}
+
+.ng-farmley-create-account__benefits li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 5px;
+	width: 14px;
+	height: 8px;
+	border-left: 2px solid var(--ng-checkout-green);
+	border-bottom: 2px solid var(--ng-checkout-green);
+	transform: rotate(-45deg);
+}
+
+.ng-farmley-create-account__form {
+	margin: 0;
+}
+
+.ng-farmley-create-account__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 50px;
+	width: 100%;
+	max-width: 320px;
+	margin: 0 auto;
+	padding: 0 22px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--ng-checkout-green);
+	color: #fff !important;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	text-decoration: none;
+	cursor: pointer;
+	box-shadow: 0 12px 24px rgba(12, 83, 61, 0.2);
+	transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ng-farmley-create-account__btn:hover {
+	background: var(--ng-checkout-green-dark);
+	transform: translateY(-1px);
+	color: #fff !important;
+}
+
+.ng-farmley-create-account__fineprint {
+	margin: 12px 0 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+	color: var(--ng-checkout-muted);
+}
+
+body.ng-farmley-order-received-page .woocommerce-order {
+	max-width: 960px;
+}
+
+@media (max-width: 680px) {
+	.ng-farmley-checkout-login {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.ng-farmley-checkout-login__banner {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.ng-farmley-checkout-login__actions {
+		width: 100%;
+	}
+
+	.ng-farmley-checkout-login__toggle,
+	.ng-farmley-checkout-login__signup {
+		flex: 1 1 calc(50% - 5px);
+	}
+}

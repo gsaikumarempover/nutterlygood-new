@@ -1,0 +1,20 @@
+# Local secrets — never commit
+wp-config.php
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+
+# Dependencies (if added later)
+node_modules/
+vendor/
+
+# WordPress cache / temp
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backups-dup-lite/

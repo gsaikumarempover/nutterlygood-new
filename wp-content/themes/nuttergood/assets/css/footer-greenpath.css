@@ -1,0 +1,56 @@
+/* Footer — match GreenPath layout (logo, contact, bottom bar) */
+
+#qodef-page-footer-top-area .qodef-grid-item:nth-child(1) {
+	position: relative;
+	min-height: 190px;
+}
+
+#qodef-page-footer-top-area .qodef-grid-item:nth-child(1) .widget_greenpath_core_single_image {
+	margin-bottom: 18px;
+}
+
+#qodef-page-footer-top-area .qodef-grid-item:nth-child(1) .widget_greenpath_core_icon {
+	display: block;
+}
+
+#qodef-page-footer-top-area .qodef-grid-item:nth-child(1) .qodef-svg-icon-widget .qodef-m-text {
+	color: #fff;
+	font-weight: 400;
+	margin: 0;
+}
+
+#qodef-page-footer-top-area .qodef-grid-item:nth-child(1) .qodef-svg-icon-widget a {
+	color: inherit;
+	text-decoration: none;
+}
+
+#qodef-page-footer-top-area .qodef-grid-item:nth-child(1) .qodef-svg-icon-widget a:hover .qodef-m-text {
+	opacity: 0.85;
+}
+
+#qodef-page-footer-bottom-area-inner .qodef-grid-item:nth-child(2) {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	gap: 0;
+}
+
+#qodef-page-footer-bottom-area-inner .qodef-grid-item:nth-child(2) .widget_greenpath_core_svg_icon {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#qodef-page-footer-bottom-area-inner .qodef-grid-item:nth-child(2) .qodef-svg-icon-widget a {
+	color: #fff;
+}
+
+#qodef-page-footer-bottom-area-inner .qodef-grid-item:nth-child(1) p {
+	margin: 0;
+	color: #fff;
+	font-size: 12px;
+}
+
+#qodef-page-footer-bottom-area-inner .qodef-grid-item:nth-child(1) a {
+	color: #fff;
+}

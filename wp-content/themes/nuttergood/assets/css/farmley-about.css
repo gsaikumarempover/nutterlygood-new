@@ -1,0 +1,262 @@
+/* About Us page */
+
+body.page-template-page-about #qodef-page-inner {
+	width: 100% !important;
+	max-width: none !important;
+	padding: 0 0 60px !important;
+}
+
+body.page-template-page-about #qodef-page-content.qodef-grid {
+	display: block;
+	width: 100%;
+}
+
+body.page-template-page-about .qodef-grid.qodef-layout--template > .qodef-grid-inner {
+	display: block;
+}
+
+.ng-farmley-about {
+	color: #1a1a1a;
+	width: 100%;
+}
+
+.ng-farmley-about .qodef-content-grid {
+	width: 100%;
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 24px;
+	padding-right: 24px;
+	box-sizing: border-box;
+}
+
+.ng-farmley-about__intro {
+	padding: 48px 24px 40px;
+}
+
+.ng-farmley-about__intro-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+	gap: 40px;
+	align-items: center;
+}
+
+.ng-farmley-about__eyebrow {
+	margin: 0 0 10px;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: #b99531;
+}
+
+.ng-farmley-about__title {
+	margin: 0 0 16px;
+	font-size: clamp(26px, 3.5vw, 36px);
+	line-height: 1.2;
+	font-weight: 700;
+	color: #0c533d;
+	letter-spacing: -0.02em;
+}
+
+.ng-farmley-about__text {
+	margin: 0 0 14px;
+	font-size: 16px;
+	line-height: 1.7;
+	color: #4a4a4a;
+}
+
+.ng-farmley-about__text--center {
+	max-width: 640px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ng-farmley-about__cta {
+	display: inline-flex;
+	margin-top: 8px;
+	padding: 12px 24px;
+	border-radius: 100px;
+	background: #0c533d;
+	color: #fff !important;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ng-farmley-about__cta:hover {
+	background: #094432;
+	transform: translateY(-1px);
+}
+
+.ng-farmley-about__visual {
+	border-radius: 20px;
+	overflow: hidden;
+	border: 1px solid rgba(12, 83, 61, 0.1);
+	box-shadow: 0 12px 32px rgba(12, 83, 61, 0.1);
+	background: #fcf4eb;
+}
+
+.ng-farmley-about__visual img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.ng-farmley-about__stats {
+	background: #0c533d;
+	color: #fff;
+	padding: 32px 24px;
+	width: 100%;
+}
+
+.ng-farmley-about__stats-inner {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+	text-align: center;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 24px;
+	box-sizing: border-box;
+}
+
+.ng-farmley-about__stat strong {
+	display: block;
+	font-size: clamp(22px, 3vw, 30px);
+	font-weight: 700;
+	color: #fcf4eb;
+	margin-bottom: 6px;
+}
+
+.ng-farmley-about__stat span {
+	font-size: 14px;
+	color: rgba(252, 244, 235, 0.88);
+}
+
+.ng-farmley-about__products {
+	padding: 52px 24px 56px;
+}
+
+.ng-farmley-about__section-head {
+	text-align: center;
+	margin-bottom: 32px;
+}
+
+.ng-farmley-about__cards {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 20px;
+}
+
+.ng-farmley-about__card {
+	display: flex;
+	flex-direction: column;
+	background: #fcf4eb;
+	border: 1px solid rgba(12, 83, 61, 0.1);
+	border-radius: 16px;
+	overflow: hidden;
+	text-decoration: none;
+	color: inherit;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ng-farmley-about__card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 12px 28px rgba(12, 83, 61, 0.12);
+}
+
+.ng-farmley-about__card-media {
+	background: #fcf4eb;
+	padding: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 200px;
+}
+
+.ng-farmley-about__card-media img {
+	display: block;
+	width: 100%;
+	max-width: 180px;
+	height: auto;
+	object-fit: contain;
+}
+
+.ng-farmley-about__card-body {
+	padding: 18px 18px 20px;
+	display: grid;
+	gap: 8px;
+	flex: 1;
+}
+
+.ng-farmley-about__card-body h3 {
+	margin: 0;
+	font-size: 18px;
+	font-weight: 700;
+	color: #0c533d;
+}
+
+.ng-farmley-about__card-body p {
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.55;
+	color: #5a5a5a;
+	flex: 1;
+}
+
+.ng-farmley-about__card-link {
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #b99531;
+}
+
+.ng-farmley-about__promise {
+	background: linear-gradient(135deg, #fcf4eb 0%, #f5ebe0 100%);
+	padding: 44px 24px 52px;
+}
+
+.ng-farmley-about__promise-inner {
+	text-align: center;
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+.ng-farmley-about__promise h2 {
+	margin: 0 0 12px;
+	font-size: 28px;
+	color: #0c533d;
+}
+
+.ng-farmley-about__promise p {
+	margin: 0;
+	font-size: 16px;
+	line-height: 1.65;
+	color: #4a4a4a;
+}
+
+@media (max-width: 1024px) {
+	.ng-farmley-about__cards {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 768px) {
+	.ng-farmley-about__intro-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.ng-farmley-about__stats-inner {
+		grid-template-columns: 1fr;
+		gap: 18px;
+	}
+
+	.ng-farmley-about__cards {
+		grid-template-columns: 1fr;
+	}
+}

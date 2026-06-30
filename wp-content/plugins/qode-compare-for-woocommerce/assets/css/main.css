@@ -1,0 +1,656 @@
+/* ==========================================================================
+   Include variables and mixins
+   ========================================================================== */
+/* ==========================================================================
+   Typography variables
+   ========================================================================== */
+/* ==========================================================================
+   Box variables
+   ========================================================================== */
+/* ==========================================================================
+   Devices screen size variables
+   ========================================================================== */
+/* ==========================================================================
+   Typography mixins
+   ========================================================================== */
+/* ==========================================================================
+   Typography mixins - end
+   ========================================================================== */
+/* ==========================================================================
+   Layout mixins - begin
+   ========================================================================== */
+/* ==========================================================================
+   Layout mixins - end
+   ========================================================================== */
+/* ==========================================================================
+   Grid size mixins - begin
+   ========================================================================== */
+/* ==========================================================================
+   Grid size mixins - end
+   ========================================================================== */
+/* ==========================================================================
+   Animation mixins - start
+   ========================================================================== */
+/* ==========================================================================
+   Animation mixins - end
+   ========================================================================== */
+/* ==========================================================================
+   Helper mixins - begin
+   ========================================================================== */
+/* ==========================================================================
+   Helper mixins - end
+   ========================================================================== */
+/* ==========================================================================
+   Keyframes settings
+   ========================================================================== */
+
+@keyframes qcfw-rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* ==========================================================================
+   Global styles - begin
+   ========================================================================== */
+.qcfw-svg--close {
+	stroke: currentColor;
+}
+
+.qcfw-spinner-item {
+	position: relative;
+}
+
+.qcfw-spinner-item .qcfw-spinner-icon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	min-width: 12px;
+	max-width: 20px;
+	height: auto;
+	color: var(--qcfw-spinner-color, currentColor);
+	display: block;
+	visibility: hidden;
+	z-index: -1;
+	transform: translate(-50%, -50%);
+}
+
+.qcfw-spinner-item .qcfw-spinner-icon svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	fill: currentColor;
+	stroke: none;
+	animation: qcfw-rotate 2s infinite linear;
+}
+
+.qcfw-spinner-item.qcfw-type--textual .qcfw-spinner-icon {
+	left: 0;
+	transform: translateY(-50%);
+	width: auto;
+}
+
+.qcfw-spinner-item.qcfw--loading, .qcfw-spinner-item.loading {
+	pointer-events: none;
+}
+
+.qcfw-spinner-item.qcfw--loading > *:not(.qcfw-spinner-icon), .qcfw-spinner-item.loading > *:not(.qcfw-spinner-icon) {
+	visibility: hidden;
+	z-index: -1;
+}
+
+.qcfw-spinner-item.qcfw--loading .qcfw-spinner-icon, .qcfw-spinner-item.loading .qcfw-spinner-icon {
+	visibility: visible;
+	z-index: 1;
+}
+
+/* ==========================================================================
+   QODE Compare For WooCommerce Compare Global Styles
+   ========================================================================== */
+#qcfw-modal,
+#qcfw-search-modal,
+.qcfw-confirm-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	visibility: hidden;
+	opacity: 0;
+	z-index: 10001;
+	transition: all .3s ease-in-out;
+	flex-direction: column;
+}
+
+#qcfw-modal.qcfw--opened,
+#qcfw-search-modal.qcfw--opened,
+.qcfw-confirm-modal.qcfw--opened {
+	opacity: 1;
+	visibility: visible;
+}
+
+#qcfw-modal .qcfw-m-overlay,
+#qcfw-search-modal .qcfw-m-overlay,
+.qcfw-confirm-modal .qcfw-m-overlay {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	background: rgba(0, 0, 0, 0.1);
+	pointer-events: auto;
+}
+
+#qcfw-modal:not(.qcfw--initialized) {
+	opacity: 0;
+	visibility: hidden;
+}
+
+#qcfw-modal .qcfw-m-table-holder {
+	background: #fff;
+	max-width: 1826px;
+	height: auto;
+	max-height: calc( 90% - 100px);
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 30px 30px 55px;
+	position: relative;
+	z-index: 2;
+	pointer-events: auto;
+	margin: auto;
+}
+
+#qcfw-modal .qcfw-m-table-holder::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+}
+
+#qcfw-modal .qcfw-m-table-holder::-webkit-scrollbar-track {
+	background: rgba(204, 204, 204, 0.1);
+	border-radius: 2px;
+}
+
+#qcfw-modal .qcfw-m-table-holder::-webkit-scrollbar-thumb {
+	background: #ccc;
+	border-radius: 2px;
+}
+
+#qcfw-modal .qcfw-m-close {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+	margin-left: auto;
+}
+
+#qcfw-modal .qcfw-m-close:hover {
+	color: #ec274f;
+}
+
+#qcfw-modal.qcfw--empty .qcfw-m-table-holder {
+	max-width: 100%;
+	max-height: 100%;
+	padding: 23px 20px;
+	background-color: #fff;
+	border-radius: 6px;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.16);
+	color: #000;
+	width: 345px;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+}
+
+#qcfw-modal.qcfw--empty .qcfw-m-close {
+	position: absolute;
+	right: 10px;
+	border: 0;
+}
+
+#qcfw-modal.qcfw--empty .qcfw-m-items {
+	border: 0;
+}
+
+#qcfw-modal *,
+.qcfw-compare-table *,
+.qcfw-compare * {
+	box-sizing: border-box;
+}
+
+#qcfw-modal .qcfw-m-remove-button-icon,
+.qcfw-compare-table .qcfw-m-remove-button-icon,
+.qcfw-compare .qcfw-m-remove-button-icon {
+	stroke: currentColor;
+}
+
+#qcfw-modal .qcfw-m-item-inner,
+.qcfw-compare-table .qcfw-m-item-inner,
+.qcfw-compare .qcfw-m-item-inner {
+	display: grid;
+	box-sizing: border-box;
+}
+
+#qcfw-modal img,
+.qcfw-compare-table img,
+.qcfw-compare img {
+	vertical-align: middle;
+}
+
+.qcfw-confirm-modal .qcfw-m-dialog-content {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	overflow-y: auto;
+	max-width: 100%;
+	max-height: 100%;
+	padding: 23px 20px;
+	background-color: #fff;
+	border-radius: 6px;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.16);
+	color: #000;
+	z-index: 2;
+}
+
+.qcfw-confirm-modal .qcfw-m-dialog-content::-webkit-scrollbar {
+	height: 4px;
+	width: 4px;
+}
+
+.qcfw-confirm-modal .qcfw-m-dialog-content::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+.qcfw-confirm-modal .qcfw-m-dialog-content::-webkit-scrollbar-thumb {
+	background-color: #ccc;
+	border-radius: 5px;
+}
+
+.qcfw-confirm-modal .qcfw-m-dialog-content .qcfw-m-form-button {
+	border: 1px solid transparent;
+	border-radius: 6px;
+	padding: 11px 23px;
+}
+
+.qcfw-confirm-modal .qcfw-m-dialog-content .qcfw-m-form-button.qcfw--yes {
+	color: #fff;
+	background-color: #ec274f;
+}
+
+.qcfw-confirm-modal .qcfw-m-dialog-content .qcfw-m-form-button.qcfw--no {
+	border-color: #000;
+}
+
+.qcfw-confirm-modal .qcfw-m-dialog-content .qcfw-m-form-title {
+	margin: 0;
+}
+
+.qcfw-confirm-modal .qcfw-m-dialog-content .qcfw-m-form-wrapper {
+	display: grid;
+	gap: 16px;
+}
+
+.qcfw-confirm-modal .qcfw-m-dialog-content .qcfw-m-form-actions {
+	display: flex;
+	justify-content: center;
+	gap: 12px;
+}
+
+.qcfw-compare-table {
+	--qcfw-col-gap: 15px;
+	--qcfw-columns: 4;
+	--qcfw-max-col-width: 320px;
+}
+
+#qcfw-modal .qcfw-compare-table {
+	--qcfw-columns: 5;
+}
+
+#qcfw-modal .qcfw-compare-table .qcfw-m-items:first-child .qcfw-m-item-wrapper:first-child {
+	border-top: 0;
+}
+
+.qcfw-compare-table .qcfw-m-item-wrapper {
+	background-color: #fff;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(calc(100% / var(--qcfw-fixed-columns-number, var(--qcfw-columns)) - (( var(--qcfw-fixed-columns-number, var(--qcfw-columns)) - 1) * var(--qcfw-col-gap)) / var(--qcfw-fixed-columns-number, var(--qcfw-columns))), var(--qcfw-max-col-width)));
+	grid-auto-columns: minmax(calc(100% / var(--qcfw-fixed-columns-number, var(--qcfw-columns)) - (( var(--qcfw-fixed-columns-number, var(--qcfw-columns)) - 1) * var(--qcfw-col-gap)) / var(--qcfw-fixed-columns-number, var(--qcfw-columns))), var(--qcfw-max-col-width));
+	grid-auto-flow: column;
+	column-gap: var(--qcfw-col-gap);
+}
+
+.qcfw-compare-table .qcfw-table-title {
+	margin: 0 0 25px;
+}
+
+.qcfw-compare-table .qcfw-m-items {
+	position: relative;
+	overflow: auto;
+	width: 100%;
+	padding: 0 0 35px;
+	border-top: 1px solid #F0F0F0;
+}
+
+.qcfw-compare-table .qcfw-m-items::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+}
+
+.qcfw-compare-table .qcfw-m-items::-webkit-scrollbar-track {
+	background: rgba(204, 204, 204, 0.1);
+	border-radius: 2px;
+}
+
+.qcfw-compare-table .qcfw-m-items::-webkit-scrollbar-thumb {
+	background: #ccc;
+	border-radius: 2px;
+}
+
+.qcfw-compare-table .qcfw-m-label {
+	vertical-align: top;
+	color: #000000;
+	padding: 13px 10px 11px;
+}
+
+.qcfw-compare-table .qcfw-thumbnail-wrapper {
+	position: relative;
+}
+
+.qcfw-compare-table .qcfw-thumbnail-wrapper .qcfw-m-remove-button {
+	border: 0;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: var(--qcfw-remove-color, #000);
+}
+
+.qcfw-compare-table .qcfw-thumbnail-wrapper .qcfw-m-remove-button svg {
+	width: 15px;
+	height: auto;
+}
+
+.qcfw-compare-table .qcfw-thumbnail-wrapper .qcfw-m-remove-button:hover {
+	color: var(--qcfw-remove-hover-color, #ec274f);
+}
+
+.qcfw-compare-table .qcfw-thumbnail-wrapper .qcfw-m-remove-button .qcfw-svg--close {
+	fill: currentColor;
+}
+
+.qcfw-compare-table .product-thumbnail .qcfw-m-item-inner {
+	border-bottom: 0;
+	padding-bottom: 5px;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.qcfw-compare-table .qcfw-m-item-inner {
+	vertical-align: middle;
+	padding: 13px 5px 11px;
+	height: 100%;
+}
+
+.qcfw-compare-table .qcfw-m-item-inner * {
+	margin: 0;
+}
+
+.qcfw-compare-table .qcfw-m-add-to-cart, .qcfw-compare-table .qcfw-m-add-to-cart + .added_to_cart {
+	justify-self: flex-start;
+}
+
+.qcfw-compare-table .qcfw-m-label,
+.qcfw-compare-table .qcfw-m-item-inner {
+	border-width: 0 0 1px;
+	border-style: solid;
+	border-color: #ededed;
+}
+
+.qcfw-compare-table .qcfw-m-item-stock.qcfw--in-stock {
+	color: #58B35B;
+}
+
+.qcfw-compare-table .qcfw-m-item-stock.qcfw--out-of-stock {
+	color: #DC0000;
+}
+
+.qcfw-compare-table .qcfw-m-price ins {
+	text-decoration: none;
+}
+
+.qcfw-compare-table .qcfw-m-price del {
+	margin-right: 10px;
+}
+
+.qcfw-m-remove-button-icon {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+}
+
+.qcfw-m-add-to-cart, .qcfw-m-add-to-cart + .added_to_cart {
+	border-radius: 8px;
+	padding: 11px 20px 9px;
+	transition: color 0.2s ease-out, background-color 0.2s ease-out;
+	color: var(--qcfw-button-color, #fff);
+	background-color: var(--qcfw-button-bg-color, #000);
+}
+
+.qcfw-m-add-to-cart:hover, .qcfw-m-add-to-cart + .added_to_cart:hover {
+	color: var(--qcfw-button-hover-color, #fff);
+	background-color: var(--qcfw-button-bg-hover-color, #333);
+}
+
+.qcfw-m-add-to-cart.added {
+	display: none !important;
+}
+
+.qcfw-not-found {
+	margin: 0;
+	color: #000;
+}
+
+/* ==========================================================================
+   QODE Compare For WooCommerce Compare Global Styles - responsive
+   ========================================================================== */
+@media only screen and (max-width: 1024px) {
+	.qcfw-compare-table, #qcfw-modal .qcfw-compare-table {
+		--qcfw-columns: 3 !important;
+	}
+}
+
+@media only screen and (max-width: 680px) {
+	.qcfw-compare-table, #qcfw-modal .qcfw-compare-table {
+		--qcfw-columns: 2 !important;
+	}
+	.qcfw-compare-table .qcfw-m-item, #qcfw-modal .qcfw-compare-table .qcfw-m-item {
+		grid-row: 2;
+	}
+	.qcfw-compare-table .qcfw-m-label {
+		border-bottom: 0;
+		padding: 17px 0 1px;
+		grid-column: span 2;
+	}
+	.qcfw-compare-table .qcfw-m-item .qcfw-m-item-inner {
+		border-width: 1px 0 0;
+		padding: 7px 0 0;
+	}
+	.qcfw-compare-table .qcfw-m-item-wrapper:first-child .qcfw-m-item-inner {
+		border: 0;
+		padding-top: 15px;
+	}
+	#qcfw-modal .qcfw-m-table-holder {
+		padding-left: 20px;
+		padding-right: 20px;
+		width: 100%;
+	}
+	#wpadminbar ~ #qcfw-modal .qcfw-m-table-holder {
+		max-height: calc(90vh - 46px);
+		margin-bottom: 0;
+	}
+}
+
+.qcfw-button {
+	position: relative;
+	z-index: 10;
+	text-decoration: none !important;
+	display: inline-flex;
+	align-items: center;
+}
+
+.qcfw-button .qcfw-button-text {
+	color: inherit;
+}
+
+.qcfw-button:hover {
+	color: var(--qcfw-cb-hover-color, #ec274f);
+}
+
+.qcfw-button.qcfw--loop, .qcfw-button.qcfw--single {
+	margin-top: 1.5rem;
+}
+
+.qcfw-button.qcfw-type--solid {
+	border-radius: 8px;
+	border: 1px solid var(--qcfw-cb-border-color, #000);
+	padding: 10px 19px 8px;
+	transition: color 0.2s ease-out, background-color 0.2s ease-out, border-color 0.2s ease-out;
+	color: var(--qcfw-cb-color, #fff);
+	background-color: var(--qcfw-cb-background-color, #000);
+}
+
+.qcfw-button.qcfw-type--solid:hover {
+	color: var(--qcfw-cb-hover-color, #000);
+	background-color: var(--qcfw-cb-hover-background-color, var(--qcfw-cb-background-color, #fff));
+	border-color: var(--qcfw-cb-hover-border-color, var(--qcfw-cb-border-color, #000));
+}
+
+.qcfw-compare-counter .qcfw-compare-counter-inner {
+	display: flex;
+	gap: 10px;
+}
+
+.qcfw-compare-counter.qcfw-layout--top-right-count .qcfw-compare-counter-label {
+	display: inline-flex;
+	padding: 0 10px 0 0;
+}
+
+.qcfw-compare-counter.qcfw-layout--top-right-count .qcfw-compare-counter-label-count {
+	right: -3px;
+}
+
+.qcfw-compare-counter .qcfw-compare-counter-label {
+	position: relative;
+	color: #000;
+}
+
+.qcfw-compare-counter .qcfw-compare-counter-label-count {
+	font-size: var(--qcfw-cc-count-size, 9px);
+	font-weight: var(--qcfw-cc-count-font-weight, 700);
+	position: absolute;
+	top: -6px;
+	right: -9px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 15px;
+	text-align: center;
+	padding: 0 0.2em;
+	color: #000;
+	background-color: var(--qcfw-second-color, #e5f2fb);
+	border: 1px solid #fff;
+	border-radius: 100%;
+	height: 17px;
+	min-width: 17px;
+}
+
+.qcfw-compare-counter.qcfw-layout--icon svg {
+	width: 18px;
+	height: auto;
+}
+
+.qcfw-compare-counter .qcfw-svg--compare {
+	position: relative;
+	top: 2px;
+}
+
+.qcfw-compare .qcfw-compare-items {
+	display: grid;
+	gap: 10px;
+}
+
+.qcfw-compare .qcfw-compare-items .qcfw-compare-item {
+	display: flex;
+	gap: 15px;
+	justify-content: space-between;
+	padding-right: 15px;
+	position: relative;
+}
+
+.qcfw-compare .qcfw-compare-items .qcfw-compare-item img {
+	width: 60px;
+	height: 60px;
+	object-fit: cover;
+}
+
+.qcfw-compare .qcfw-compare-items .qcfw-compare-item .qcfw--product-name {
+	width: 100%;
+}
+
+.qcfw-compare .qcfw-compare-items .qcfw-compare-item .qcfw-m-thumbnail-url,
+.qcfw-compare .qcfw-compare-items .qcfw-compare-item .qcfw-m-remove-button {
+	flex-shrink: 0;
+}
+
+.qcfw-compare .qcfw-compare-items .qcfw-compare-item .qcfw-m-remove-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.qcfw-compare .qcfw-compare-items .qcfw-compare-item .qcfw-m-remove-button svg {
+	width: 10px;
+}
+
+.qcfw-compare .qcfw-compare-bottom {
+	margin-top: 15px;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.qcfw-compare .qcfw-compare-bottom > a {
+	width: 100%;
+	color: #fff;
+	background-color: #000;
+	display: flex;
+	gap: 9px;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 9px 8px;
+	border-radius: 5px;
+	height: auto;
+	border: 1px solid #000;
+	transition: color 0.2s ease-out, background-color 0.2s ease-out;
+}
+
+.qcfw-compare .qcfw-compare-bottom > a svg {
+	position: relative;
+	bottom: 1px;
+	fill: currentColor;
+}
+
+.qcfw-compare .qcfw-compare-bottom > a > * {
+	flex-shrink: 0;
+}
+
+.qcfw-compare .qcfw-compare-bottom > a:hover {
+	color: #000;
+	background-color: #fff;
+}

@@ -1,0 +1,495 @@
+/* Single product layout — larger gallery column with balanced details */
+#qodef-woo-page.qodef--single .qodef-woo-single-inner {
+	grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+	gap: 40px;
+	align-items: start;
+}
+
+#qodef-woo-page.qodef--single.qodef-gallery-position--left .qodef-woo-single-inner {
+	grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+	gap: 40px;
+}
+
+#qodef-woo-page.qodef--single.qodef-gallery-position--left .qodef-woo-single-inner .qodef-woo-single-image,
+#qodef-woo-page.qodef--single.qodef-gallery-position--left .qodef-woo-single-inner .entry-summary {
+	grid-column: auto;
+}
+
+#qodef-woo-page.qodef--single .qodef-woo-single-image {
+	max-width: 440px;
+	width: 100%;
+	justify-self: start;
+}
+
+/* Product image gallery — custom stage + prev/next + thumbnails */
+
+.ng-farmley-sp-gallery {
+	position: relative;
+	width: 100%;
+}
+
+.ng-farmley-sp-gallery__stage-wrap {
+	position: relative;
+}
+
+.ng-farmley-sp-gallery__stage {
+	position: relative;
+	width: 100%;
+	min-height: 440px;
+	height: 440px;
+	max-height: 440px;
+	aspect-ratio: 1 / 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #FCF4EB;
+	border: 1px solid #E8E0D6;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 4px 18px rgba(12, 83, 61, 0.07);
+	padding: 16px;
+}
+
+/* Buy Now only — leave original quantity and Add to cart styling untouched */
+#qodef-woo-page.qodef--single form.cart .ng-farmley-sp-buy-now {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	align-self: center;
+	margin-left: 10px !important;
+	padding: 18px 38px 17px !important;
+	line-height: 1 !important;
+	box-sizing: border-box;
+	border: 1px solid #0C533D !important;
+	border-radius: 8px !important;
+	background: #FFFFFF !important;
+	box-shadow: none !important;
+	font-family: "Manrope", sans-serif;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	color: #0C533D !important;
+	white-space: nowrap;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+#qodef-woo-page.qodef--single form.cart .ng-farmley-sp-buy-now .qodef-m-text {
+	display: inline-flex;
+	align-items: center;
+	line-height: 1;
+}
+
+#qodef-woo-page.qodef--single form.cart .ng-farmley-sp-buy-now:hover,
+#qodef-woo-page.qodef--single form.cart .ng-farmley-sp-buy-now:focus {
+	background: #FCF4EB !important;
+	box-shadow: 0 8px 18px rgba(12, 83, 61, 0.12) !important;
+	color: #0C533D !important;
+	transform: translateY(-1px);
+}
+
+.ng-farmley-sp-gallery__stage-img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+	object-position: center;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.3s ease;
+}
+
+.ng-farmley-sp-gallery__stage-img.is-active {
+	opacity: 1;
+	pointer-events: auto;
+	position: relative;
+}
+
+.ng-farmley-sp-gallery__nav {
+	position: absolute;
+	top: 50%;
+	z-index: 3;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.95);
+	color: #0C533D;
+	font-size: 22px;
+	line-height: 1;
+	cursor: pointer;
+	transform: translateY(-50%);
+	box-shadow: 0 2px 10px rgba(12, 83, 61, 0.15);
+	transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.ng-farmley-sp-gallery__nav:hover {
+	background: #0C533D;
+	color: #fff;
+}
+
+.ng-farmley-sp-gallery__nav--prev {
+	left: 10px;
+}
+
+.ng-farmley-sp-gallery__nav--next {
+	right: 10px;
+}
+
+.ng-farmley-sp-gallery__thumbs {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 8px;
+	margin: 12px 0 0;
+	padding: 0;
+	overflow-x: auto;
+	scrollbar-width: thin;
+}
+
+.ng-farmley-sp-gallery__thumb {
+	flex: 0 0 56px;
+	width: 56px;
+	height: 56px;
+	margin: 0;
+	padding: 3px;
+	border: 2px solid #E8E0D6;
+	border-radius: 8px;
+	background: #fff;
+	cursor: pointer;
+	overflow: hidden;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ng-farmley-sp-gallery__thumb.is-active,
+.ng-farmley-sp-gallery__thumb:hover {
+	border-color: #0C533D;
+	box-shadow: 0 0 0 1px rgba(12, 83, 61, 0.12);
+}
+
+.ng-farmley-sp-gallery__thumb img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
+}
+
+#qodef-woo-page.qodef--single form.cart .qwfw-add-to-wishlist-wrapper {
+	display: none !important;
+}
+
+.ng-farmley-sp-gallery__wishlist {
+	position: absolute;
+	top: 14px;
+	right: 14px;
+	z-index: 5;
+	margin: 0;
+	line-height: 1;
+}
+
+.ng-farmley-sp-gallery__wishlist .qwfw-add-to-wishlist-wrapper {
+	margin: 0 !important;
+	padding: 0;
+	line-height: 1;
+}
+
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.qwfw-type--icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	padding: 0;
+	margin: 0;
+	border: none;
+	border-radius: 50%;
+	color: #0C533D;
+	background: rgba(255, 255, 255, 0.96);
+	box-shadow: 0 4px 14px rgba(12, 83, 61, 0.18);
+	line-height: 1;
+	transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.qwfw-type--icon:hover {
+	transform: scale(1.06);
+	box-shadow: 0 6px 18px rgba(12, 83, 61, 0.22);
+}
+
+.ng-farmley-sp-gallery__wishlist .qwfw-m-text {
+	display: none !important;
+}
+
+.ng-farmley-sp-gallery__wishlist .qwfw-m-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 18px;
+	line-height: 1;
+}
+
+.ng-farmley-sp-gallery__wishlist .qwfw-m-icon svg {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+/* Related products — hide compare only */
+#qodef-woo-page.qodef--single .related.products .qcfw-button,
+#qodef-woo-page.qodef--single section.related .qcfw-button {
+	display: none !important;
+}
+
+/* Related products — match homepage Farmley cards */
+.ng-farmley-related-products {
+	margin-top: 72px;
+}
+
+.ng-farmley-related-products > h2 {
+	margin: 0 0 36px;
+}
+
+.ng-farmley-related-cards .qodef-woo-product-list.qodef-gutter--normal > ul.qodef-grid-inner {
+	column-gap: 18px !important;
+	row-gap: 24px !important;
+}
+
+.ng-farmley-related-cards .qodef-woo-product-list .product {
+	height: 100%;
+}
+
+/* Share row — icon buttons */
+.ng-farmley-sp-share {
+	margin-top: 22px;
+	padding-top: 20px;
+	border-top: 1px solid #EAE3DE;
+}
+
+.ng-farmley-sp-share__inner {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px 16px;
+}
+
+.ng-farmley-sp-share__label {
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1;
+	color: #0C533D;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.ng-farmley-sp-share__icons {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.ng-farmley-sp-share__list {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ng-farmley-sp-share__list li {
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+}
+
+.ng-farmley-sp-share__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #FCF4EB;
+	border: 1px solid #E8E0D6;
+	color: #0C533D !important;
+	text-decoration: none;
+	transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ng-farmley-sp-share__link:hover {
+	background: #0C533D;
+	border-color: #0C533D;
+	color: #fff !important;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(12, 83, 61, 0.2);
+}
+
+.ng-farmley-sp-share__link svg {
+	display: block;
+	width: 18px;
+	height: 18px;
+	fill: currentColor;
+}
+
+.ng-farmley-sp-share__link--whatsapp:hover {
+	color: #fff !important;
+}
+
+/* Size row on single product */
+.ng-farmley-sp-sku {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px 8px;
+	margin: 10px 0 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	line-height: 1.4;
+}
+
+.ng-farmley-sp-sku__label {
+	font-weight: 600;
+	color: #000;
+}
+
+.ng-farmley-sp-sku__value {
+	font-weight: 500;
+	color: #555;
+}
+
+.ng-farmley-sp-weight {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 14px;
+	margin: 12px 0 4px;
+}
+
+.ng-farmley-sp-weight__label {
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	font-weight: 600;
+	color: #0C533D;
+}
+
+.ng-farmley-sp-weight .ng-farmley-card-weight__options {
+	gap: 8px;
+}
+
+/* Description tab — text + bullets only */
+.ng-farmley-sp-description__text {
+	font-family: "Manrope", sans-serif;
+	font-size: 16px;
+	line-height: 1.65;
+	color: #333;
+}
+
+.ng-farmley-sp-description__text p {
+	margin: 0 0 1em;
+}
+
+.ng-farmley-sp-description .shop_attributes,
+.ng-farmley-sp-description table,
+.ng-farmley-sp-description dl {
+	display: none !important;
+}
+
+.ng-farmley-sp-bullets {
+	margin: 16px 0 0;
+	padding: 0 0 0 1.2em;
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	line-height: 1.6;
+	color: #0C533D;
+}
+
+.ng-farmley-sp-bullets li {
+	margin-bottom: 8px;
+}
+
+.ng-farmley-sp-bullets li:last-child {
+	margin-bottom: 0;
+}
+
+/* Additional Details tab — single column, aligned rows */
+#qodef-woo-page.qodef--single .woocommerce-Tabs-panel--additional_information .shop_attributes tbody,
+#qodef-woo-page.qodef--single .ng-farmley-sp-details__table tbody {
+	display: block;
+	width: 100%;
+}
+
+#qodef-woo-page.qodef--single .ng-farmley-sp-details__row,
+#qodef-woo-page.qodef--single .woocommerce-Tabs-panel--additional_information .shop_attributes tr {
+	display: grid;
+	grid-template-columns: minmax(160px, 34%) 1fr;
+	gap: 12px 28px;
+	align-items: start;
+	padding: 14px 0;
+	margin: 0;
+	border: none;
+	border-bottom: 1px solid #EAE3DE;
+}
+
+#qodef-woo-page.qodef--single .ng-farmley-sp-details__row:last-child,
+#qodef-woo-page.qodef--single .woocommerce-Tabs-panel--additional_information .shop_attributes tr:last-child {
+	border-bottom: none;
+}
+
+#qodef-woo-page.qodef--single .ng-farmley-sp-details__label,
+#qodef-woo-page.qodef--single .woocommerce-Tabs-panel--additional_information .shop_attributes th {
+	margin: 0;
+	padding: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.45;
+	color: #0C533D;
+	text-align: left;
+}
+
+#qodef-woo-page.qodef--single .ng-farmley-sp-details__value,
+#qodef-woo-page.qodef--single .woocommerce-Tabs-panel--additional_information .shop_attributes td {
+	margin: 0;
+	padding: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	line-height: 1.55;
+	color: #333;
+	text-align: left;
+}
+
+#qodef-woo-page.qodef--single .ng-farmley-sp-details__value p,
+#qodef-woo-page.qodef--single .woocommerce-Tabs-panel--additional_information .shop_attributes td p {
+	margin: 0;
+}
+
+@media (max-width: 640px) {
+	#qodef-woo-page.qodef--single .ng-farmley-sp-details__row,
+	#qodef-woo-page.qodef--single .woocommerce-Tabs-panel--additional_information .shop_attributes tr {
+		grid-template-columns: 1fr;
+		gap: 6px;
+	}
+
+	#qodef-woo-page.qodef--single .qodef-woo-single-image {
+		max-width: 100%;
+		justify-self: stretch;
+	}
+
+	.ng-farmley-sp-gallery__stage {
+		min-height: min(380px, 86vw);
+		height: min(380px, 86vw);
+		max-height: min(380px, 86vw);
+	}
+
+	#qodef-woo-page.qodef--single form.cart .ng-farmley-sp-buy-now {
+		margin-left: 8px !important;
+		min-width: 0;
+	}
+}

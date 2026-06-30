@@ -1,0 +1,1121 @@
+# Copyright (C) 2024 Qode Interactive
+# This file is distributed under the GPLv3.
+msgid ""
+msgstr ""
+"Project-Id-Version: QODE Compare for WooCommerce 1.0.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/qode-compare-for-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-10-14T14:05:32+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: qode-compare-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: D:\projects\qi-woo\app\public\wp-content\plugins\qode-compare-for-woocommerce\class-qode-compare-for-woocommerce.php
+#: inc/compare/shortcodes/compare-button/class-qode-compare-for-woocommerce-compare-button-shortcode.php:34
+msgid "QODE Compare for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: D:\projects\qi-woo\app\public\wp-content\plugins\qode-compare-for-woocommerce\class-qode-compare-for-woocommerce.php
+msgid "https://qodeinteractive.com/qode-compare-for-woocommerce/"
+msgstr ""
+
+#. Description of the plugin
+#: D:\projects\qi-woo\app\public\wp-content\plugins\qode-compare-for-woocommerce\class-qode-compare-for-woocommerce.php
+msgid "Streamline user experience with practical comparison functionality, offering easy product overviews with features and differences highlighted."
+msgstr ""
+
+#. Author of the plugin
+#: D:\projects\qi-woo\app\public\wp-content\plugins\qode-compare-for-woocommerce\class-qode-compare-for-woocommerce.php
+msgid "Qode Interactive"
+msgstr ""
+
+#. Author URI of the plugin
+#: D:\projects\qi-woo\app\public\wp-content\plugins\qode-compare-for-woocommerce\class-qode-compare-for-woocommerce.php
+msgid "https://qodeinteractive.com/"
+msgstr ""
+
+#: class-qode-compare-for-woocommerce.php:117
+#: inc/compare/shortcodes/compare-button/class-qode-compare-for-woocommerce-compare-button-shortcode.php:75
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:75
+msgid "Add to Compare"
+msgstr ""
+
+#: class-qode-compare-for-woocommerce.php:128
+#: inc/compare/shortcodes/compare-button/class-qode-compare-for-woocommerce-compare-button-shortcode.php:78
+msgid "Added to Compare"
+msgstr ""
+
+#: class-qode-compare-for-woocommerce.php:207
+msgid "WooCommerce plugin is required for QODE Compare For WooCommerce Compare plugin to work properly. Please install/activate it first."
+msgstr ""
+
+#: helpers/helper.php:836
+#: inc/admin/inc/common/core/class-qode-compare-for-woocommerce-framework-options.php:149
+#: inc/admin/inc/fonts/helper.php:115
+msgid "Default"
+msgstr ""
+
+#: helpers/helper.php:841
+msgid "H1"
+msgstr ""
+
+#: helpers/helper.php:842
+msgid "H2"
+msgstr ""
+
+#: helpers/helper.php:843
+msgid "H3"
+msgstr ""
+
+#: helpers/helper.php:844
+msgid "H4"
+msgstr ""
+
+#: helpers/helper.php:845
+msgid "H5"
+msgstr ""
+
+#: helpers/helper.php:846
+msgid "H6"
+msgstr ""
+
+#: helpers/helper.php:847
+msgid "P"
+msgstr ""
+
+#: helpers/helper.php:850
+msgid "Same Window"
+msgstr ""
+
+#: helpers/helper.php:851
+msgid "New Window"
+msgstr ""
+
+#: helpers/helper.php:854
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:62
+msgid "Solid"
+msgstr ""
+
+#: helpers/helper.php:855
+msgid "Dashed"
+msgstr ""
+
+#: helpers/helper.php:856
+msgid "Dotted"
+msgstr ""
+
+#: helpers/helper.php:859
+msgid "Thin (100)"
+msgstr ""
+
+#: helpers/helper.php:860
+msgid "Extra Light (200)"
+msgstr ""
+
+#: helpers/helper.php:861
+msgid "Light (300)"
+msgstr ""
+
+#: helpers/helper.php:862
+msgid "Normal (400)"
+msgstr ""
+
+#: helpers/helper.php:863
+msgid "Medium (500)"
+msgstr ""
+
+#: helpers/helper.php:864
+msgid "Semi Bold (600)"
+msgstr ""
+
+#: helpers/helper.php:865
+msgid "Bold (700)"
+msgstr ""
+
+#: helpers/helper.php:866
+msgid "Extra Bold (800)"
+msgstr ""
+
+#: helpers/helper.php:867
+msgid "Black (900)"
+msgstr ""
+
+#: helpers/helper.php:870
+msgid "Normal"
+msgstr ""
+
+#: helpers/helper.php:871
+msgid "Italic"
+msgstr ""
+
+#: helpers/helper.php:872
+msgid "Oblique"
+msgstr ""
+
+#: helpers/helper.php:873
+#: helpers/helper.php:881
+#: helpers/helper.php:889
+msgid "Initial"
+msgstr ""
+
+#: helpers/helper.php:874
+#: helpers/helper.php:882
+#: helpers/helper.php:890
+msgid "Inherit"
+msgstr ""
+
+#: helpers/helper.php:877
+#: helpers/helper.php:885
+msgid "None"
+msgstr ""
+
+#: helpers/helper.php:878
+msgid "Capitalize"
+msgstr ""
+
+#: helpers/helper.php:879
+msgid "Uppercase"
+msgstr ""
+
+#: helpers/helper.php:880
+msgid "Lowercase"
+msgstr ""
+
+#: helpers/helper.php:886
+msgid "Underline"
+msgstr ""
+
+#: helpers/helper.php:887
+msgid "Overline"
+msgstr ""
+
+#: helpers/helper.php:888
+msgid "Line-Through"
+msgstr ""
+
+#: helpers/helper.php:893
+#: helpers/helper.php:898
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-yesno.php:13
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-yesno.php:13
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-compare-for-woocommerce-framework-elementor-translator.php:622
+msgid "Yes"
+msgstr ""
+
+#: helpers/helper.php:894
+#: helpers/helper.php:897
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-yesno.php:17
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-yesno.php:15
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-compare-for-woocommerce-framework-elementor-translator.php:621
+msgid "No"
+msgstr ""
+
+#: helpers/helper.php:901
+msgid "One"
+msgstr ""
+
+#: helpers/helper.php:902
+msgid "Two"
+msgstr ""
+
+#: helpers/helper.php:903
+msgid "Three"
+msgstr ""
+
+#: helpers/helper.php:904
+msgid "Four"
+msgstr ""
+
+#: helpers/helper.php:905
+msgid "Five"
+msgstr ""
+
+#: helpers/helper.php:906
+msgid "Six"
+msgstr ""
+
+#: helpers/helper.php:909
+msgid "Date"
+msgstr ""
+
+#: helpers/helper.php:910
+msgid "ID"
+msgstr ""
+
+#: helpers/helper.php:911
+msgid "Menu Order"
+msgstr ""
+
+#: helpers/helper.php:912
+msgid "Post Name"
+msgstr ""
+
+#: helpers/helper.php:913
+msgid "Random"
+msgstr ""
+
+#: helpers/helper.php:914
+#: inc/compare/helper.php:526
+msgid "Title"
+msgstr ""
+
+#: helpers/helper.php:917
+msgid "Descending"
+msgstr ""
+
+#: helpers/helper.php:918
+msgid "Ascending"
+msgstr ""
+
+#: inc/admin/class-qode-compare-for-woocommerce-framework.php:57
+#: inc/compare/widgets/compare-counter/templates/content-top-right-count.php:15
+msgid "Compare"
+msgstr ""
+
+#: inc/admin/class-qode-compare-for-woocommerce-framework.php:77
+msgid "Global"
+msgstr ""
+
+#: inc/admin/class-qode-compare-for-woocommerce-framework.php:78
+msgid "Global Plugin Options"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/class-qode-compare-for-woocommerce-admin-notice.php:96
+msgid "Thank you for the feedback!"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/class-qode-compare-for-woocommerce-admin-notice.php:98
+msgid "Something went wrong with sending feedback."
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:22
+msgid "Quick Feedback"
+msgstr ""
+
+#. translators: %s - Plugin name.
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:32
+msgid "If you have a moment, please share why you are deactivating %s:"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:44
+msgid "I no longer need the plugin"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:53
+msgid "I found a better plugin"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:56
+msgid "Please share which plugin"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:63
+msgid "I couldn't get plugin to work"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:72
+msgid "This is a temporary deactivation"
+msgstr ""
+
+#. translators: %s - Plugin name.
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:85
+msgid "I have %s Premium"
+msgstr ""
+
+#. translators: 1. Plugin name; 2. Plugin name; 3. Plugin name.
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:96
+msgid "Wait! Don't deactivate %1$s. You have to activate both %2$s and %3$s Premium in order for the plugin to work."
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:109
+msgid "Other"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:112
+msgid "Please share the reason"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:116
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:117
+msgid "Skip & Deactivate"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/class-qode-compare-for-woocommerce-admin-general-page.php:17
+msgid "Qode Plugins For WooCommerce"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/class-qode-compare-for-woocommerce-admin-general-page.php:62
+msgid "Help Center"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/class-qode-compare-for-woocommerce-admin-general-page.php:63
+msgid "Video Tutorials"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/class-qode-compare-for-woocommerce-admin-general-page.php:64
+msgid "Qode WooCommerce Plugins"
+msgstr ""
+
+#. translators: 1. Premium plugin url.
+#: inc/admin/inc/admin-pages/class-qode-compare-for-woocommerce-admin-general-page.php:74
+#: inc/admin/inc/admin-pages/options-custom-pages/helper.php:10
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/helper.php:96
+msgid "Upgrade"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/dashboard.php:17
+msgid "Help"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:12
+msgid "Documentation"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:13
+msgid "Detailed QODE Compare for WooCommerce user manual and documentation."
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:14
+msgid "Read More"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:20
+msgid "Support"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:21
+msgid "Our dedicated team of support pros is there for your plugin-related questions."
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:22
+msgid "Submit a Ticket"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:34
+msgid "Rate QODE Compare"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:35
+msgid "Let us know about your experience with the QODE Compare for WooCommerce."
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:36
+msgid "Rate Us"
+msgstr ""
+
+#. translators: %s - current date.
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/footer.php:12
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/footer.php:12
+#: inc/admin/inc/admin-pages/templates/footer.php:12
+msgid "Copyright &copy; %d Qode Interactive, All rights reserved"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/header.php:8
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/header.php:8
+msgid "Qode Logo"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/header.php:9
+msgid "QODE Compare for WooCommerce Help"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/header.php:10
+msgid "Check out the Knowledge Base articles, user guide or contact our support professionals"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/knowledge.php:9
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/knowledge.php:21
+msgid "Knowledge Base"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/knowledge.php:10
+msgid "Find the answers to all types of WordPress-related questions by browsing our Knowledge Base articles."
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/knowledge.php:12
+msgid "View More"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/subscribe.php:8
+msgid "Qode Newsletter"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/subscribe.php:9
+msgid "Subscribe  to get all our news & updates more words "
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/subscribe.php:13
+msgid "Your Email..."
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/dashboard.php:17
+msgid "Qode Products"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/helper.php:89
+msgid "Activate"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/helper.php:112
+msgid "Activated"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/helper.php:128
+msgid "Get Free Version"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/all-products.php:9
+msgid "Build beautiful modern websites with ease"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/all-products.php:10
+msgid "View All Products"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/all-products.php:13
+msgid "All Products"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/header.php:9
+msgid "All Qode Products"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/header.php:10
+msgid "Plugins and website templates with powerful options & features for creating all types of websites"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/plugins.php:18
+msgid "More Info"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-compare-for-woocommerce-framework-field-repeater-inner.php:26
+msgid "Add New Item"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-compare-for-woocommerce-framework-field-repeater.php:26
+msgid "+ Add New Item"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-compare-for-woocommerce-framework-options.php:147
+msgid "Clear"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-compare-for-woocommerce-framework-options.php:148
+msgid "Clear color"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-compare-for-woocommerce-framework-options.php:150
+msgid "Select default color"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-compare-for-woocommerce-framework-options.php:151
+msgid "Select Color"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-compare-for-woocommerce-framework-options.php:152
+msgid "Color value"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-file.php:18
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-file.php:18
+msgid "File Thumbnail"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-file.php:26
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-file.php:25
+msgid "Select File"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-file.php:26
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-image.php:41
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-file.php:25
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-image.php:41
+#: inc/admin/inc/widgets/fields/class-qode-compare-for-woocommerce-framework-field-widget-image.php:24
+msgid "Upload"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-file.php:27
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-image.php:42
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-file.php:26
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-image.php:42
+#: inc/admin/inc/widgets/fields/class-qode-compare-for-woocommerce-framework-field-widget-image.php:25
+#: inc/compare/templates/parts/modal-inner.php:19
+msgid "Remove"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-image.php:21
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-image.php:32
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-image.php:21
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-image.php:32
+#: inc/admin/inc/widgets/fields/class-qode-compare-for-woocommerce-framework-field-widget-image.php:18
+msgid "Image Thumbnail"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-compare-for-woocommerce-framework-field-wp-image.php:41
+#: inc/admin/inc/common/fields/class-qode-compare-for-woocommerce-framework-field-image.php:41
+#: inc/admin/inc/widgets/fields/class-qode-compare-for-woocommerce-framework-field-widget-image.php:24
+msgid "Select Image"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/core/class-qode-compare-for-woocommerce-framework-options-admin.php:19
+msgid "Qode Options"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/core/class-qode-compare-for-woocommerce-framework-options-admin.php:159
+msgid "Saved"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/core/class-qode-compare-for-woocommerce-framework-options-admin.php:164
+#: inc/admin/inc/common/modules/admin/core/class-qode-compare-for-woocommerce-framework-options-admin.php:191
+msgid "Wrong options trigger"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/core/class-qode-compare-for-woocommerce-framework-options-admin.php:186
+msgid "Options reset to default"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/core/class-qode-compare-for-woocommerce-framework-options-admin.php:272
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:18
+#: inc/admin/inc/common/modules/admin/templates/holder.php:19
+msgid "Admin Qode Interactive image"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:23
+#: inc/admin/inc/common/modules/admin/templates/holder.php:24
+msgid "Search Options"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:31
+#: inc/admin/inc/common/modules/admin/templates/holder.php:32
+msgid "Saved!"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:35
+#: inc/admin/inc/common/modules/admin/templates/holder.php:36
+msgid "Save Changes"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:38
+#: inc/admin/inc/common/modules/admin/templates/holder.php:39
+msgid "Are you sure? You will reset all options to default values. This will also apply on already imported demo."
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:38
+#: inc/admin/inc/common/modules/admin/templates/holder.php:39
+msgid "Reset All"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:78
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:98
+msgid "%1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:80
+msgid "Search %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:82
+msgid "All %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:84
+msgid "Parent %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:86
+msgid "Parent %1$s %2$s:"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:88
+msgid "Edit %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:90
+msgid "Update %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:92
+msgid "Add New %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:94
+msgid "New %1$s %2$s Name"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:96
+msgid "No %1$s %2$s Found"
+msgstr ""
+
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type-taxonomy.php:124
+#: inc/admin/inc/post-types/class-qode-compare-for-woocommerce-framework-custom-post-type.php:243
+msgid "base"
+msgstr ""
+
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-compare-for-woocommerce-framework-elementor-translator.php:58
+msgid "Content"
+msgstr ""
+
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-compare-for-woocommerce-framework-elementor-translator.php:180
+msgid "Item"
+msgstr ""
+
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-compare-for-woocommerce-framework-elementor-translator.php:343
+#: inc/compare/widgets/compare/class-qode-compare-for-woocommerce-compare-widget.php:30
+msgid "QODE Compare"
+msgstr ""
+
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-compare-for-woocommerce-framework-elementor-translator.php:609
+msgid "Developer Tools"
+msgstr ""
+
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-compare-for-woocommerce-framework-elementor-translator.php:617
+msgid "Show Shortcode Snippet"
+msgstr ""
+
+#: inc/admin/inc/widgets/class-qode-compare-for-woocommerce-framework-widget.php:213
+msgid "There are no options for this widget."
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:21
+msgid "Comparison Table"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:22
+msgid "Comparison Table Options"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:33
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:32
+msgid "General"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:47
+msgid "Enable Table Title"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:48
+msgid "Display comparison table title"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:57
+msgid "Table Title Label"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:58
+msgid "Compare selected items"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:77
+msgid "Attributes to Show"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:78
+msgid "Select attributes to be displayed in the comparison table. You can order the items using drag and drop"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:88
+msgid "Table Fields positions"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:102
+msgid "Repeat Price Field"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:103
+msgid "Display an additional \"Price\" field at the end of the table"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:112
+msgid "Repeat Add to Cart Field"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:113
+msgid "Display an additional \"Add to Cart\" field at the end of the table"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:122
+msgid "Removal Confirmation Prompt"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:123
+msgid "Enable to show a confirmation dialog before removing an item"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:134
+msgid "Product Image Size"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:142
+msgid "Image Width"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:154
+msgid "Image Height"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:166
+msgid "Hard Crop Image"
+msgstr ""
+
+#: inc/compare/dashboard/admin/compare-table-options.php:167
+msgid "Crop thumbnail to exact dimensions (normally thumbnails are proportional)"
+msgstr ""
+
+#: inc/compare/dashboard/admin/general-options.php:19
+msgid "Welcome to Qode Compare for WooCommerce"
+msgstr ""
+
+#: inc/compare/dashboard/admin/general-options.php:20
+msgid "It's time to set up the Compare feature on your website"
+msgstr ""
+
+#: inc/compare/helper.php:61
+msgid "My Comparison"
+msgstr ""
+
+#: inc/compare/helper.php:122
+msgid "Guest"
+msgstr ""
+
+#: inc/compare/helper.php:527
+msgid "Price"
+msgstr ""
+
+#: inc/compare/helper.php:528
+msgid "Add to cart"
+msgstr ""
+
+#: inc/compare/helper.php:529
+msgid "Description"
+msgstr ""
+
+#: inc/compare/helper.php:530
+msgid "SKU"
+msgstr ""
+
+#: inc/compare/helper.php:531
+msgid "Availability"
+msgstr ""
+
+#: inc/compare/helper.php:532
+msgid "Weight"
+msgstr ""
+
+#: inc/compare/helper.php:533
+msgid "Dimension"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/class-qode-compare-for-woocommerce-compare-button-shortcode.php:32
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:21
+msgid "Compare Button"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/class-qode-compare-for-woocommerce-compare-button-shortcode.php:33
+msgid "Shortcode that displays compare button"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/class-qode-compare-for-woocommerce-compare-button-shortcode.php:39
+#: inc/compare/widgets/compare-counter/class-qode-compare-for-woocommerce-compare-counter-widget.php:36
+#: inc/compare/widgets/compare/class-qode-compare-for-woocommerce-compare-widget.php:36
+msgid "Custom Class"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:22
+msgid "Compare Button Options"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:58
+msgid "Button Type"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:59
+msgid "Select a type of the button you wish to use"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:61
+#: inc/compare/widgets/compare-counter/class-qode-compare-for-woocommerce-compare-counter-widget.php:47
+msgid "Textual"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:74
+msgid "Button Label"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:96
+msgid "Open Lightbox Automatically"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:97
+msgid "Display the lightbox automatically after \"Compare\" button is clicked"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:117
+msgid "Show \"Compare\" Button in Loops"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:118
+msgid "Display \"Compare\" button in WooCommerce loops (shop pages, archive pages and all other places where the WooCommerce product loop is shown)"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:139
+msgid "Show \"Compare\" Button on Product Pages"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/dashboard/admin/compare-button-options.php:140
+msgid "Display the \"Compare\" button on single product pages"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:46
+msgid "ID is int value"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:53
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:81
+msgid "Type of action"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:74
+msgid "Array of product IDs"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:101
+msgid "Options data is array with all selected shortcode parameters value"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:127
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:130
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:211
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:214
+msgid "You are not authorized."
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:142
+msgid "Item IDs or action are invalid."
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:185
+msgid "Item is successfully added into comparison table"
+msgstr ""
+
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:188
+msgid "Item is successfully removed from the comparison table"
+msgid_plural "Items are successfully removed from the comparison table"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:219
+msgid "Item ID or action are invalid."
+msgstr ""
+
+#. translators: %s - product name.
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:228
+msgid "%s is already in comparison."
+msgstr ""
+
+#. translators: %s - product name.
+#: inc/compare/shortcodes/compare-button/helper-ajax.php:233
+msgid "%s is successfully added into comparison."
+msgstr ""
+
+#: inc/compare/templates/item-parts/remove.php:12
+msgid "Remove this item"
+msgstr ""
+
+#: inc/compare/templates/item-parts/remove.php:14
+msgid "Are you sure you want to remove this item?"
+msgstr ""
+
+#: inc/compare/templates/item-parts/stock-status.php:9
+msgid "In stock"
+msgstr ""
+
+#: inc/compare/templates/item-parts/stock-status.php:14
+msgid "Out of stock"
+msgstr ""
+
+#: inc/compare/templates/parts/modal-inner.php:15
+msgid "Ok"
+msgstr ""
+
+#: inc/compare/templates/parts/modal-inner.php:20
+msgid "Cancel"
+msgstr ""
+
+#: inc/compare/templates/parts/not-found.php:8
+msgid "Compare table is empty"
+msgstr ""
+
+#: inc/compare/widgets/compare-counter/class-qode-compare-for-woocommerce-compare-counter-widget.php:30
+msgid "QODE Compare Counter"
+msgstr ""
+
+#: inc/compare/widgets/compare-counter/class-qode-compare-for-woocommerce-compare-counter-widget.php:31
+msgid "Display a text with the count of numbers in comparison"
+msgstr ""
+
+#: inc/compare/widgets/compare-counter/class-qode-compare-for-woocommerce-compare-counter-widget.php:43
+msgid "Layout"
+msgstr ""
+
+#: inc/compare/widgets/compare-counter/class-qode-compare-for-woocommerce-compare-counter-widget.php:45
+msgid "Icon Only"
+msgstr ""
+
+#: inc/compare/widgets/compare-counter/class-qode-compare-for-woocommerce-compare-counter-widget.php:46
+msgid "Icon With Text"
+msgstr ""
+
+#: inc/compare/widgets/compare-counter/class-qode-compare-for-woocommerce-compare-counter-widget.php:56
+msgid "Margin"
+msgstr ""
+
+#: inc/compare/widgets/compare-counter/class-qode-compare-for-woocommerce-compare-counter-widget.php:57
+#: inc/compare/widgets/compare/class-qode-compare-for-woocommerce-compare-widget.php:44
+msgid "Insert margin in format: top right bottom left"
+msgstr ""
+
+#: inc/compare/widgets/compare-counter/templates/content-icon.php:11
+#: inc/compare/widgets/compare-counter/templates/content-top-right-count.php:11
+#: inc/compare/widgets/compare-counter/templates/content-with-icon.php:11
+msgid "Open comparison"
+msgstr ""
+
+#. translators: %s - number of products in comparison.
+#: inc/compare/widgets/compare-counter/templates/content-with-icon.php:16
+msgid "%d product in comparison"
+msgid_plural "%d products in comparison"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/compare/widgets/compare/class-qode-compare-for-woocommerce-compare-widget.php:31
+msgid "Display a compare list that shows all items you added to comparison"
+msgstr ""
+
+#: inc/compare/widgets/compare/class-qode-compare-for-woocommerce-compare-widget.php:43
+msgid "Widget Margin"
+msgstr ""
+
+#: inc/compare/widgets/compare/templates/content.php:47
+msgid "Compare products"
+msgstr ""
+
+#: inc/compare/widgets/compare/templates/content.php:50
+msgid "Clear all items"
+msgstr ""
+
+#: inc/compare/widgets/compare/templates/content.php:52
+msgid "Clear all"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:80
+msgid "When you visit and interact with our website, we track:"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:81
+msgid "Products you add to compare - this is done in order to present you and other visitors your favorite products, and to create targeted email campaigns."
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:82
+msgid "We also use cookies to follow compare contents while you browse our website."
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:88
+msgid "Our team members have access to the information you provide us with."
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:89
+msgid "For instance, site Administrators and Shop Managers can view the general compare info, like added products and addition dates"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:90
+msgid "Our team has access to this type of data in order to offer you better deals and promotions for the products you are interested in."
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:111
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:127
+msgid "Customer Comparisons"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:162
+msgid "Comparisons"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:189
+msgid "Token"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:190
+msgctxt "date when compare was created"
+msgid "Created on"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:191
+msgid "Items added"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:212
+msgid "x"
+msgstr ""
+
+#. translators: date when item is added into compare.
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:215
+msgid "(on: %s)"
+msgstr ""
+
+#. translators: %s compare unique token.
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:279
+msgid "Removed compare \"%s\"."
+msgstr ""
+
+#. translators: %s compare unique token.
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy-compare.php:283
+msgid "Compare \"%s\" has been retained."
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy.php:37
+msgctxt "Privacy Policy Guide Title"
+msgid "QODE Compare for WooCommerce"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy.php:67
+msgctxt "Privacy Policy Content"
+msgid "This sample language includes the basics around what personal data your store may be collecting, storing and sharing, as well as who may have access to that data. Depending on what settings are enabled and which additional plugins are used, the specific information shared by your store will vary. We recommend consulting with a lawyer when deciding what information to disclose on your privacy policy."
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy.php:71
+msgctxt "Privacy Policy Content"
+msgid "What we collect and store"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy.php:74
+msgctxt "Privacy Policy Content"
+msgid "Who on our team has access"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy.php:77
+msgctxt "Privacy Policy Content"
+msgid "What we share with others"
+msgstr ""
+
+#: inc/privacy/class-qode-compare-for-woocommerce-privacy.php:80
+msgctxt "Privacy Policy Content"
+msgid "Payments"
+msgstr ""

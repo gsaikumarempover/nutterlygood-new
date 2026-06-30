@@ -1,0 +1,12 @@
+[
+  {"slug": "dry-fruits", "title": "Dry Fruits", "source": "52.jpg", "file": "dry-fruits.jpg"},
+  {"slug": "almonds", "title": "Almonds", "source": "54.jpg", "file": "almonds.jpg"},
+  {"slug": "cashews", "title": "Cashews", "source": "53.jpg", "file": "cashews.jpg"},
+  {"slug": "khishmish", "title": "Khishmish", "source": "56.jpg", "file": "khishmish.jpg"},
+  {"slug": "cranberry", "title": "Cranberry", "source": "51.jpg", "file": "cranberry.jpg"},
+  {"slug": "walnuts", "title": "Walnuts", "source": "55.jpg", "file": "walnuts.jpg"},
+  {"slug": "chips", "title": "Chips", "source": "59.jpg", "file": "chips.jpg"},
+  {"slug": "mixes", "title": "Mixes", "source": "58.jpg", "file": "mixes.jpg"},
+  {"slug": "brittles", "title": "Brittles", "source": "57.jpg", "file": "brittles.jpg"},
+  {"slug": "mouth-fresheners", "title": "Mouth Freshners", "source": "60.jpg", "file": "mouth-fresheners.jpg"}
+]

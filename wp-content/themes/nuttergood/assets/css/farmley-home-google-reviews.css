@@ -1,0 +1,248 @@
+/* Homepage Google reviews feed — below blog section */
+
+.ng-farmley-greviews {
+	width: 100%;
+	background: #fcf4eb;
+	padding: 64px 0 72px;
+	border-top: 1px solid rgba(12, 83, 61, 0.08);
+	box-sizing: border-box;
+}
+
+.ng-farmley-greviews__inner {
+	width: 100%;
+}
+
+.ng-farmley-greviews__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 20px 28px;
+	margin-bottom: 28px;
+}
+
+.ng-farmley-greviews__title {
+	margin: 0 0 6px;
+	font-family: "Manrope", sans-serif;
+	font-size: clamp(1.5rem, 2.6vw, 2rem);
+	font-weight: 700;
+	line-height: 1.2;
+	color: #0c533d;
+}
+
+.ng-farmley-greviews__subtitle {
+	margin: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	color: #5a5a5a;
+}
+
+.ng-farmley-greviews__summary {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 12px;
+}
+
+.ng-farmley-greviews__google-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 10px;
+	border-radius: 999px;
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.1);
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	color: #1a1a1a;
+}
+
+.ng-farmley-greviews__score {
+	font-family: "Manrope", sans-serif;
+	font-size: 1.35rem;
+	font-weight: 700;
+	color: #0c533d;
+	line-height: 1;
+}
+
+.ng-farmley-greviews__stars {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.ng-farmley-greviews__star {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	background: #e0e0e0;
+	clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.ng-farmley-greviews__star.is-full {
+	background: #f4b400;
+}
+
+.ng-farmley-greviews__star.is-half {
+	background: linear-gradient(90deg, #f4b400 50%, #e0e0e0 50%);
+}
+
+.ng-farmley-greviews__count {
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	color: #5a5a5a;
+}
+
+.ng-farmley-greviews__maps-link {
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	color: #0c533d;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.ng-farmley-greviews__maps-link:hover {
+	color: #b99531;
+}
+
+.ng-farmley-greviews__feed-wrap {
+	position: relative;
+}
+
+.ng-farmley-greviews__feed {
+	display: flex;
+	gap: 18px;
+	overflow-x: hidden;
+	scroll-behavior: smooth;
+	padding: 4px 2px 12px;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.ng-farmley-greviews__feed::-webkit-scrollbar {
+	display: none;
+}
+
+.ng-farmley-greviews__card {
+	flex: 0 0 min(320px, calc(100% - 8px));
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	border-radius: 16px;
+	padding: 18px 18px 20px;
+	box-shadow: 0 8px 24px rgba(12, 83, 61, 0.06);
+	box-sizing: border-box;
+}
+
+.ng-farmley-greviews__card-top {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.ng-farmley-greviews__avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #0c533d;
+	color: #fff;
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.ng-farmley-greviews__avatar--photo {
+	object-fit: cover;
+	display: block;
+}
+
+.ng-farmley-greviews__author {
+	margin: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	font-weight: 700;
+	color: #1a1a1a;
+	line-height: 1.3;
+}
+
+.ng-farmley-greviews__time {
+	display: block;
+	font-family: "Manrope", sans-serif;
+	font-size: 12px;
+	color: #8a8a8a;
+	margin-top: 2px;
+}
+
+.ng-farmley-greviews__card .ng-farmley-greviews__stars {
+	margin-bottom: 10px;
+}
+
+.ng-farmley-greviews__text {
+	margin: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	line-height: 1.65;
+	color: #3d3d3d;
+}
+
+.ng-farmley-greviews__nav {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 2;
+	width: 36px;
+	height: 36px;
+	border: none;
+	border-radius: 50%;
+	background: #fff;
+	color: #0c533d;
+	box-shadow: 0 4px 14px rgba(12, 83, 61, 0.14);
+	font-size: 22px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.ng-farmley-greviews__nav:hover {
+	background: #0c533d;
+	color: #fff;
+}
+
+.ng-farmley-greviews__nav--prev {
+	left: -10px;
+}
+
+.ng-farmley-greviews__nav--next {
+	right: -10px;
+}
+
+@media (max-width: 1024px) {
+	.ng-farmley-greviews {
+		padding: 52px 0 60px;
+	}
+
+	.ng-farmley-greviews__nav--prev {
+		left: 0;
+	}
+
+	.ng-farmley-greviews__nav--next {
+		right: 0;
+	}
+}
+
+@media (max-width: 680px) {
+	.ng-farmley-greviews__head {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.ng-farmley-greviews__card {
+		flex-basis: min(280px, 88vw);
+	}
+}

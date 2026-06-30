@@ -1,0 +1,122 @@
+/* Farmley wishlist — red filled heart + pop animation (gallery, shop, related, carousel, media stack) */
+
+.ng-farmley-media-actions .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode:not(.button) .qwfw-m-icon svg,
+.ng-farmley-media-actions .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode:not(.button) .qwfw-m-icon svg path,
+.ng-farmley-sp-gallery__wishlist .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode:not(.button) .qwfw-m-icon svg,
+.ng-farmley-sp-gallery__wishlist .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode:not(.button) .qwfw-m-icon svg path,
+.ng-farmley-sp-gallery__wishlist .qwfw-m-icon svg path,
+.qodef-woo-product-list .qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode:not(.button) .qwfw-m-icon svg,
+.qodef-woo-product-list .qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode:not(.button) .qwfw-m-icon svg path,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode:not(.button) .qwfw-m-icon svg,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode:not(.button) .qwfw-m-icon svg path,
+.qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode:not(.button) .qwfw-m-icon svg,
+.qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode:not(.button) .qwfw-m-icon svg path {
+	fill: none !important;
+	stroke: currentColor !important;
+	stroke-width: 2 !important;
+	transition: fill 0.3s ease, stroke 0.3s ease, transform 0.3s ease;
+}
+
+/* Added / active state */
+.ng-farmley-media-actions .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added,
+.ng-farmley-media-actions .qwfw-shortcode.qwfw--added,
+.ng-farmley-media-actions .qwfw-shortcode.ng-farmley-wishlist--active,
+.ng-farmley-sp-gallery__wishlist .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added,
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.qwfw--added,
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.ng-farmley-wishlist--active,
+.qodef-woo-product-list .qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added,
+.qodef-woo-product-list .qodef-action-holder .qwfw-shortcode.qwfw--added,
+.qodef-woo-product-list .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--active,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-shortcode.qwfw--added,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--active,
+.qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added,
+.qodef-action-holder .qwfw-shortcode.qwfw--added,
+.qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--active {
+	color: #E53935 !important;
+	background-color: #fff !important;
+	border-color: #E53935 !important;
+	box-shadow: 0 4px 16px rgba(229, 57, 53, 0.28) !important;
+}
+
+.ng-farmley-media-actions .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added .qwfw-m-icon svg,
+.ng-farmley-media-actions .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added .qwfw-m-icon svg path,
+.ng-farmley-media-actions .qwfw-shortcode.qwfw--added .qwfw-m-icon svg,
+.ng-farmley-media-actions .qwfw-shortcode.qwfw--added .qwfw-m-icon svg path,
+.ng-farmley-media-actions .qwfw-shortcode.ng-farmley-wishlist--active .qwfw-m-icon svg,
+.ng-farmley-media-actions .qwfw-shortcode.ng-farmley-wishlist--active .qwfw-m-icon svg path,
+.ng-farmley-sp-gallery__wishlist .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added .qwfw-m-icon svg,
+.ng-farmley-sp-gallery__wishlist .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added .qwfw-m-icon svg path,
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.qwfw--added .qwfw-m-icon svg,
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.qwfw--added .qwfw-m-icon svg path,
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.ng-farmley-wishlist--active .qwfw-m-icon svg,
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.ng-farmley-wishlist--active .qwfw-m-icon svg path,
+.qodef-woo-product-list .qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added .qwfw-m-icon svg,
+.qodef-woo-product-list .qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added .qwfw-m-icon svg path,
+.qodef-woo-product-list .qodef-action-holder .qwfw-shortcode.qwfw--added .qwfw-m-icon svg,
+.qodef-woo-product-list .qodef-action-holder .qwfw-shortcode.qwfw--added .qwfw-m-icon svg path,
+.qodef-woo-product-list .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--active .qwfw-m-icon svg,
+.qodef-woo-product-list .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--active .qwfw-m-icon svg path,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added .qwfw-m-icon svg,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added .qwfw-m-icon svg path,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-shortcode.qwfw--added .qwfw-m-icon svg,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-shortcode.qwfw--added .qwfw-m-icon svg path,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--active .qwfw-m-icon svg,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--active .qwfw-m-icon svg path,
+.qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added .qwfw-m-icon svg,
+.qodef-action-holder .qwfw-add-to-wishlist-wrapper.qodef-greenpath-theme .qwfw-shortcode.qwfw--added .qwfw-m-icon svg path,
+.qodef-action-holder .qwfw-shortcode.qwfw--added .qwfw-m-icon svg,
+.qodef-action-holder .qwfw-shortcode.qwfw--added .qwfw-m-icon svg path,
+.qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--active .qwfw-m-icon svg,
+.qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--active .qwfw-m-icon svg path {
+	fill: #E53935 !important;
+	stroke: #E53935 !important;
+}
+
+@keyframes ng-farmley-wishlist-pop {
+	0% {
+		transform: scale(1);
+	}
+	35% {
+		transform: scale(1.28);
+	}
+	65% {
+		transform: scale(0.94);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes ng-farmley-wishlist-ring {
+	0% {
+		box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.45);
+	}
+	70% {
+		box-shadow: 0 0 0 12px rgba(229, 57, 53, 0);
+	}
+	100% {
+		box-shadow: 0 4px 16px rgba(229, 57, 53, 0.28);
+	}
+}
+
+.ng-farmley-media-actions .qwfw-shortcode.ng-farmley-wishlist--pop,
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.ng-farmley-wishlist--pop,
+.qodef-woo-product-list .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--pop,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--pop,
+.qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--pop {
+	animation: ng-farmley-wishlist-pop 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ng-farmley-media-actions .qwfw-shortcode.ng-farmley-wishlist--pop.qwfw--added,
+.ng-farmley-media-actions .qwfw-shortcode.ng-farmley-wishlist--pop.ng-farmley-wishlist--active,
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.ng-farmley-wishlist--pop.qwfw--added,
+.ng-farmley-sp-gallery__wishlist .qwfw-shortcode.ng-farmley-wishlist--pop.ng-farmley-wishlist--active,
+.qodef-woo-product-list .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--pop.qwfw--added,
+.qodef-woo-product-list .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--pop.ng-farmley-wishlist--active,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--pop.qwfw--added,
+#qodef-woo-page.qodef--single .related.products .qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--pop.ng-farmley-wishlist--active,
+.qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--pop.qwfw--added,
+.qodef-action-holder .qwfw-shortcode.ng-farmley-wishlist--pop.ng-farmley-wishlist--active {
+	animation: ng-farmley-wishlist-pop 0.55s cubic-bezier(0.16, 1, 0.3, 1), ng-farmley-wishlist-ring 0.7s ease-out;
+}

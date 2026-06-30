@@ -1,0 +1,842 @@
+# Copyright (C) 2024 Qode Interactive
+# This file is distributed under the GPLv3.
+msgid ""
+msgstr ""
+"Project-Id-Version: QODE Quick View for WooCommerce 1.1.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/qode-quick-view-for-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-12-25T15:05:56+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: qode-quick-view-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: inc/quick-view/shortcodes/quick-view-button/class-qode-quick-view-for-woocommerce-quick-view-button-shortcode.php:33
+msgid "QODE Quick View for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://qodeinteractive.com/qode-quick-view-for-woocommerce/"
+msgstr ""
+
+#. Description of the plugin
+msgid "QODE Quick View for WooCommerce helps you boost conversions & sales by providing visitors with handy pop-up product previews on product list pages."
+msgstr ""
+
+#. Author of the plugin
+msgid "Qode Interactive"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://qodeinteractive.com/"
+msgstr ""
+
+#: class-qode-quick-view-for-woocommerce.php:113
+msgid "Something went wrong"
+msgstr ""
+
+#: class-qode-quick-view-for-woocommerce.php:114
+msgid "Please select some product options before adding this product to your cart."
+msgstr ""
+
+#: class-qode-quick-view-for-woocommerce.php:115
+msgid "Sorry, this product is unavailable. Please choose a different combination."
+msgstr ""
+
+#: class-qode-quick-view-for-woocommerce.php:116
+msgid "Please choose the quantity of items you wish to add to your cart..."
+msgstr ""
+
+#: class-qode-quick-view-for-woocommerce.php:117
+msgid "In stock"
+msgstr ""
+
+#: class-qode-quick-view-for-woocommerce.php:204
+msgid "WooCommerce plugin is required for QODE Quick View for WooCommerce plugin to work properly. Please install/activate it first."
+msgstr ""
+
+#: helpers/helper.php:307
+msgid "Please upload a valid SVG icon"
+msgstr ""
+
+#: helpers/helper.php:636
+#: helpers/helper.php:680
+#: helpers/helper.php:709
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-options.php:149
+#: inc/admin/inc/fonts/helper.php:115
+#: assets/blocks/quick-view-button.js:437
+#: inc/quick-view/blocks/quick-view-button/assets/js/edit.jsx:141
+msgid "Default"
+msgstr ""
+
+#: helpers/helper.php:723
+msgid "Same Window"
+msgstr ""
+
+#: helpers/helper.php:724
+msgid "New Window"
+msgstr ""
+
+#: helpers/helper.php:727
+msgid "Solid"
+msgstr ""
+
+#: helpers/helper.php:728
+msgid "Dashed"
+msgstr ""
+
+#: helpers/helper.php:729
+msgid "Dotted"
+msgstr ""
+
+#: helpers/helper.php:732
+msgid "Thin (100)"
+msgstr ""
+
+#: helpers/helper.php:733
+msgid "Extra Light (200)"
+msgstr ""
+
+#: helpers/helper.php:734
+msgid "Light (300)"
+msgstr ""
+
+#: helpers/helper.php:735
+msgid "Normal (400)"
+msgstr ""
+
+#: helpers/helper.php:736
+msgid "Medium (500)"
+msgstr ""
+
+#: helpers/helper.php:737
+msgid "Semi Bold (600)"
+msgstr ""
+
+#: helpers/helper.php:738
+msgid "Bold (700)"
+msgstr ""
+
+#: helpers/helper.php:739
+msgid "Extra Bold (800)"
+msgstr ""
+
+#: helpers/helper.php:740
+msgid "Black (900)"
+msgstr ""
+
+#: helpers/helper.php:743
+msgid "Normal"
+msgstr ""
+
+#: helpers/helper.php:744
+msgid "Italic"
+msgstr ""
+
+#: helpers/helper.php:745
+msgid "Oblique"
+msgstr ""
+
+#: helpers/helper.php:746
+#: helpers/helper.php:754
+#: helpers/helper.php:762
+msgid "Initial"
+msgstr ""
+
+#: helpers/helper.php:747
+#: helpers/helper.php:755
+#: helpers/helper.php:763
+msgid "Inherit"
+msgstr ""
+
+#: helpers/helper.php:750
+#: helpers/helper.php:758
+msgid "None"
+msgstr ""
+
+#: helpers/helper.php:751
+msgid "Capitalize"
+msgstr ""
+
+#: helpers/helper.php:752
+msgid "Uppercase"
+msgstr ""
+
+#: helpers/helper.php:753
+msgid "Lowercase"
+msgstr ""
+
+#: helpers/helper.php:759
+msgid "Underline"
+msgstr ""
+
+#: helpers/helper.php:760
+msgid "Overline"
+msgstr ""
+
+#: helpers/helper.php:761
+msgid "Line-Through"
+msgstr ""
+
+#: helpers/helper.php:766
+#: helpers/helper.php:771
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-yesno.php:13
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-yesno.php:13
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-quick-view-for-woocommerce-framework-elementor-translator.php:622
+msgid "Yes"
+msgstr ""
+
+#: helpers/helper.php:767
+#: helpers/helper.php:770
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-yesno.php:17
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-yesno.php:15
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-quick-view-for-woocommerce-framework-elementor-translator.php:621
+msgid "No"
+msgstr ""
+
+#: inc/admin/class-qode-quick-view-for-woocommerce-framework.php:57
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:77
+#: inc/quick-view/shortcodes/quick-view-button/helper.php:18
+msgid "Quick View"
+msgstr ""
+
+#: inc/admin/class-qode-quick-view-for-woocommerce-framework.php:77
+msgid "Global"
+msgstr ""
+
+#: inc/admin/class-qode-quick-view-for-woocommerce-framework.php:78
+msgid "Global Plugin Options"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/class-qode-quick-view-for-woocommerce-admin-notice.php:96
+msgid "Thank you for the feedback!"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/class-qode-quick-view-for-woocommerce-admin-notice.php:98
+msgid "Something went wrong with sending feedback."
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:22
+msgid "Quick Feedback"
+msgstr ""
+
+#. translators: %s - Plugin name.
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:32
+msgid "If you have a moment, please share why you are deactivating %s:"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:44
+msgid "I no longer need the plugin"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:53
+msgid "I found a better plugin"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:56
+msgid "Please share which plugin"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:63
+msgid "I couldn't get plugin to work"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:72
+msgid "This is a temporary deactivation"
+msgstr ""
+
+#. translators: %s - Plugin name.
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:85
+msgid "I have %s Premium"
+msgstr ""
+
+#. translators: 1. Plugin name; 2. Plugin name; 3. Plugin name.
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:96
+msgid "Wait! Don't deactivate %1$s. You have to activate both %2$s and %3$s Premium in order for the plugin to work."
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:109
+msgid "Other"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:112
+msgid "Please share the reason"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:116
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: inc/admin/inc/admin-notice/templates/admin-deactivation-form.php:117
+msgid "Skip & Deactivate"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/class-qode-quick-view-for-woocommerce-admin-general-page.php:17
+msgid "Qode Plugins For WooCommerce"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/class-qode-quick-view-for-woocommerce-admin-general-page.php:62
+msgid "Help Center"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/class-qode-quick-view-for-woocommerce-admin-general-page.php:63
+msgid "Video Tutorials"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/class-qode-quick-view-for-woocommerce-admin-general-page.php:64
+msgid "Qode WooCommerce Plugins"
+msgstr ""
+
+#. translators: 1. Premium plugin url.
+#: inc/admin/inc/admin-pages/class-qode-quick-view-for-woocommerce-admin-general-page.php:74
+#: inc/admin/inc/admin-pages/options-custom-pages/helper.php:10
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/helper.php:96
+msgid "Upgrade"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/dashboard.php:17
+msgid "Help"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:12
+msgid "Documentation"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:13
+msgid "Detailed QODE Quick View for WooCommerce user manual and documentation."
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:14
+msgid "Read More"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:20
+msgid "Support"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:21
+msgid "Our dedicated team of support pros is there for your plugin-related questions."
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:22
+msgid "Submit a Ticket"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:34
+msgid "Rate QODE Quick View"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:35
+msgid "Let us know about your experience with the QODE Quick View for WooCommerce."
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/boxes.php:36
+msgid "Rate Us"
+msgstr ""
+
+#. translators: %s - current date.
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/footer.php:12
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/footer.php:12
+#: inc/admin/inc/admin-pages/templates/footer.php:12
+msgid "Copyright &copy; %d Qode Interactive, All rights reserved"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/header.php:8
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/header.php:8
+msgid "Qode Logo"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/header.php:9
+msgid "QODE Quick View for WooCommerce Help"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/header.php:10
+msgid "Check out the Knowledge Base articles, user guide or contact our support professionals"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/knowledge.php:9
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/knowledge.php:21
+msgid "Knowledge Base"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/knowledge.php:10
+msgid "Find the answers to all types of WordPress-related questions by browsing our Knowledge Base articles."
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/knowledge.php:12
+msgid "View More"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/subscribe.php:8
+msgid "Qode Newsletter"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/subscribe.php:9
+msgid "Subscribe  to get all our news & updates more words "
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/help/templates/parts/subscribe.php:13
+msgid "Your Email..."
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/dashboard.php:17
+msgid "Qode Products"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/helper.php:89
+msgid "Activate"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/helper.php:112
+msgid "Activated"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/helper.php:128
+msgid "Get Free Version"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/all-products.php:9
+msgid "Build beautiful modern websites with ease"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/all-products.php:10
+msgid "View All Products"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/all-products.php:13
+msgid "All Products"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/header.php:9
+msgid "All Qode Products"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/header.php:10
+msgid "Plugins and website templates with powerful options & features for creating all types of websites"
+msgstr ""
+
+#: inc/admin/inc/admin-pages/options-custom-pages/qode-products/templates/parts/plugins.php:18
+msgid "More Info"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-field-repeater-inner.php:26
+msgid "Add New Item"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-field-repeater-inner.php:123
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-field-repeater-inner.php:184
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-field-repeater.php:132
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-field-repeater.php:180
+msgid "Item "
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-field-repeater.php:26
+msgid "+ Add New Item"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-options.php:147
+msgid "Clear"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-options.php:148
+msgid "Clear color"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-options.php:150
+msgid "Select default color"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-options.php:151
+msgid "Select Color"
+msgstr ""
+
+#: inc/admin/inc/common/core/class-qode-quick-view-for-woocommerce-framework-options.php:152
+msgid "Color value"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-file.php:18
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-file.php:18
+msgid "File Thumbnail"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-file.php:26
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-file.php:25
+msgid "Select File"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-file.php:26
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-image.php:41
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-file.php:25
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-image.php:41
+#: inc/admin/inc/widgets/fields/class-qode-quick-view-for-woocommerce-framework-field-widget-image.php:24
+msgid "Upload"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-file.php:27
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-image.php:42
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-file.php:26
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-image.php:42
+#: inc/admin/inc/widgets/fields/class-qode-quick-view-for-woocommerce-framework-field-widget-image.php:25
+msgid "Remove"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-image.php:21
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-image.php:32
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-image.php:21
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-image.php:32
+#: inc/admin/inc/widgets/fields/class-qode-quick-view-for-woocommerce-framework-field-widget-image.php:18
+msgid "Image Thumbnail"
+msgstr ""
+
+#: inc/admin/inc/common/fields-wp/class-qode-quick-view-for-woocommerce-framework-field-wp-image.php:41
+#: inc/admin/inc/common/fields/class-qode-quick-view-for-woocommerce-framework-field-image.php:41
+#: inc/admin/inc/widgets/fields/class-qode-quick-view-for-woocommerce-framework-field-widget-image.php:24
+msgid "Select Image"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/core/class-qode-quick-view-for-woocommerce-framework-options-admin.php:19
+msgid "Qode Options"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/core/class-qode-quick-view-for-woocommerce-framework-options-admin.php:159
+msgid "Saved"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/core/class-qode-quick-view-for-woocommerce-framework-options-admin.php:164
+#: inc/admin/inc/common/modules/admin/core/class-qode-quick-view-for-woocommerce-framework-options-admin.php:191
+msgid "Wrong options trigger"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/core/class-qode-quick-view-for-woocommerce-framework-options-admin.php:186
+msgid "Options reset to default"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/core/class-qode-quick-view-for-woocommerce-framework-options-admin.php:272
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:18
+#: inc/admin/inc/common/modules/admin/templates/holder.php:19
+msgid "Admin Qode Interactive image"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:23
+#: inc/admin/inc/common/modules/admin/templates/holder.php:24
+msgid "Search Options"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:31
+#: inc/admin/inc/common/modules/admin/templates/holder.php:32
+msgid "Saved!"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:35
+#: inc/admin/inc/common/modules/admin/templates/holder.php:36
+msgid "Save Changes"
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:38
+#: inc/admin/inc/common/modules/admin/templates/holder.php:39
+msgid "Are you sure? You will reset all options to default values. This will also apply on already imported demo."
+msgstr ""
+
+#: inc/admin/inc/common/modules/admin/templates/holder-custom.php:38
+#: inc/admin/inc/common/modules/admin/templates/holder.php:39
+msgid "Reset All"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:78
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:98
+msgid "%1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:80
+msgid "Search %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:82
+msgid "All %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:84
+msgid "Parent %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:86
+msgid "Parent %1$s %2$s:"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:88
+msgid "Edit %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:90
+msgid "Update %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:92
+msgid "Add New %1$s %2$s"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:94
+msgid "New %1$s %2$s Name"
+msgstr ""
+
+#. translators: 1. Custom Post Type, 2. Custom Post Type Name.
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:96
+msgid "No %1$s %2$s Found"
+msgstr ""
+
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type-taxonomy.php:124
+#: inc/admin/inc/post-types/class-qode-quick-view-for-woocommerce-framework-custom-post-type.php:243
+msgid "base"
+msgstr ""
+
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-quick-view-for-woocommerce-framework-elementor-translator.php:58
+#: inc/quick-view/dashboard/admin/content-options.php:22
+msgid "Content"
+msgstr ""
+
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-quick-view-for-woocommerce-framework-elementor-translator.php:180
+msgid "Item"
+msgstr ""
+
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-quick-view-for-woocommerce-framework-elementor-translator.php:343
+msgid "QODE Quick View"
+msgstr ""
+
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-quick-view-for-woocommerce-framework-elementor-translator.php:609
+msgid "Developer Tools"
+msgstr ""
+
+#: inc/admin/inc/shortcodes/translators/elementor/class-qode-quick-view-for-woocommerce-framework-elementor-translator.php:617
+msgid "Show Shortcode Snippet"
+msgstr ""
+
+#: inc/admin/inc/widgets/class-qode-quick-view-for-woocommerce-framework-widget.php:213
+msgid "There are no options for this widget."
+msgstr ""
+
+#: inc/blocks/helper.php:20
+msgid "Qode WooCommerce"
+msgstr ""
+
+#: inc/quick-view/blocks/quick-view-button/class-qode-quick-view-for-woocommerce-quick-view-button-block.php:58
+msgid "Quick view Button shortcode does not exist"
+msgstr ""
+
+#: inc/quick-view/blocks/quick-view-button/helper.php:31
+#: inc/quick-view/shortcodes/quick-view-button/helper.php:62
+msgid "ID is int value"
+msgstr ""
+
+#: inc/quick-view/blocks/quick-view-button/helper.php:38
+msgid "Type of string"
+msgstr ""
+
+#: inc/quick-view/blocks/quick-view-button/helper.php:58
+#: inc/quick-view/shortcodes/quick-view-button/helper.php:87
+#: inc/quick-view/shortcodes/quick-view-button/helper.php:91
+#: inc/quick-view/shortcodes/quick-view-button/helper.php:92
+msgid "You are not authorized."
+msgstr ""
+
+#: inc/quick-view/blocks/quick-view-button/helper.php:80
+msgid "Item is successfully returned."
+msgstr ""
+
+#: inc/quick-view/blocks/quick-view-button/helper.php:82
+msgid "Shortcode Quick view Button not exist."
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/content-options.php:23
+msgid "Content Options"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/content-options.php:36
+msgid "Style"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/content-options.php:43
+msgid "Quick View Content"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/content-options.php:44
+msgid "Make general stylistic adjustments to the content inside the Quick View"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/content-options.php:58
+msgid "Background"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/content-options.php:71
+#: inc/quick-view/dashboard/admin/content-options.php:86
+msgid "Close Icon"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/content-options.php:72
+msgid "Make general stylistic adjustments to the \"Close\" icon appearance"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/content-options.php:97
+msgid "Close Icon Hover"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/global-options.php:20
+msgid "Welcome to Qode Quick View for WooCommerce"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/global-options.php:21
+msgid "It's time to set up the Quick View feature on your website"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/global-options.php:33
+msgid "Enable"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/global-options.php:34
+msgid "Display the “Quick View” button in WooCommerce Product Loops (product lists shown on shop pages, archive pages and all other places where the product lists are displayed)"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/global-options.php:43
+msgid "Enable on Mobile"
+msgstr ""
+
+#: inc/quick-view/dashboard/admin/global-options.php:44
+msgid "Display the \"Quick View\" button on mobile devices"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/class-qode-quick-view-for-woocommerce-quick-view-button-shortcode.php:31
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:22
+msgid "Quick View Button"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/class-qode-quick-view-for-woocommerce-quick-view-button-shortcode.php:32
+msgid "Shortcode that displays quick view button"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/class-qode-quick-view-for-woocommerce-quick-view-button-shortcode.php:38
+msgid "Custom Class"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/class-qode-quick-view-for-woocommerce-quick-view-button-shortcode.php:45
+msgid "Product ID"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:23
+msgid "Quick View Button Options"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:33
+msgid "General"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:37
+#: inc/quick-view/shortcodes/quick-view-button/layouts/icon-with-text/helper.php:13
+msgid "Icon With Text"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:44
+msgid "Type"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:45
+msgid "Choose a type of the \"Quick View\" button you wish to use"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:54
+msgid "After Add To Cart"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:61
+msgid "Position"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:62
+msgid "Choose where you wish to position the \"Quick View\" button inside WooCommerce Product Loops. In the event that you are using the shortcode, you can copy the following code and paste it where you wish to place it on your page, along with the corresponding product ID: <code>[qode_quick_view_for_woocommerce_button item_id=\"product_id\"]</code>"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:75
+msgid "Label"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/dashboard/admin/quick-view-button-options.php:76
+msgid "Input text for the \"Quick View\" button label in WooCommerce Product Loops"
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/helper.php:112
+msgid "Item ID is invalid."
+msgstr ""
+
+#: inc/quick-view/shortcodes/quick-view-button/helper.php:146
+msgid "Item is added"
+msgstr ""
+
+#: inc/quick-view/variations/pop-up/helper.php:17
+msgid "Pop-up"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:413
+#: inc/quick-view/blocks/quick-view-button/assets/js/edit.jsx:116
+msgid "--Choose Product--"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:426
+#: inc/quick-view/blocks/quick-view-button/assets/js/edit.jsx:132
+msgid "Choose Product"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:433
+#: inc/quick-view/blocks/quick-view-button/assets/js/edit.jsx:138
+msgid "Button Type"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:440
+#: inc/quick-view/blocks/quick-view-button/assets/js/edit.jsx:142
+msgid "Icon with Text"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:443
+#: inc/quick-view/blocks/quick-view-button/assets/js/edit.jsx:143
+msgid "Only Icon"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:456
+#: inc/quick-view/blocks/quick-view-button/assets/js/edit.jsx:160
+msgid "Please choose an Product"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:476
+#: inc/quick-view/blocks/quick-view-button/assets/js/quick-view-button-block.jsx:16
+msgid "Qode Quick View Button"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:477
+#: inc/quick-view/blocks/quick-view-button/assets/js/quick-view-button-block.jsx:17
+msgid "Block that displays quick view button"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:479
+#: inc/quick-view/blocks/quick-view-button/assets/js/quick-view-button-block.jsx:20
+msgid "product"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:479
+#: inc/quick-view/blocks/quick-view-button/assets/js/quick-view-button-block.jsx:21
+msgid "woocommerce"
+msgstr ""
+
+#: assets/blocks/quick-view-button.js:481
+#: inc/quick-view/blocks/quick-view-button/assets/js/quick-view-button-block.jsx:23
+msgid "qode"
+msgstr ""

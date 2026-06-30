@@ -1,0 +1,1 @@
+{'sliderHeight': 600, 'sliderWidth': 1440, 'bgSrc': None, 'texts': ['Flavor & Freshness', 'Your Everyday Treat of Tasty Goodness.', 'Premium Dry Fruits', 'Handpicked Almonds, Cashews & More', 'Crunchy Chips & Mixes', 'Wholesome Snacking, Reimagined'], 'slideCount': 3}

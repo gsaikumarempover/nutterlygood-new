@@ -1,0 +1,19 @@
+<li <?php wc_product_class( $item_classes ); ?>>
+	<div class="qodef-e-inner">
+		<?php if ( has_post_thumbnail() ) { ?>
+			<div class="qodef-e-media">
+				<?php greenpath_core_template_part( 'plugins/woocommerce/shortcodes/product-list', 'templates/post-info/image', '', $params ); ?>
+				<?php greenpath_core_template_part( 'plugins/woocommerce/shortcodes/product-list', 'templates/post-info/link' ); ?>
+			</div>
+		<?php } ?>
+		<div class="qodef-e-content">
+			<?php greenpath_core_template_part( 'plugins/woocommerce/shortcodes/product-list', 'templates/post-info/title', '', $params ); ?>
+			<?php greenpath_core_template_part( 'plugins/woocommerce/shortcodes/product-list', 'templates/post-info/rating', '', $params ); ?>
+			<?php
+			if ( 'yes' === $enable_price ) {
+				greenpath_core_template_part( 'plugins/woocommerce/shortcodes/product-list', 'templates/post-info/price', '', $params );
+			}
+			?>
+		</div>
+	</div>
+</li>

@@ -1,0 +1,28 @@
+<wpml-config>
+	<admin-texts>
+		<key name="qode_wishlist_for_woocommerce_options">
+			<key name="qode_wishlist_for_woocommerce_add_to_wishlist_label" />
+			<key name="qode_wishlist_for_woocommerce_added_to_wishlist_label" />
+			<key name="qode_wishlist_for_woocommerce_remove_from_wishlist_label" />
+			<key name="qode_wishlist_for_woocommerce_browse_wishlist_label" />
+			<key name="qode_wishlist_for_woocommerce_successfully_added_text" />
+			<key name="qode_wishlist_for_woocommerce_already_added_text" />
+			<key name="qode_wishlist_for_woocommerce_removed_text" />
+			<key name="qode_wishlist_for_woocommerce_twitter_text" />
+		</key>
+	</admin-texts>
+	<shortcodes>
+		<shortcode>
+			<tag>qode_wishlist_for_woocommerce_add_to_wishlist</tag>
+			<attributes>
+				<attribute type="post-ids" sub-type="product">item_id</attribute>
+			</attributes>
+		</shortcode>
+		<shortcode>
+			<tag>qode_wishlist_for_woocommerce_table</tag>
+			<attributes>
+				<attribute>table_title</attribute>
+			</attributes>
+		</shortcode>
+	</shortcodes>
+</wpml-config>

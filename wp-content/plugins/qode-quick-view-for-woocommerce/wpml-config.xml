@@ -1,0 +1,7 @@
+<wpml-config>
+    <admin-texts>
+        <key name="qode_quick_view_for_woocommerce_options">
+            <key name="qode_quick_view_for_woocommerce_button_label" />
+        </key>
+    </admin-texts>
+</wpml-config>

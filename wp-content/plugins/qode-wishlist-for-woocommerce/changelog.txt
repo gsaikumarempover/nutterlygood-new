@@ -1,0 +1,89 @@
+*** QODE Wishlist for WooCommerce Changelog ***
+
+2025-11-25 - version 1.2.8
+* Improved shared Wishlist functionality
+
+2025-03-24 - version 1.2.7
+* Improved default Wishlist page creating
+* Updated pot files
+* Minor fixes
+
+2025-01-21 - version 1.2.6
+* Changed the pro plugin URL to point to the WooCommerce marketplace
+
+2024-12-04 - version 1.2.5
+* Added WordPress 6.7 support
+* Improved default Wishlist table title "My Wishlist" to be translatable
+* Updated pot files
+* Minor fixes
+
+2024-10-21 - version 1.2.4
+* Improved framework
+* Minor fixes
+
+2024-10-14 - version 1.2.3
+* Improved framework
+* Minor fixes
+
+2024-09-24 - version 1.2.2
+* Improved QODE framework
+* Improved WordPress coding standards
+* Minor fixes
+
+2024-09-16 - version 1.2.1
+* Improved Qode Variation Swatches for WooCommerce - Wishlist compatibility
+* Improved WordPress coding standards
+* Minor fixes
+
+2024-07-16 - version 1.2
+* Added GDPR compliance
+* Improved admin deactivation notice style
+* Updated plugin pot file
+* Fixed wishlist layout for variable products in Qode Quick View for WooCommerce popup
+* Minor fixes
+
+2024-06-05 - version 1.1.1
+* Fixed specific case where product images are not showing on mobile devices
+
+2024-06-04 - version 1.1
+* Added additional plugin action links
+* Improved custom SVG file escaping and sanitizing to prevent potential XSS
+* Updated plugin pot file
+* Minor fixes
+
+2024-05-28 - version 1.0.7
+* Fixed default Wishlist Page value
+
+2024-05-16 - version 1.0.6
+* Improved Qode Quick View for WooCommerce compatibility
+* Improved qode_wishlist_for_woocommerce_framework_wp_kses_html helper function - svg case
+* Minor fixes
+
+2024-04-25 - version 1.0.5
+* Improved WordPress coding standards
+* Improved helper functions
+* Fixed handle id name for the main framework script
+* Minor fixes
+
+2024-04-09 - version 1.0.4
+* Added WordPress 6.5 compatibility
+* Fixed read more button click on Wishlist Table page when product is out of stock
+* Minor fixes
+
+2024-03-28 - version 1.0.3
+* Added "qode_wishlist_for_woocommerce_filter_wishlist_table_attributes" hook
+* Improved "Add to Wishlist" button functionalities
+* Minor fixes
+
+2024-03-25 - version 1.0.2
+* Improved "Add to Wishlist" and "Wishlist Table" shortcodes with new hooks
+* Improved "qode_wishlist_for_woocommerce_filter_add_to_wishlist_button_loop_position" hook
+* Updated plugin pot file
+
+2024-03-22 - version 1.0.1
+* Improved social share styles
+* Improved social share template with additional hooks
+* Minor fixes
+
+2024-03-19 - version 1.0
+* Initial release

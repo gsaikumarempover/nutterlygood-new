@@ -1,0 +1,649 @@
+/* Farmley account and signup pages */
+body.woocommerce-account,
+body.page-template-page-signup {
+	background: #fbf8f1;
+}
+
+body.woocommerce-account #qodef-page-inner,
+body.page-template-page-signup #qodef-page-inner {
+	padding-top: 34px;
+	padding-bottom: 70px;
+}
+
+.ng-farmley-signup {
+	max-width: 1160px;
+	margin: 44px auto 82px;
+	padding: 0 22px;
+}
+
+.ng-farmley-auth {
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(0, 0.95fr) minmax(380px, 0.8fr);
+	gap: 30px;
+	align-items: stretch;
+}
+
+.ng-farmley-auth__intro,
+.ng-farmley-auth__card,
+body.woocommerce-account .woocommerce:not(.widget) {
+	position: relative;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	border-radius: 30px;
+	background: rgba(255, 255, 255, 0.92);
+	box-shadow: 0 22px 60px rgba(12, 83, 61, 0.09);
+	overflow: hidden;
+}
+
+.ng-farmley-auth__intro {
+	min-height: 560px;
+	padding: 52px 48px;
+	background:
+		radial-gradient(circle at 84% 18%, rgba(185, 149, 49, 0.18) 0 120px, transparent 121px),
+		linear-gradient(135deg, #0c533d 0%, #1f7055 58%, #f4ead8 58.2%, #fffaf2 100%);
+	color: #ffffff;
+}
+
+.ng-farmley-auth__intro::after {
+	content: "";
+	position: absolute;
+	right: 42px;
+	bottom: 42px;
+	width: 210px;
+	height: 210px;
+	border-radius: 50%;
+	background:
+		radial-gradient(circle at 42% 42%, rgba(185, 149, 49, 0.7) 0 16px, transparent 17px),
+		radial-gradient(circle at 62% 58%, rgba(255, 255, 255, 0.55) 0 10px, transparent 11px),
+		rgba(255, 255, 255, 0.12);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+
+.ng-farmley-auth__eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 18px;
+	font-family: "Manrope", sans-serif;
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.ng-farmley-auth__eyebrow::before {
+	content: "";
+	width: 28px;
+	height: 2px;
+	border-radius: 999px;
+	background: #e9d199;
+}
+
+.ng-farmley-signup__title {
+	max-width: 520px;
+	margin: 0 0 14px;
+	font-family: "Manrope", sans-serif;
+	font-size: clamp(38px, 5vw, 64px);
+	font-weight: 800;
+	line-height: 1.02;
+	letter-spacing: -0.05em;
+	color: inherit;
+}
+
+.ng-farmley-signup__sub {
+	max-width: 430px;
+	margin: 0 0 30px;
+	font-family: "Manrope", sans-serif;
+	font-size: 16px;
+	line-height: 1.7;
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.ng-farmley-auth__benefits {
+	display: grid;
+	gap: 14px;
+	max-width: 430px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ng-farmley-auth__benefits li {
+	position: relative;
+	padding: 14px 16px 14px 44px;
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	border-radius: 18px;
+	background: rgba(255, 255, 255, 0.1);
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	backdrop-filter: blur(10px);
+}
+
+.ng-farmley-auth__benefits li::before {
+	content: "";
+	position: absolute;
+	left: 16px;
+	top: 50%;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	transform: translateY(-50%);
+	background: #e9d199;
+	box-shadow: inset 0 0 0 4px rgba(12, 83, 61, 0.28);
+}
+
+.ng-farmley-auth__card {
+	padding: 38px;
+}
+
+body.page-template-page-signup .u-column1.col-1 {
+	display: none !important;
+}
+
+body.page-template-page-signup .u-columns.col2-set,
+body.page-template-page-signup .u-column2.col-2 {
+	width: 100% !important;
+	max-width: none;
+	margin: 0;
+	float: none !important;
+}
+
+body.page-template-page-signup .u-column2.col-2 > h2 {
+	margin-top: 0;
+}
+
+.ng-farmley-signup__login-link {
+	margin: 22px 0 0;
+	text-align: center;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	color: #5f6f68;
+}
+
+.ng-farmley-signup__login-link a,
+body.woocommerce-account .woocommerce a {
+	color: #0c533d;
+	font-weight: 800;
+}
+
+body.woocommerce-account .woocommerce:not(.widget) {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 34px;
+}
+
+body.woocommerce-account .woocommerce::after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+body.woocommerce-account .woocommerce > h2,
+body.page-template-page-signup .woocommerce > h2,
+body.woocommerce-account #customer_login h2,
+body.page-template-page-signup #customer_login h2 {
+	margin: 0 0 22px;
+	font-family: "Manrope", sans-serif;
+	font-size: 28px;
+	font-weight: 800;
+	line-height: 1.2;
+	letter-spacing: -0.03em;
+	color: #0c533d;
+}
+
+body.woocommerce-account #customer_login {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+}
+
+body.woocommerce-account #customer_login .u-column1,
+body.woocommerce-account #customer_login .u-column2 {
+	width: auto !important;
+	float: none !important;
+	margin: 0 !important;
+	padding: 30px;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	border-radius: 26px;
+	background: linear-gradient(180deg, #ffffff 0%, #fffaf2 100%);
+	box-shadow: 0 14px 38px rgba(12, 83, 61, 0.07);
+}
+
+body.woocommerce-account .woocommerce-form,
+body.page-template-page-signup .woocommerce-form {
+	margin: 0;
+}
+
+body.woocommerce-account .woocommerce .form-row,
+body.page-template-page-signup .ng-farmley-auth__card .form-row {
+	margin-bottom: 18px;
+}
+
+body.woocommerce-account .woocommerce label,
+body.page-template-page-signup .ng-farmley-auth__card label {
+	margin-bottom: 8px;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 800;
+	color: #183b2f;
+}
+
+body.woocommerce-account .woocommerce input[type="text"],
+body.woocommerce-account .woocommerce input[type="email"],
+body.woocommerce-account .woocommerce input[type="password"],
+body.page-template-page-signup .ng-farmley-auth__card input[type="text"],
+body.page-template-page-signup .ng-farmley-auth__card input[type="email"],
+body.page-template-page-signup .ng-farmley-auth__card input[type="password"] {
+	width: 100%;
+	height: 54px;
+	margin: 0;
+	padding: 0 18px;
+	border: 1px solid rgba(12, 83, 61, 0.12);
+	border-radius: 16px;
+	background: #fbf8f1;
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	color: #173a2e;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+body.woocommerce-account .woocommerce input:focus,
+body.page-template-page-signup .ng-farmley-auth__card input:focus {
+	border-color: rgba(12, 83, 61, 0.42);
+	background: #ffffff;
+	box-shadow: 0 0 0 4px rgba(12, 83, 61, 0.08);
+	outline: none;
+}
+
+body.woocommerce-account .woocommerce-form .button,
+body.woocommerce-account #customer_login .button,
+body.woocommerce-account .woocommerce-MyAccount-content > .button,
+body.woocommerce-account .woocommerce-MyAccount-content form .button,
+body.page-template-page-signup .ng-farmley-auth__card .button {
+	min-height: 54px;
+	justify-content: center;
+	border: 0;
+	border-radius: 999px;
+	background: #0c533d;
+	box-shadow: 0 12px 24px rgba(12, 83, 61, 0.18);
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	font-weight: 800;
+	letter-spacing: 0.02em;
+	color: #ffffff;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+body.woocommerce-account .woocommerce-form .button:hover,
+body.woocommerce-account #customer_login .button:hover,
+body.woocommerce-account .woocommerce-MyAccount-content > .button:hover,
+body.woocommerce-account .woocommerce-MyAccount-content form .button:hover,
+body.page-template-page-signup .ng-farmley-auth__card .button:hover {
+	background: #173a2e;
+	box-shadow: 0 16px 28px rgba(12, 83, 61, 0.24);
+	transform: translateY(-1px);
+}
+
+body.woocommerce-account .woocommerce-form-login .form-row:not(.form-row-wide) {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 14px;
+}
+
+body.woocommerce-account .woocommerce-form-login .woocommerce-form__label-for-checkbox {
+	margin: 0;
+	color: #5f6f68;
+	font-weight: 700;
+}
+
+body.woocommerce-account .woocommerce-LostPassword {
+	margin: 10px 0 0;
+}
+
+body.woocommerce-account .woocommerce-privacy-policy-text,
+body.page-template-page-signup .woocommerce-privacy-policy-text {
+	margin: 0 0 22px;
+	font-size: 13px;
+	line-height: 1.7;
+	color: #6d7d76;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation {
+	width: 28%;
+	padding-right: 28px;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation ul {
+	padding: 12px;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	border-radius: 24px;
+	background: #fffaf2;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation ul li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation ul li + li {
+	margin-top: 8px;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation ul li a {
+	display: flex;
+	align-items: center;
+	min-height: 48px;
+	padding: 0 16px;
+	border-radius: 16px;
+	background-image: none;
+	font-size: 14px;
+	color: #24483c;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation ul li a:hover,
+body.woocommerce-account .woocommerce-MyAccount-navigation ul li.is-active a {
+	background: #0c533d;
+	color: #ffffff;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-content {
+	width: 72%;
+	padding: 30px;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	border-radius: 24px;
+	background: #ffffff;
+	box-shadow: 0 12px 34px rgba(12, 83, 61, 0.06);
+}
+
+body.woocommerce-account .woocommerce-MyAccount-content p:first-child {
+	margin-top: 0;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-content h2,
+body.woocommerce-account .woocommerce-MyAccount-content h3 {
+	color: #0c533d;
+}
+
+body.woocommerce-account table.shop_table {
+	border-radius: 18px;
+	overflow: hidden;
+}
+
+/* My Account — orders table */
+body.woocommerce-account .ng-farmley-orders-table,
+body.woocommerce-account .woocommerce-orders-table {
+	width: 100%;
+	table-layout: fixed;
+	border: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin: 0;
+}
+
+body.woocommerce-account .ng-farmley-orders-table__col--order {
+	width: 11%;
+}
+
+body.woocommerce-account .ng-farmley-orders-table__col--date {
+	width: 19%;
+}
+
+body.woocommerce-account .ng-farmley-orders-table__col--status {
+	width: 19%;
+}
+
+body.woocommerce-account .ng-farmley-orders-table__col--total {
+	width: 24%;
+}
+
+body.woocommerce-account .ng-farmley-orders-table__col--actions {
+	width: 27%;
+}
+
+body.woocommerce-account .woocommerce-orders-table thead th {
+	padding: 14px 16px;
+	font-family: "Manrope", sans-serif;
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: #5c6b64;
+	background: #fbf8f1;
+	border-bottom: 1px solid rgba(12, 83, 61, 0.1);
+	text-align: left;
+}
+
+body.woocommerce-account .woocommerce-orders-table__header-order-actions {
+	text-align: right;
+}
+
+body.woocommerce-account .woocommerce-orders-table tbody td,
+body.woocommerce-account .woocommerce-orders-table tbody th {
+	padding: 16px;
+	vertical-align: middle;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	line-height: 1.45;
+	color: #183b2f;
+	border-bottom: 1px solid rgba(12, 83, 61, 0.08);
+	text-align: left;
+}
+
+body.woocommerce-account .woocommerce-orders-table tbody tr:last-child td,
+body.woocommerce-account .woocommerce-orders-table tbody tr:last-child th {
+	border-bottom: 0;
+}
+
+body.woocommerce-account .woocommerce-orders-table__cell-order-number a {
+	color: #0c533d;
+	font-weight: 800;
+	text-decoration: none;
+}
+
+body.woocommerce-account .woocommerce-orders-table__cell-order-number a:hover {
+	color: #094432;
+	text-decoration: underline;
+}
+
+body.woocommerce-account .woocommerce-orders-table__cell-order-actions {
+	text-align: right;
+	vertical-align: middle;
+}
+
+@media only screen and (min-width: 681px) {
+	body.woocommerce-account .woocommerce-orders-table__cell-order-actions {
+		display: table-cell !important;
+	}
+}
+
+body.woocommerce-account .ng-farmley-order-actions {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	width: 100%;
+}
+
+body.woocommerce-account .ng-farmley-order-actions__btn,
+body.woocommerce-account .ng-farmley-order-actions .button,
+body.woocommerce-account .ng-farmley-order-actions .woocommerce-button {
+	position: static !important;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	float: none !important;
+	min-height: 36px !important;
+	height: 36px !important;
+	width: auto !important;
+	min-width: 68px;
+	padding: 0 14px !important;
+	margin: 0 !important;
+	font-family: "Manrope", sans-serif !important;
+	font-size: 11px !important;
+	font-weight: 800 !important;
+	line-height: 1 !important;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	border-radius: 999px !important;
+	white-space: nowrap;
+	z-index: auto !important;
+	box-shadow: none !important;
+	transform: none !important;
+	flex: 0 0 auto;
+}
+
+body.woocommerce-account .ng-farmley-order-actions__btn:hover,
+body.woocommerce-account .ng-farmley-order-actions .button:hover,
+body.woocommerce-account .ng-farmley-order-actions .woocommerce-button:hover {
+	transform: none !important;
+	box-shadow: none !important;
+}
+
+body.woocommerce-account .ng-farmley-order-actions .pay {
+	background: #0c533d !important;
+	color: #fff !important;
+	border: 0 !important;
+}
+
+body.woocommerce-account .ng-farmley-order-actions .pay:hover {
+	background: #094432 !important;
+	color: #fff !important;
+}
+
+body.woocommerce-account .ng-farmley-order-actions .view {
+	background: #fff !important;
+	color: #0c533d !important;
+	border: 2px solid rgba(12, 83, 61, 0.2) !important;
+}
+
+body.woocommerce-account .ng-farmley-order-actions .view:hover {
+	background: rgba(252, 244, 235, 0.9) !important;
+	border-color: rgba(12, 83, 61, 0.35) !important;
+}
+
+body.woocommerce-account .ng-farmley-order-actions .cancel {
+	background: #fff !important;
+	color: #b54a38 !important;
+	border: 2px solid rgba(181, 74, 56, 0.35) !important;
+}
+
+body.woocommerce-account .ng-farmley-order-actions .cancel:hover {
+	background: rgba(181, 74, 56, 0.08) !important;
+	border-color: rgba(181, 74, 56, 0.55) !important;
+	color: #943828 !important;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-content .woocommerce-pagination {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-content .woocommerce-pagination .button {
+	min-height: 44px;
+	padding: 0 20px !important;
+}
+
+@media only screen and (max-width: 1024px) {
+	.ng-farmley-auth,
+	body.woocommerce-account #customer_login {
+		grid-template-columns: 1fr;
+	}
+
+	.ng-farmley-auth__intro {
+		min-height: auto;
+	}
+
+	body.woocommerce-account .woocommerce-MyAccount-navigation,
+	body.woocommerce-account .woocommerce-MyAccount-content {
+		display: block;
+		width: 100%;
+		float: none;
+		padding-right: 0;
+	}
+
+	body.woocommerce-account .woocommerce-MyAccount-navigation {
+		margin-bottom: 22px;
+	}
+}
+
+@media only screen and (max-width: 680px) {
+	.ng-farmley-signup,
+	body.woocommerce-account .woocommerce:not(.widget) {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.ng-farmley-auth__intro,
+	.ng-farmley-auth__card,
+	body.woocommerce-account .woocommerce:not(.widget),
+	body.woocommerce-account #customer_login .u-column1,
+	body.woocommerce-account #customer_login .u-column2,
+	body.woocommerce-account .woocommerce-MyAccount-content {
+		border-radius: 22px;
+		padding: 24px;
+	}
+
+	.ng-farmley-auth__intro::after {
+		display: none;
+	}
+
+	body.woocommerce-account .woocommerce-form-login .form-row:not(.form-row-wide) {
+		align-items: stretch;
+		flex-direction: column-reverse;
+	}
+
+	body.woocommerce-account .woocommerce-form .button,
+	body.woocommerce-account #customer_login .button,
+	body.page-template-page-signup .ng-farmley-auth__card .button {
+		width: 100%;
+	}
+
+	body.woocommerce-account .ng-farmley-order-actions {
+		justify-content: flex-start;
+	}
+
+	body.woocommerce-account .ng-farmley-order-actions .button,
+	body.woocommerce-account .ng-farmley-order-actions .woocommerce-button {
+		width: auto !important;
+		flex: 0 0 auto;
+	}
+
+	body.woocommerce-account .woocommerce-orders-table.shop_table_responsive tr {
+		margin-bottom: 16px;
+		border: 1px solid rgba(12, 83, 61, 0.08);
+		border-radius: 16px;
+		overflow: hidden;
+	}
+
+	body.woocommerce-account .woocommerce-orders-table.shop_table_responsive td,
+	body.woocommerce-account .woocommerce-orders-table.shop_table_responsive th {
+		display: block;
+		width: 100%;
+		text-align: left !important;
+		border-bottom: 1px solid rgba(12, 83, 61, 0.06);
+	}
+
+	body.woocommerce-account .woocommerce-orders-table.shop_table_responsive td::before {
+		float: none;
+		display: block;
+		margin-bottom: 6px;
+		font-size: 11px;
+		font-weight: 800;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: #5c6b64;
+	}
+
+	body.woocommerce-account .woocommerce-orders-table__cell-order-actions {
+		min-width: 0;
+		width: 100%;
+	}
+}

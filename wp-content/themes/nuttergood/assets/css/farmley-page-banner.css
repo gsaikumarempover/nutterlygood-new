@@ -1,0 +1,11 @@
+/* Page title banner polish */
+
+.qodef-page-title.qodef-m .qodef-m-inner {
+	max-width: var(--qode-content-width, 1200px);
+	margin: 0 auto;
+	padding: 0 24px;
+}
+
+.qodef-page-title .qodef-m-content {
+	justify-content: center;
+}

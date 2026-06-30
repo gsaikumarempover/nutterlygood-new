@@ -1,0 +1,198 @@
+/* Contact page */
+
+body.page-template-page-contact #qodef-page-inner {
+	width: 100% !important;
+	max-width: none !important;
+	padding: 0 0 60px !important;
+}
+
+body.page-template-page-contact #qodef-page-content.qodef-grid {
+	display: block;
+	width: 100%;
+}
+
+body.page-template-page-contact .qodef-grid.qodef-layout--template > .qodef-grid-inner {
+	display: block;
+}
+
+.ng-farmley-contact-map-strip {
+	width: 100%;
+	margin: 0;
+	line-height: 0;
+	background: #e8e0d6;
+}
+
+.ng-farmley-contact-map-strip iframe {
+	display: block;
+	width: 100%;
+	min-height: 380px;
+	border: 0;
+}
+
+.ng-farmley-contact {
+	padding: 48px 24px 56px;
+	max-width: var(--qode-content-width, 1200px);
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.ng-farmley-contact__notice {
+	margin: 0 auto 20px;
+	padding: 12px 16px;
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.ng-farmley-contact__notice--success {
+	background: rgba(12, 83, 61, 0.1);
+	color: #0c533d;
+	border: 1px solid rgba(12, 83, 61, 0.2);
+}
+
+.ng-farmley-contact__notice--error {
+	background: rgba(180, 40, 40, 0.08);
+	color: #8b1f1f;
+	border: 1px solid rgba(180, 40, 40, 0.2);
+}
+
+.ng-farmley-contact__lead {
+	margin: 0 auto 28px;
+	font-size: 16px;
+	line-height: 1.65;
+	color: #4a4a4a;
+	max-width: 720px;
+	text-align: center;
+}
+
+.ng-farmley-contact__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+	gap: 24px;
+	margin-bottom: 36px;
+}
+
+.ng-farmley-contact__panel {
+	background: #fcf4eb;
+	border: 1px solid rgba(12, 83, 61, 0.1);
+	border-radius: 16px;
+	padding: 24px;
+}
+
+.ng-farmley-contact__heading {
+	margin: 0 0 18px;
+	font-size: 20px;
+	font-weight: 700;
+	color: #0c533d;
+	letter-spacing: -0.02em;
+}
+
+.ng-farmley-contact__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 16px;
+}
+
+.ng-farmley-contact__list li {
+	display: grid;
+	gap: 4px;
+}
+
+.ng-farmley-contact__label {
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: #8a7a68;
+}
+
+.ng-farmley-contact__list a,
+.ng-farmley-contact__list span {
+	font-size: 15px;
+	line-height: 1.5;
+	color: #1a1a1a;
+}
+
+.ng-farmley-contact__list a {
+	color: #0c533d;
+	text-decoration: none;
+}
+
+.ng-farmley-contact__list a:hover {
+	text-decoration: underline;
+}
+
+.ng-farmley-contact__form {
+	display: grid;
+	gap: 14px;
+}
+
+.ng-farmley-contact__field-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 14px;
+}
+
+.ng-farmley-contact__field {
+	display: grid;
+	gap: 6px;
+}
+
+.ng-farmley-contact__field label {
+	font-size: 12px;
+	font-weight: 600;
+	color: #3d3d3d;
+}
+
+.ng-farmley-contact__field input,
+.ng-farmley-contact__field textarea {
+	width: 100%;
+	padding: 11px 14px;
+	border: 1.5px solid rgba(12, 83, 61, 0.16);
+	border-radius: 8px;
+	background: #fff;
+	font-family: inherit;
+	font-size: 14px;
+	color: #1a1a1a;
+	box-sizing: border-box;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ng-farmley-contact__field input:focus,
+.ng-farmley-contact__field textarea:focus {
+	outline: none;
+	border-color: #0c533d;
+	box-shadow: 0 0 0 3px rgba(12, 83, 61, 0.12);
+}
+
+.ng-farmley-contact__submit {
+	justify-self: start;
+	padding: 12px 24px;
+	border: 0;
+	border-radius: 100px;
+	background: #0c533d;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ng-farmley-contact__submit:hover {
+	background: #094432;
+	transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+	.ng-farmley-contact__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.ng-farmley-contact__field-row {
+		grid-template-columns: 1fr;
+	}
+}

@@ -1,0 +1,1144 @@
+/* ==========================================================================
+   Farmley product drawer — full override (beats QODE pop-up defaults)
+   ========================================================================== */
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer {
+	position: fixed !important;
+	top: 0 !important;
+	left: 0 !important;
+	width: 100% !important;
+	height: 100vh !important;
+	display: flex !important;
+	justify-content: flex-end !important;
+	align-items: stretch !important;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity 0.42s ease, visibility 0.42s ease;
+	z-index: 99999 !important;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer.qqvfw--opened {
+	pointer-events: auto;
+}
+
+.admin-bar #qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer {
+	top: 32px !important;
+	height: calc(100vh - 32px) !important;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer.qqvfw--opened {
+	opacity: 1;
+	visibility: visible;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-overlay {
+	opacity: 0;
+	transition: opacity 0.45s ease;
+	background: rgba(12, 83, 61, 0.32);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer.qqvfw--opened .qqvfw-m-overlay {
+	opacity: 1;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-content {
+	position: relative !important;
+	display: flex !important;
+	flex-direction: column !important;
+	width: min(420px, 100vw) !important;
+	max-width: 100vw !important;
+	height: 100% !important;
+	max-height: 100% !important;
+	transform: translate3d(100%, 0, 0);
+	transition: transform 0.58s cubic-bezier(0.16, 1, 0.3, 1) !important;
+	border-radius: 18px 0 0 18px !important;
+	box-shadow: -12px 0 40px rgba(12, 83, 61, 0.14);
+	background: #fff;
+	overflow: hidden;
+	vertical-align: top !important;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer.ng-farmley-qv--closing .qqvfw-m-content {
+	transform: translate3d(100%, 0, 0) !important;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer.ng-farmley-qv--closing .qqvfw-m-overlay {
+	opacity: 0 !important;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer.qqvfw--opened .qqvfw-m-content {
+	transform: translate3d(0, 0, 0);
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-content-inner {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 0;
+	overflow-x: hidden;
+	overflow-y: auto !important;
+	-webkit-overflow-scrolling: touch;
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+	scrollbar-color: #d8e5df transparent;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-content-inner::-webkit-scrollbar {
+	width: 5px;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-content-inner::-webkit-scrollbar-thumb {
+	background: #d8e5df;
+	border-radius: 4px;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-close {
+	position: absolute !important;
+	top: 18px;
+	right: 16px;
+	width: 32px;
+	height: 32px;
+	min-width: 32px;
+	min-height: 32px;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	padding: 0 !important;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.96);
+	color: #0C533D;
+	border: 1px solid rgba(12, 83, 61, 0.14);
+	box-shadow: 0 3px 10px rgba(12, 83, 61, 0.1);
+	box-sizing: border-box;
+	overflow: hidden;
+	z-index: 40;
+	font-size: 0 !important;
+	line-height: 1 !important;
+	transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-close svg {
+	display: block;
+	width: 12px !important;
+	height: 12px !important;
+	max-width: 12px !important;
+	max-height: 12px !important;
+	flex: 0 0 12px;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-close svg path,
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-close svg line {
+	stroke: currentColor !important;
+	stroke-width: 2.2 !important;
+	stroke-linecap: round !important;
+	fill: none !important;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-close::before,
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-close::after {
+	content: none !important;
+	display: none !important;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-close:hover {
+	transform: scale(1.04);
+	background: #0C533D;
+	color: #fff;
+	box-shadow: 0 5px 14px rgba(12, 83, 61, 0.18);
+	opacity: 1;
+}
+
+/* Drawer top bar */
+.ng-farmley-qv__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 14px;
+	min-height: 68px;
+	padding: 14px 64px 12px 24px;
+	border-bottom: 1px solid rgba(12, 83, 61, 0.08);
+	background: linear-gradient(180deg, #faf8f5 0%, #fff 100%);
+	flex-shrink: 0;
+}
+
+.ng-farmley-qv__head-label {
+	font-family: "Manrope", sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #0C533D;
+	white-space: nowrap;
+}
+
+body.ng-farmley-qv-open {
+	overflow: hidden;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-product {
+	display: block !important;
+	flex: 0 0 auto;
+	width: 100%;
+	height: auto !important;
+	min-height: 0;
+	overflow: visible !important;
+	background: #fff !important;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-product > .product {
+	display: block !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	height: auto !important;
+	overflow: visible !important;
+	background: #fff !important;
+	padding: 0 !important;
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+/* Beat QODE pop-up split layout (47% media + 53% summary) */
+.ng-farmley-qv-drawer .qqvfw-m-content .qqvfw-m-product > .product {
+	flex-direction: column !important;
+	align-items: stretch !important;
+}
+
+.ng-farmley-qv-drawer .qqvfw-m-content .qqvfw-m-product > .product .qqvfw-m-media-wrapper {
+	position: relative !important;
+	display: block !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	height: auto !important;
+	min-height: 0 !important;
+	float: none !important;
+	padding: 0 !important;
+	background: transparent !important;
+	overflow: visible !important;
+}
+
+.ng-farmley-qv-drawer .qqvfw-m-content .qqvfw-m-product > .product .qqvfw-m-summary-wrapper {
+	display: none !important;
+	width: 0 !important;
+	height: 0 !important;
+	min-width: 0 !important;
+	flex: 0 0 0 !important;
+	overflow: hidden !important;
+	visibility: hidden !important;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-media-wrapper {
+	position: relative !important;
+	display: block !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	height: auto !important;
+	float: none !important;
+	padding: 0 !important;
+	background: transparent !important;
+	overflow: visible !important;
+}
+
+#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-summary-wrapper {
+	display: none !important;
+	width: 0 !important;
+	height: 0 !important;
+	overflow: hidden !important;
+	visibility: hidden !important;
+}
+
+/* Kill QODE / theme gallery inside drawer — we render our own */
+.ng-farmley-qv-drawer .woocommerce-product-gallery,
+.ng-farmley-qv-drawer .images,
+.ng-farmley-qv-drawer .onsale,
+.ng-farmley-qv-drawer .flex-viewport,
+.ng-farmley-qv-drawer .flex-control-nav {
+	display: none !important;
+}
+
+.ng-farmley-qv-drawer .qqvfw-m-product > .product .summary {
+	display: none !important;
+	padding: 0 !important;
+}
+
+/* Panel — single column; parent .qqvfw-m-content-inner scrolls everything */
+.ng-farmley-qv-drawer .ng-farmley-qv {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: auto !important;
+	max-height: none !important;
+	overflow: visible !important;
+	box-sizing: border-box;
+	--ng-qv-pad-x: 20px;
+	--ng-qv-pad-bottom: 28px;
+}
+
+.ng-farmley-qv-drawer .qqvfw-m-product > .product .summary {
+	display: none !important;
+	overflow: visible !important;
+	height: auto !important;
+	padding: 0 !important;
+}
+
+/* Disable QODE PerfectScrollbar inside our drawer — native scroll only */
+.ng-farmley-qv-drawer .ps__rail-x,
+.ng-farmley-qv-drawer .ps__rail-y {
+	display: none !important;
+}
+
+.ng-farmley-qv-drawer .qqvfw-m-product > .product.ps,
+.ng-farmley-qv-drawer .qqvfw-m-product > .product.qqvfw-ps,
+.ng-farmley-qv-drawer .summary.ps,
+.ng-farmley-qv-drawer .summary.qqvfw-ps {
+	overflow: visible !important;
+	height: auto !important;
+}
+
+/* Gallery — transparent product shots, no image boxes */
+.ng-farmley-qv-drawer img.ng-farmley-qv__stage-img,
+.ng-farmley-qv-drawer .ng-farmley-qv__thumb img,
+.ng-farmley-qv-drawer .ng-farmley-qv__size-img {
+	background: transparent !important;
+	background-color: transparent !important;
+}
+
+/* JPG pack shots: hide baked-in white so product floats on transparent UI */
+.ng-farmley-qv-drawer img.ng-farmley-qv__stage-img[src*=".jpg"],
+.ng-farmley-qv-drawer img.ng-farmley-qv__stage-img[src*=".jpeg"],
+.ng-farmley-qv-drawer .ng-farmley-qv__thumb img[src*=".jpg"],
+.ng-farmley-qv-drawer .ng-farmley-qv__thumb img[src*=".jpeg"],
+.ng-farmley-qv-drawer .ng-farmley-qv__size-img[src*=".jpg"],
+.ng-farmley-qv-drawer .ng-farmley-qv__size-img[src*=".jpeg"] {
+	mix-blend-mode: multiply;
+}
+
+.ng-farmley-qv__gallery {
+	background: linear-gradient(180deg, #fcf4eb 0%, #fff 100%);
+	padding: 18px var(--ng-qv-pad-x, 20px) 16px;
+	margin: 0;
+	box-sizing: border-box;
+	position: relative;
+	flex-shrink: 0;
+}
+
+.ng-farmley-qv__gallery-nav {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	transform: translateY(-50%);
+	display: flex;
+	justify-content: space-between;
+	pointer-events: none;
+	padding: 0 8px;
+	z-index: 4;
+}
+
+.ng-farmley-qv__gallery-nav-btn {
+	pointer-events: auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.95);
+	color: #0C533D;
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+	box-shadow: 0 2px 8px rgba(12, 83, 61, 0.12);
+	transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.ng-farmley-qv__gallery-nav-btn:hover {
+	background: #0C533D;
+	color: #fff;
+	transform: scale(1.06);
+}
+
+.ng-farmley-qv__gallery-nav-btn:disabled {
+	opacity: 0.35;
+	cursor: default;
+	transform: none;
+}
+
+.ng-farmley-qv__stage {
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	height: 300px;
+	min-height: 300px;
+	max-height: 300px;
+	aspect-ratio: 1 / 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #fff;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	border-radius: 12px;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+.ng-farmley-qv__stage-img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
+	opacity: 0;
+	transform: scale(0.98);
+	transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+	background: transparent !important;
+}
+
+.ng-farmley-qv__stage-img.is-active {
+	opacity: 1;
+	transform: scale(1.06);
+	position: relative;
+}
+
+.ng-farmley-qv__thumbs {
+	display: flex;
+	gap: 6px;
+	justify-content: center;
+	margin-top: 10px;
+	overflow-x: auto;
+	padding-bottom: 2px;
+	scrollbar-width: none;
+	background: transparent !important;
+}
+
+.ng-farmley-qv__thumbs::-webkit-scrollbar {
+	display: none;
+}
+
+.ng-farmley-qv__thumb {
+	flex: 0 0 44px;
+	width: 44px;
+	height: 44px;
+	padding: 3px;
+	border: 2px solid rgba(12, 83, 61, 0.1);
+	border-radius: 8px;
+	background: #fff !important;
+	cursor: pointer;
+	overflow: hidden;
+	transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ng-farmley-qv__thumb.is-active {
+	border-color: #0C533D;
+	box-shadow: 0 0 0 1px rgba(12, 83, 61, 0.1);
+	transform: scale(1.02);
+}
+
+.ng-farmley-qv__thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	background: transparent;
+}
+
+/* Info section — aligned content rhythm */
+.ng-farmley-qv__info {
+	padding: 18px var(--ng-qv-pad-x, 20px) var(--ng-qv-pad-bottom, 28px);
+	font-family: "Manrope", -apple-system, sans-serif;
+	color: #1a1a1a;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.ng-farmley-qv__intro {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 12px;
+	margin-bottom: 16px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid rgba(12, 83, 61, 0.08);
+}
+
+.ng-farmley-qv__title-row {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 6px;
+	margin-bottom: 0;
+	width: 100%;
+}
+
+.ng-farmley-qv-drawer .ng-farmley-qv__subtitle {
+	display: none !important;
+}
+
+.ng-farmley-qv__subtitle {
+	font-size: 13px;
+	line-height: 1.55;
+	color: #5a5a5a;
+	margin: 0;
+	padding: 12px 14px;
+	font-weight: 400;
+	background: #faf8f5;
+	border-radius: 10px;
+	border-left: 3px solid #0c533d;
+}
+
+.ng-farmley-qv__title {
+	width: 100%;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.3;
+	margin: 0;
+	color: #0c533d;
+}
+
+.ng-farmley-qv__sku {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	padding: 5px 12px;
+	border-radius: 100px;
+	background: #f5f9f7;
+	border: 1px solid rgba(12, 83, 61, 0.1);
+	font-family: "Manrope", sans-serif;
+	font-size: 12px;
+	align-self: flex-start;
+}
+
+.ng-farmley-qv__sku-label {
+	font-weight: 700;
+	color: #0c533d;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.ng-farmley-qv__sku-value {
+	font-weight: 500;
+	color: #555;
+}
+
+.ng-farmley-qv__price-row {
+	display: flex;
+	flex-shrink: 0;
+	align-items: baseline;
+	justify-content: flex-start;
+	margin: 0;
+	text-align: left;
+	width: 100%;
+}
+
+.ng-farmley-qv__price-label {
+	font-size: 13px;
+	color: #5a5a5a;
+	width: 100%;
+}
+
+.ng-farmley-qv__price-values {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 8px;
+}
+
+.ng-farmley-qv__price-regular,
+.ng-farmley-qv__price-row del {
+	font-size: 14px;
+	color: #9a9a9a;
+	text-decoration: line-through;
+}
+
+.ng-farmley-qv__price-sale,
+.ng-farmley-qv__price-row ins {
+	font-size: 18px;
+	font-weight: 700;
+	color: #0c533d;
+	text-decoration: none;
+}
+
+.ng-farmley-qv__price-sale .woocommerce-Price-currencySymbol,
+.ng-farmley-qv__price-regular .woocommerce-Price-currencySymbol {
+	font-size: inherit;
+}
+
+/* Size selector — compact, aligned */
+.ng-farmley-qv__size {
+	margin: 0 0 16px;
+	padding: 0;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ng-farmley-qv__size-label {
+	display: block;
+	font-size: 12px;
+	font-weight: 600;
+	color: #1a1a1a;
+	margin-bottom: 8px;
+}
+
+.ng-farmley-qv__size-options {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.ng-farmley-qv__size-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	width: auto;
+	min-height: 32px;
+	padding: 6px 12px;
+	border: 1.5px solid rgba(12, 83, 61, 0.18);
+	border-radius: 100px;
+	background: #fff !important;
+	cursor: pointer;
+	text-align: left;
+	transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.ng-farmley-qv__size-btn:hover {
+	border-color: #0C533D;
+}
+
+.ng-farmley-qv__size-btn.is-active {
+	border-color: #0C533D;
+	background: #0C533D !important;
+}
+
+.ng-farmley-qv__size-btn.is-active .ng-farmley-qv__size-text {
+	color: #fff;
+}
+
+.ng-farmley-qv__size-img {
+	display: none;
+}
+
+.ng-farmley-qv__size-text {
+	font-size: 12px;
+	font-weight: 500;
+	color: #1a1a1a;
+	line-height: 1.25;
+}
+
+/* Variable product overrides inside drawer */
+.ng-farmley-qv-drawer .ng-farmley-qv .variations {
+	margin: 0;
+}
+
+.ng-farmley-qv-drawer .ng-farmley-qv__cart {
+	width: 100%;
+	margin: 0 0 16px;
+	box-sizing: border-box;
+}
+
+.ng-farmley-qv-drawer .ng-farmley-qv__cart .ng-farmley-qv__purchase {
+	margin-bottom: 0;
+}
+
+.ng-farmley-qv-drawer .ng-farmley-qv .variations tr {
+	display: block;
+	margin-bottom: 12px;
+}
+
+.ng-farmley-qv-drawer .ng-farmley-qv .variations .label label {
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.ng-farmley-qv-drawer .ng-farmley-qv .variations select {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1.5px solid #e5e5e5;
+	border-radius: 4px;
+	font-family: inherit;
+}
+
+/* Quantity + add to cart — compact purchase block */
+.ng-farmley-qv__purchase {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 12px;
+	margin-bottom: 0;
+	padding: 12px 14px;
+	border-radius: 14px;
+	background: #fffaf2;
+	border: 1px solid rgba(12, 83, 61, 0.12);
+	box-shadow: 0 8px 22px rgba(12, 83, 61, 0.06);
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ng-farmley-qv__checkout {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: 16px;
+	width: 100%;
+}
+
+.ng-farmley-qv__qty-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0;
+	width: 100%;
+}
+
+.ng-farmley-qv__qty-label {
+	font-size: 12px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.ng-farmley-qv__cart .quantity,
+.ng-farmley-qv__qty-row .quantity {
+	margin: 0 !important;
+}
+
+/* Farmley horizontal stepper: [ − ] [ 1 ] [ + ] */
+.ng-farmley-qv__qty-control {
+	display: inline-flex;
+	align-items: stretch;
+	flex-shrink: 0;
+	height: 36px;
+	border: 1px solid rgba(12, 83, 61, 0.14);
+	border-radius: 999px;
+	overflow: hidden;
+	background: #fff;
+}
+
+.ng-farmley-qv__qty-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	min-width: 34px;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: #fff;
+	font-family: 'Manrope', -apple-system, sans-serif;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 1;
+	color: #1a1a1a;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.ng-farmley-qv__qty-btn:hover {
+	background: #f5f5f5;
+	color: #0C533D;
+}
+
+.ng-farmley-qv__qty-btn--minus {
+	border-right: 1px solid #d9d9d9;
+}
+
+.ng-farmley-qv__qty-btn--plus {
+	border-left: 1px solid #d9d9d9;
+}
+
+.ng-farmley-qv__qty-input {
+	width: 42px !important;
+	min-width: 42px;
+	height: 100% !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	border: none !important;
+	border-radius: 0 !important;
+	background: #fff !important;
+	font-family: 'Manrope', -apple-system, sans-serif !important;
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	line-height: 36px !important;
+	text-align: center;
+	color: #1a1a1a;
+	box-shadow: none !important;
+	-moz-appearance: textfield;
+	appearance: textfield;
+}
+
+.ng-farmley-qv__qty-input::-webkit-outer-spin-button,
+.ng-farmley-qv__qty-input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Hide theme chevron quantity if it leaks in */
+.ng-farmley-qv-drawer .qodef-quantity-buttons {
+	display: none !important;
+}
+
+.ng-farmley-qv__actions {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: 8px;
+	margin: 0;
+	width: 100%;
+	min-width: 0;
+}
+
+.ng-farmley-qv-drawer .ng-farmley-qv form.cart:not(.ng-farmley-qv__cart) {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+	margin: 0 0 16px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ng-farmley-qv-drawer .ng-farmley-qv form.cart:not(.ng-farmley-qv__cart) .quantity {
+	margin: 0 !important;
+	flex: 0 0 auto;
+}
+
+.ng-farmley-qv-drawer .ng-farmley-qv form.cart:not(.ng-farmley-qv__cart) .single_add_to_cart_button,
+.ng-farmley-qv-drawer .ng-farmley-qv form.cart:not(.ng-farmley-qv__cart) .ng-farmley-qv__buy-now {
+	flex: 1 1 calc(50% - 5px);
+	min-width: 0;
+}
+
+.ng-farmley-qv__atc,
+.ng-farmley-qv-drawer .single_add_to_cart_button {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 100% !important;
+	max-width: 100%;
+	min-width: 0 !important;
+	min-height: 38px;
+	height: 38px;
+	background: #0c533d !important;
+	color: #fff !important;
+	border: 1px solid #0c533d !important;
+	border-radius: 999px !important;
+	font-family: "Manrope", sans-serif !important;
+	font-size: 12px !important;
+	font-weight: 700 !important;
+	padding: 0 12px !important;
+	text-transform: none !important;
+	letter-spacing: 0.01em !important;
+	transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease !important;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	box-shadow: 0 3px 10px rgba(12, 83, 61, 0.18);
+}
+
+.ng-farmley-qv__atc:hover,
+.ng-farmley-qv-drawer .single_add_to_cart_button:hover {
+	background: #0a4634 !important;
+	transform: translateY(-1px);
+	box-shadow: 0 5px 14px rgba(12, 83, 61, 0.24);
+}
+
+.ng-farmley-qv__buy-now {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+	min-height: 38px;
+	height: 38px;
+	text-align: center;
+	padding: 0 12px;
+	border: 1px solid #0c533d;
+	border-radius: 999px;
+	background: #fff;
+	box-shadow: none;
+	font-family: "Manrope", sans-serif;
+	font-size: 12px;
+	font-weight: 700;
+	color: #0c533d;
+	text-decoration: none;
+	transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ng-farmley-qv__buy-now:hover {
+	background: #f3faf7;
+	color: #0c533d;
+	box-shadow: 0 4px 12px rgba(12, 83, 61, 0.1);
+	transform: translateY(-1px);
+}
+
+.ng-farmley-qv__buy-now.loading,
+.ng-farmley-qv__buy-now.ng-farmley-buy-now--busy {
+	pointer-events: none;
+	cursor: wait;
+	padding-right: 28px !important;
+	position: relative;
+	color: #0c533d !important;
+	background: #fff !important;
+}
+
+.ng-farmley-qv__buy-now.loading::after,
+.ng-farmley-qv__buy-now.ng-farmley-buy-now--busy::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	width: 10px;
+	height: 10px;
+	margin-top: -5px;
+	border: 2px solid rgba(12, 83, 61, 0.2);
+	border-top-color: #0c533d;
+	border-radius: 50%;
+	animation: ng-farmley-qv-spin 0.65s linear infinite;
+}
+
+.ng-farmley-qv__atc.loading {
+	opacity: 0.88;
+	pointer-events: none;
+}
+
+@keyframes ng-farmley-qv-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Description + meta — aligned blocks */
+.ng-farmley-qv__description {
+	font-size: 13px;
+	line-height: 1.65;
+	color: #3d3d3d;
+	margin: 20px 0 0;
+	padding: 0;
+	text-align: left;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ng-farmley-qv__description p,
+.ng-farmley-qv__description div,
+.ng-farmley-qv__description ul,
+.ng-farmley-qv__description ol,
+.ng-farmley-qv__description table {
+	margin: 0 0 12px;
+	padding-left: 0 !important;
+	margin-left: 0 !important;
+	max-width: 100%;
+}
+
+.ng-farmley-qv__description ul,
+.ng-farmley-qv__description ol {
+	padding-left: 1.25em !important;
+}
+
+.ng-farmley-qv__meta {
+	margin: 16px 0 0;
+	padding: 14px 14px 6px;
+	border-top: none;
+	border-radius: 12px;
+	background: #f8faf9;
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ng-farmley-qv__meta-row {
+	display: grid;
+	grid-template-columns: minmax(0, 46%) minmax(0, 1fr);
+	gap: 6px 10px;
+	align-items: start;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgba(12, 83, 61, 0.06);
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+.ng-farmley-qv__meta-row:last-child {
+	border-bottom: 0;
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+
+.ng-farmley-qv__meta-row dt {
+	font-weight: 700;
+	color: #1a1a1a;
+	margin: 0;
+}
+
+.ng-farmley-qv__meta-row dt::after {
+	content: ' :';
+	font-weight: 700;
+}
+
+.ng-farmley-qv__meta-row dd {
+	margin: 0;
+	color: #3d3d3d;
+}
+
+/* Hide theme/plugin clutter + imported reviews in drawer */
+.ng-farmley-qv-drawer .qodef-sale-boosters,
+.ng-farmley-qv-drawer .qwfw-add-to-wishlist-wrapper,
+.ng-farmley-qv-drawer .qodef-e-buy-now-wrapper,
+.ng-farmley-qv-drawer .woocommerce-product-rating,
+.ng-farmley-qv-drawer .product_meta,
+.ng-farmley-qv-drawer .reset_variations,
+.ng-farmley-qv-drawer #reviews,
+.ng-farmley-qv-drawer #review_form_wrapper,
+.ng-farmley-qv-drawer .woocommerce-Reviews,
+.ng-farmley-qv-drawer .commentlist,
+.ng-farmley-qv-drawer .o_shop_discussion_rating,
+.ng-farmley-qv-drawer #o_product_page_reviews,
+.ng-farmley-qv-drawer .o_product_page_reviews_link,
+.ng-farmley-qv-drawer .o_website_rating_static,
+.ng-farmley-qv-drawer .qodef-woo-ratings {
+	display: none !important;
+}
+
+.ng-farmley-qv-drawer .ng-farmley-qv__description .o_shop_discussion_rating,
+.ng-farmley-qv-drawer .ng-farmley-qv__description #o_product_page_reviews,
+.ng-farmley-qv-drawer .ng-farmley-qv__description section[data-snippet="s_dynamic_snippet_products"] {
+	display: none !important;
+}
+
+/* Open animation stagger */
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__gallery {
+	animation: ng-fv-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > * {
+	animation: ng-fv-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(1) { animation-delay: 0.06s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(2) { animation-delay: 0.1s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(3) { animation-delay: 0.14s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(4) { animation-delay: 0.18s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(5) { animation-delay: 0.22s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(6) { animation-delay: 0.26s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(7) { animation-delay: 0.3s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(8) { animation-delay: 0.34s; }
+
+@keyframes ng-fv-slide-up {
+	from {
+		opacity: 0;
+		transform: translateY(24px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes ng-fv-fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__head {
+	animation: ng-fv-fade-in 0.4s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__gallery,
+	.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *,
+	.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__head {
+		animation: none !important;
+	}
+
+	#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-content,
+	#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-overlay {
+		transition-duration: 0.01ms !important;
+	}
+}
+
+@media (min-width: 1200px) {
+	#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-content {
+		width: min(480px, 100vw) !important;
+	}
+}
+
+@media (max-width: 680px) {
+	#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer .qqvfw-m-content {
+		width: 100vw !important;
+		border-radius: 0 !important;
+	}
+
+	.ng-farmley-qv-drawer .ng-farmley-qv {
+		--ng-qv-pad-x: 18px;
+		--ng-qv-pad-bottom: 24px;
+	}
+
+	.ng-farmley-qv__head {
+		padding-left: 18px;
+		padding-right: 52px;
+	}
+
+	.ng-farmley-qv__stage {
+		height: min(72vw, 300px);
+		min-height: min(72vw, 300px);
+		max-height: min(72vw, 300px);
+	}
+
+	.ng-farmley-qv__title-row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 6px;
+	}
+
+	.ng-farmley-qv__price-row {
+		justify-content: flex-start;
+		text-align: left;
+	}
+
+	.ng-farmley-qv__price-values {
+		flex-direction: row;
+		align-items: baseline;
+	}
+
+	.ng-farmley-qv__purchase {
+		padding: 12px;
+		gap: 10px;
+	}
+
+	.ng-farmley-qv__actions {
+		grid-template-columns: 1fr;
+	}
+
+	.ng-farmley-qv__atc,
+	.ng-farmley-qv-drawer .single_add_to_cart_button,
+	.ng-farmley-qv__buy-now {
+		height: 40px;
+		min-height: 40px;
+	}
+
+	.ng-farmley-qv__meta-row {
+		grid-template-columns: 1fr;
+		gap: 4px;
+	}
+
+	.admin-bar #qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer {
+		top: 46px !important;
+		height: calc(100vh - 46px) !important;
+	}
+}

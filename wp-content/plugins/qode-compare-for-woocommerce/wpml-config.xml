@@ -1,0 +1,8 @@
+<wpml-config>
+    <admin-texts>
+        <key name="qode_compare_for_woocommerce_options">
+            <key name="qode_compare_for_woocommerce_table_title" />
+            <key name="qode_compare_for_woocommerce_button_text" />
+        </key>
+    </admin-texts>
+</wpml-config>

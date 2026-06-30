@@ -1,0 +1,360 @@
+/*!***************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./node_modules/sass-loader/dist/cjs.js!./node_modules/webpack-import-glob-loader/index.js!./inc/blocks/assets/css/scss/main-editor.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************************************/
+/* ==========================================================================
+	General blocks styles
+   ========================================================================== */
+/* ==========================================================================
+	Typography variables
+   ========================================================================== */
+/* ==========================================================================
+	Box variables
+   ========================================================================== */
+/* ==========================================================================
+	Devices screen size variables
+   ========================================================================== */
+/* ==========================================================================
+	Typography mixins
+   ========================================================================== */
+/* ==========================================================================
+	Typography mixins - end
+   ========================================================================== */
+/* ==========================================================================
+	Layout mixins - begin
+   ========================================================================== */
+/* ==========================================================================
+	Layout mixins - end
+   ========================================================================== */
+/* ==========================================================================
+	Grid size mixins - begin
+   ========================================================================== */
+/* ==========================================================================
+	Grid size mixins - end
+   ========================================================================== */
+/* ==========================================================================
+	Animation mixins - start
+   ========================================================================== */
+/* ==========================================================================
+	Animation mixins - end
+   ========================================================================== */
+/* ==========================================================================
+	Helper mixins - begin
+   ========================================================================== */
+/* ==========================================================================
+	Helper mixins - end
+   ========================================================================== */
+/* ==========================================================================
+	Keyframes settings
+   ========================================================================== */
+
+@keyframes qwfw-rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* ==========================================================================
+	Global styles - begin
+   ========================================================================== */
+*[class*="qwfw-"] {
+	box-sizing: border-box;
+}
+
+.qwfw-spinner-item {
+	position: relative;
+}
+
+.qwfw-spinner-item .qwfw-spinner-icon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	min-width: 12px;
+	max-width: 20px;
+	height: auto;
+	color: var(--qwfw-wishlist-spinner-color, var(--qwfw-heading-color, #000));
+	display: block;
+	visibility: hidden;
+	z-index: -1;
+	transform: translate(-50%, -50%);
+}
+
+.qwfw-spinner-item .qwfw-spinner-icon svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	fill: currentColor;
+	stroke: none;
+	animation: qwfw-rotate 2s infinite linear;
+}
+
+.qwfw-spinner-item.qwfw--loading > *:not(.qwfw-spinner-icon) {
+	visibility: hidden;
+	z-index: -1;
+}
+
+.qwfw-spinner-item.qwfw--loading .qwfw-spinner-icon {
+	visibility: visible;
+	z-index: 1;
+}
+
+.qwfw-confirm-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	visibility: hidden;
+	opacity: 0;
+	z-index: 10001;
+	transition: all 0.2s ease-out;
+}
+
+.qwfw-confirm-modal .qwfw-m-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+.qwfw-confirm-modal .qwfw-m-content {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width: 80vw;
+	max-width: 420px;
+	max-height: 90vh;
+	padding: 30px 30px 40px;
+	background-color: #fff;
+	border-radius: var(--qwfw-border-radius, 8px);
+	box-shadow: 1px 1px 16px 0 rgba(0, 0, 0, 0.1);
+	overflow-y: auto;
+	z-index: 2;
+}
+
+.qwfw-confirm-modal .qwfw-m-content::-webkit-scrollbar {
+	height: 4px;
+	width: 4px;
+}
+
+.qwfw-confirm-modal .qwfw-m-content::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+.qwfw-confirm-modal .qwfw-m-content::-webkit-scrollbar-thumb {
+	background-color: #ccc;
+	border-radius: 5px;
+}
+
+.qwfw-confirm-modal .qwfw-m-form-wrapper {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	vertical-align: top;
+}
+
+.qwfw-confirm-modal .qwfw-m-form {
+	position: relative;
+}
+
+.qwfw-confirm-modal .qwfw-m-form .qwfw-m-form-title {
+	margin: 0 0 1.3em;
+}
+
+.qwfw-confirm-modal .qwfw-m-form .qwfw-m-form-label {
+	margin: 0 0 0.3rem;
+}
+
+.qwfw-confirm-modal .qwfw-m-form .qwfw-m-form-field,
+.qwfw-confirm-modal .qwfw-m-form .qwfw-m-form-dropdown {
+	width: 100%;
+}
+
+.qwfw-confirm-modal .qwfw-m-form .qwfw-m-form-button {
+	margin: 0;
+	width: 100%;
+	justify-content: center;
+}
+
+.qwfw-confirm-modal .qwfw-m-form .qwfw-m-form-button .qwfw-spinner-icon {
+	color: inherit;
+}
+
+.qwfw-confirm-modal .qwfw-m-form.qwfw--initial .qwfw-m-form-title {
+	margin-bottom: 0.8em;
+}
+
+.qwfw-confirm-modal .qwfw-m-form.qwfw--success-notice > *:not(.qwfw-m-form-response):not(.qwfw-m-form-title) {
+	display: none;
+}
+
+.qwfw-confirm-modal .qwfw-m-form.qwfw--success-notice .qwfw-m-form-title {
+	margin-bottom: 0.7em;
+}
+
+.qwfw-confirm-modal .qwfw-m-form.qwfw--success-notice .qwfw-m-form-response.qwfw--has-notice {
+	margin-top: 0;
+}
+
+.qwfw-confirm-modal .qwfw-m-form.qwfw--hide {
+	display: none;
+}
+
+.qwfw-confirm-modal .qwfw-m-form-row {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--qwfw-form-gap, 22px);
+	margin: var(--qwfw-form-gap, 22px) 0 0;
+}
+
+.qwfw-confirm-modal .qwfw-m-form-row-item {
+	position: relative;
+}
+
+.qwfw-confirm-modal .qwfw-m-response {
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+}
+
+.qwfw-confirm-modal .qwfw-m-response .qwfw-m-response-icon {
+	position: relative;
+	top: 3px;
+	width: 16px;
+	height: auto;
+	display: block;
+	flex-shrink: 0;
+	fill: none;
+	stroke: currentColor;
+}
+
+.qwfw-confirm-modal .qwfw-m-form-response.qwfw--has-notice {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	row-gap: 23px;
+	margin-top: var(--qwfw-form-gap, 22px);
+}
+
+.qwfw-confirm-modal .qwfw-m-form-response-actions {
+	display: flex;
+	gap: 33px;
+}
+
+.qwfw-confirm-modal .qwfw-m-form-response-button.qwfw--shop {
+	display: flex;
+	align-items: center;
+	column-gap: 8px;
+}
+
+.qwfw-confirm-modal .qwfw-m-form-response-button.qwfw--shop:before {
+	content: '';
+	position: relative;
+	top: 1px;
+	display: block;
+	width: 14px;
+	height: 13px;
+	background-color: currentColor;
+	-webkit-mask-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDE0IDEzIiBzdHJva2U9IiMwMDAiIGZpbGw9Im5vbmUiPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEgMSkiPjxwYXRoIGQ9Ik02LjkxOCwxMCw0LDEyLjkxOGwyLjkxOCwyLjkxOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTQgLTUuNDE0KSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTQsNFY4Ljc3NUEyLjYyMiwyLjYyMiwwLDAsMSwxMS41LDExLjVINCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIuMDgzIC00KSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiLz48L2c+PC9zdmc+Cg==);
+	mask-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDE0IDEzIiBzdHJva2U9IiMwMDAiIGZpbGw9Im5vbmUiPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEgMSkiPjxwYXRoIGQ9Ik02LjkxOCwxMCw0LDEyLjkxOGwyLjkxOCwyLjkxOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTQgLTUuNDE0KSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTQsNFY4Ljc3NUEyLjYyMiwyLjYyMiwwLDAsMSwxMS41LDExLjVINCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIuMDgzIC00KSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiLz48L2c+PC9zdmc+Cg==);
+}
+
+.qwfw-confirm-modal .qwfw-m-close {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	width: 18px;
+	display: flex;
+	z-index: 2;
+	color: var(--qwfw-heading-color, #000);
+}
+
+.qwfw-confirm-modal .qwfw-m-close svg {
+	display: block;
+	width: 100%;
+	height: auto;
+	fill: none;
+	stroke: currentColor;
+}
+
+.qwfw-confirm-modal .qwfw-m-close:hover {
+	color: var(--qwfw-main-color, #ec274f);
+}
+
+.qwfw-confirm-modal.qwfw--opened {
+	opacity: 1;
+	visibility: visible;
+}
+
+.qwfw-confirm-modal .qwfw-m-form-title {
+	margin: 0 0 1.3rem;
+}
+
+.qwfw-confirm-modal .qwfw-m-form-actions {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	gap: 15px;
+}
+
+.qwfw-confirm-modal .qwfw-m-form-button {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	vertical-align: top;
+	margin: 0;
+	padding: 6px 30px;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: 2em;
+	font-weight: inherit;
+	text-decoration: none;
+	text-transform: none;
+	color: #fff;
+	background-color: var(--qwfw-heading-color, #000);
+	border: 1px solid var(--qwfw-heading-color, #000);
+	border-radius: 0;
+	outline: 0;
+	box-shadow: none;
+	cursor: pointer;
+	transition: color 0.2s ease-out, background-color 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+.qwfw-confirm-modal .qwfw-m-form-button:hover {
+	color: var(--qwfw-heading-color, #000);
+	background-color: transparent;
+	border-color: var(--qwfw-heading-color, #000);
+}
+
+.qwfw-confirm-modal .qwfw-m-close {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	display: flex;
+	z-index: 2;
+	color: var(--qwfw-heading-color, #000);
+}
+
+.qwfw-confirm-modal .qwfw-m-close svg {
+	display: block;
+	fill: none;
+	stroke: currentColor;
+}
+
+.qwfw-confirm-modal .qwfw-m-close:hover {
+	color: var(--qwfw-main-color, #ec274f);
+}
+
+.qode-woocommerce-base-control-container {
+	padding: 16px;
+}

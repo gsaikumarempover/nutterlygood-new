@@ -1,0 +1,1 @@
+<?php echo wp_trim_words( get_the_excerpt( $product_id ), 30, '...' ); ?>

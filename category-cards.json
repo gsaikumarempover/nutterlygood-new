@@ -1,0 +1,62 @@
+[
+    {
+        "id": 109,
+        "slug": "dry-fruits",
+        "title": "Dry Fruits",
+        "thumb": "ng-cat-dry-fruits.jpg"
+    },
+    {
+        "id": 110,
+        "slug": "almonds",
+        "title": "Almonds",
+        "thumb": "ng-cat-almonds.jpg"
+    },
+    {
+        "id": 111,
+        "slug": "cashews",
+        "title": "Cashews",
+        "thumb": "ng-cat-cashews.jpg"
+    },
+    {
+        "id": 112,
+        "slug": "khishmish",
+        "title": "Khishmish",
+        "thumb": "ng-cat-khishmish.jpg"
+    },
+    {
+        "id": 113,
+        "slug": "cranberry",
+        "title": "Cranberry",
+        "thumb": "ng-cat-cranberry.jpg"
+    },
+    {
+        "id": 114,
+        "slug": "walnuts",
+        "title": "Walnuts",
+        "thumb": "ng-cat-walnuts.jpg"
+    },
+    {
+        "id": 115,
+        "slug": "chips",
+        "title": "Chips",
+        "thumb": "ng-cat-chips.jpg"
+    },
+    {
+        "id": 116,
+        "slug": "mixes",
+        "title": "Mixes",
+        "thumb": "ng-cat-mixes.jpg"
+    },
+    {
+        "id": 119,
+        "slug": "brittles",
+        "title": "Brittles",
+        "thumb": "ng-cat-brittles.jpg"
+    },
+    {
+        "id": 118,
+        "slug": "mouth-fresheners",
+        "title": "Mouth Freshners",
+        "thumb": "ng-cat-mouth-fresheners.jpg"
+    }
+]
