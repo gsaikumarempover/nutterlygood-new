@@ -237,16 +237,6 @@ if ( ! function_exists( 'nuttergood_farmley_hero_slider_maybe_migrate' ) ) {
 			);
 		}
 
-		if ( class_exists( 'RevSliderSlider' ) ) {
-			$slider = new RevSliderSlider();
-			if ( method_exists( $slider, 'initByID' ) ) {
-				$slider->initByID( (int) $slider_id );
-			}
-			if ( method_exists( $slider, 'refreshSlider' ) ) {
-				$slider->refreshSlider();
-			}
-		}
-
 		update_option( 'ng_farmley_hero_slider_fix', $version, false );
 
 		$page_id = (int) get_option( 'page_on_front' );
@@ -254,5 +244,7 @@ if ( ! function_exists( 'nuttergood_farmley_hero_slider_maybe_migrate' ) ) {
 			delete_post_meta( $page_id, '_elementor_css' );
 		}
 	}
-	add_action( 'init', 'nuttergood_farmley_hero_slider_maybe_migrate', 5 );
+	if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+		add_action( 'init', 'nuttergood_farmley_hero_slider_maybe_migrate', 5 );
+	}
 }

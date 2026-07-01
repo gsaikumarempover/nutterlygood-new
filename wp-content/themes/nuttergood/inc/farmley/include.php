@@ -3,6 +3,20 @@
  * Farmley-style promo ticker + header polish for Nutterly Good.
  */
 
+if ( defined( 'NG_FARMLEY_INCLUDES_LOADED' ) ) {
+	return;
+}
+
+define( 'NG_FARMLEY_INCLUDES_LOADED', true );
+
+$ng_farmley_media_library = get_template_directory() . '/inc/farmley/media-library.php';
+if ( file_exists( $ng_farmley_media_library ) ) {
+	include_once $ng_farmley_media_library;
+}
+$ng_farmley_performance = get_template_directory() . '/inc/farmley/performance-optimizer.php';
+if ( file_exists( $ng_farmley_performance ) ) {
+	include_once $ng_farmley_performance;
+}
 $ng_farmley_contact_info = get_template_directory() . '/inc/farmley/contact-info.php';
 if ( file_exists( $ng_farmley_contact_info ) ) {
 	include_once $ng_farmley_contact_info;
@@ -10,6 +24,10 @@ if ( file_exists( $ng_farmley_contact_info ) ) {
 $ng_farmley_meta_file = get_template_directory() . '/inc/farmley/product-meta.php';
 if ( file_exists( $ng_farmley_meta_file ) ) {
 	include_once $ng_farmley_meta_file;
+}
+$ng_farmley_admin_cleanup = get_template_directory() . '/inc/farmley/admin-cleanup.php';
+if ( file_exists( $ng_farmley_admin_cleanup ) ) {
+	include_once $ng_farmley_admin_cleanup;
 }
 $ng_farmley_quick_view = get_template_directory() . '/inc/farmley/quick-view-drawer.php';
 if ( file_exists( $ng_farmley_quick_view ) ) {
@@ -22,6 +40,14 @@ if ( file_exists( $ng_farmley_footer ) ) {
 $ng_farmley_shop = get_template_directory() . '/inc/farmley/shop.php';
 if ( file_exists( $ng_farmley_shop ) ) {
 	include_once $ng_farmley_shop;
+}
+$ng_farmley_empty_products = get_template_directory() . '/inc/farmley/empty-products.php';
+if ( file_exists( $ng_farmley_empty_products ) ) {
+	include_once $ng_farmley_empty_products;
+}
+$ng_farmley_shop_categories = get_template_directory() . '/inc/farmley/shop-categories.php';
+if ( file_exists( $ng_farmley_shop_categories ) ) {
+	include_once $ng_farmley_shop_categories;
 }
 $ng_farmley_shop_catalog_filters = get_template_directory() . '/inc/farmley/shop-catalog-filters.php';
 if ( file_exists( $ng_farmley_shop_catalog_filters ) ) {
@@ -38,6 +64,10 @@ if ( file_exists( $ng_farmley_header ) ) {
 $ng_farmley_ecommerce = get_template_directory() . '/inc/farmley/ecommerce-setup.php';
 if ( file_exists( $ng_farmley_ecommerce ) ) {
 	include_once $ng_farmley_ecommerce;
+}
+$ng_farmley_otp_auth = get_template_directory() . '/inc/farmley/otp-auth.php';
+if ( file_exists( $ng_farmley_otp_auth ) ) {
+	include_once $ng_farmley_otp_auth;
 }
 $ng_farmley_product_wc_attrs = get_template_directory() . '/inc/farmley/product-wc-attributes.php';
 if ( file_exists( $ng_farmley_product_wc_attrs ) ) {
@@ -80,6 +110,10 @@ if ( file_exists( $ng_farmley_home_category_carousel ) ) {
 $ng_farmley_home_featured_products = get_template_directory() . '/inc/farmley/home-featured-products.php';
 if ( file_exists( $ng_farmley_home_featured_products ) ) {
 	include_once $ng_farmley_home_featured_products;
+}
+$ng_farmley_home_premium_snacks = get_template_directory() . '/inc/farmley/home-premium-snacks.php';
+if ( file_exists( $ng_farmley_home_premium_snacks ) ) {
+	include_once $ng_farmley_home_premium_snacks;
 }
 $ng_farmley_home_cart_drawer = get_template_directory() . '/inc/farmley/home-cart-drawer.php';
 if ( file_exists( $ng_farmley_home_cart_drawer ) ) {
@@ -129,9 +163,17 @@ $ng_farmley_checkout_thankyou = get_template_directory() . '/inc/farmley/checkou
 if ( file_exists( $ng_farmley_checkout_thankyou ) ) {
 	include_once $ng_farmley_checkout_thankyou;
 }
+$ng_farmley_coupons_bootstrap = get_template_directory() . '/inc/farmley/coupons-bootstrap.php';
+if ( file_exists( $ng_farmley_coupons_bootstrap ) ) {
+	include_once $ng_farmley_coupons_bootstrap;
+}
 $ng_farmley_side_cart = get_template_directory() . '/inc/farmley/side-cart-experience.php';
 if ( file_exists( $ng_farmley_side_cart ) ) {
 	include_once $ng_farmley_side_cart;
+}
+$ng_farmley_newsletter_coupons = get_template_directory() . '/inc/farmley/newsletter-coupons.php';
+if ( file_exists( $ng_farmley_newsletter_coupons ) ) {
+	include_once $ng_farmley_newsletter_coupons;
 }
 
 if ( ! function_exists( 'nuttergood_farmley_promo_offers' ) ) {
@@ -284,7 +326,7 @@ if ( ! function_exists( 'nuttergood_farmley_home_assets' ) ) {
 			wp_enqueue_style(
 				'nuttergood-farmley-home',
 				$uri . '/assets/css/farmley-home.css',
-				array( 'nuttergood-farmley-product-cards', 'nuttergood-farmley-header' ),
+				array( 'nuttergood-farmley-product-cards', 'nuttergood-farmley-header', 'greenpath-core-style' ),
 				filemtime( $css )
 			);
 		}

@@ -244,14 +244,15 @@
 	flex-direction: row !important;
 	align-items: stretch;
 	justify-content: space-between;
-	gap: 10px;
+	gap: 12px;
 	width: 100%;
 	min-height: 0;
-	padding: 12px 12px 12px 14px;
+	padding: 14px 12px 14px 14px;
 	background: #fdf8f3;
 	border: 1.5px solid #0c533d;
+	border-right: 3px solid #b99531;
 	border-radius: 20px;
-	box-shadow: none;
+	box-shadow: 0 4px 16px rgba(12, 83, 61, 0.05);
 	text-decoration: none;
 	box-sizing: border-box;
 	overflow: visible;
@@ -312,8 +313,9 @@
 .qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-weight {
 	display: inline-flex;
 	align-items: center;
+	gap: 5px;
 	min-height: 24px;
-	padding: 3px 12px;
+	padding: 3px 12px 3px 10px;
 	border-radius: 999px;
 	background: #e6efe9;
 	border: 0;
@@ -323,6 +325,15 @@
 	line-height: 1.2;
 	color: #0c533d;
 	letter-spacing: 0.01em;
+}
+
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-weight__leaf {
+	flex: 0 0 auto;
+	color: #0c533d;
+}
+
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-weight__text {
+	line-height: 1.2;
 }
 
 .qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__price {
@@ -357,11 +368,20 @@
 }
 
 .qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__price .price del {
-	display: none !important;
+	display: block !important;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	line-height: 1.2;
+	color: #9a9a9a !important;
+	text-decoration: line-through;
+	margin: 2px 0 0;
+	order: 2;
 }
 
 .qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__price .price ins {
 	text-decoration: none;
+	order: 1;
 }
 
 .qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions {
@@ -379,7 +399,7 @@
 	display: grid !important;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	align-items: stretch;
-	gap: 6px;
+	gap: 10px;
 	width: 100%;
 	min-width: 0;
 }
@@ -389,8 +409,12 @@
 .qodef-e-widget-area .qodef-woo-shortcode .ng-farmley-popular-card__actions .ng-farmley-card-buttons .button.add_to_cart_button:first-child:nth-last-child(n),
 .qodef-e-widget-area .qodef-woo-shortcode .ng-farmley-popular-card__actions .ng-farmley-card-buttons .button.product_type_variable:first-child:nth-last-child(n),
 .qodef-e-widget-area .qodef-woo-shortcode .ng-farmley-popular-card__actions .ng-farmley-card-buttons .button.product_type_grouped:first-child:nth-last-child(n),
-.qodef-e-widget-area .qodef-woo-shortcode .ng-farmley-popular-card__actions .ng-farmley-card-buttons .button.ng-farmley-buy-now {
+.qodef-e-widget-area .qodef-woo-shortcode .ng-farmley-popular-card__actions .ng-farmley-card-buttons .button.ng-farmley-buy-now,
+.qodef-e-widget-area .ng-farmley-popular-card__actions .ng-farmley-card-buttons .ng-farmley-popular-btn,
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-card-buttons .button,
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-card-buttons a.button {
 	display: inline-flex !important;
+	flex-direction: row !important;
 	align-items: center !important;
 	justify-content: center !important;
 	position: relative !important;
@@ -399,30 +423,29 @@
 	width: 100% !important;
 	min-width: 0 !important;
 	max-width: 100% !important;
-	min-height: 34px !important;
-	height: 34px !important;
+	min-height: 44px !important;
+	height: 44px !important;
 	margin: 0 !important;
-	padding: 0 8px !important;
-	border-radius: 999px !important;
-	font-family: "Manrope", sans-serif;
-	font-size: 9px;
-	font-weight: 700;
-	line-height: 1;
-	letter-spacing: 0.02em;
-	text-transform: uppercase;
+	padding: 0 !important;
+	border-radius: 12px !important;
+	font-family: "Manrope", sans-serif !important;
+	font-size: 10px !important;
+	font-weight: 700 !important;
+	line-height: 1.2 !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
 	text-decoration: none !important;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	white-space: normal !important;
+	overflow: visible !important;
 	box-sizing: border-box;
 	box-shadow: none !important;
 	transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-card-buttons .button:not(.ng-farmley-buy-now) {
-	background: #0c533d !important;
+	background: #ffffff !important;
 	border: 1.5px solid #0c533d !important;
-	color: #ffffff !important;
+	color: #0c533d !important;
 	box-shadow: none !important;
 }
 
@@ -433,14 +456,56 @@
 	box-shadow: none !important;
 }
 
-.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-card-btn__inner {
-	display: inline-flex;
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-card-btn__inner,
+.qodef-e-widget-area .ng-farmley-popular-card__actions .ng-farmley-card-btn__inner {
+	display: inline-flex !important;
+	flex-direction: row !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 0 !important;
+	width: 100% !important;
+	min-width: 0;
+	line-height: 1 !important;
+	text-align: center;
+}
+
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-popular-btn-icon,
+.qodef-e-widget-area .ng-farmley-popular-card__actions .ng-farmley-popular-btn-icon {
+	display: inline-flex !important;
 	align-items: center;
 	justify-content: center;
-	gap: 0;
-	width: 100%;
-	min-width: 0;
-	line-height: 1;
+	width: 24px;
+	height: 24px;
+	margin: 0;
+	padding: 0;
+	overflow: visible;
+	visibility: visible;
+	color: #0c533d;
+	flex: 0 0 auto;
+}
+
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-popular-btn-svg,
+.qodef-e-widget-area .ng-farmley-popular-card__actions .ng-farmley-popular-btn-svg {
+	display: block;
+	width: 24px;
+	height: 24px;
+}
+
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-popular-btn-icon--cart,
+.qodef-e-widget-area .ng-farmley-popular-card__actions .ng-farmley-popular-btn-icon--cart {
+	color: #0c533d;
+}
+
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-popular-btn-icon--bag,
+.qodef-e-widget-area .ng-farmley-popular-card__actions .ng-farmley-popular-btn-icon--bag,
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .button.ng-farmley-buy-now .ng-farmley-popular-btn-icon,
+.qodef-e-widget-area .ng-farmley-popular-card__actions .button.ng-farmley-buy-now .ng-farmley-popular-btn-icon {
+	color: #ffffff !important;
+}
+
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-popular-btn-label,
+.qodef-e-widget-area .ng-farmley-popular-card__actions .ng-farmley-popular-btn-label {
+	display: none !important;
 }
 
 .qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .qodef-m-text {
@@ -453,10 +518,9 @@
 	line-height: 1;
 }
 
-/* Block theme-injected cart SVG on popular cards */
+/* Hide theme-injected cart SVG only — keep custom popular icons */
 .qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card .qodef-svg--button-icon,
-.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .qodef-svg--button-icon,
-.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-btn-icon {
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .qodef-svg--button-icon {
 	display: none !important;
 	width: 0 !important;
 	height: 0 !important;
@@ -467,9 +531,9 @@
 }
 
 .qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-card-buttons .button:not(.ng-farmley-buy-now):hover {
-	background: #094432 !important;
+	background: #f4faf7 !important;
 	border-color: #094432 !important;
-	color: #ffffff !important;
+	color: #094432 !important;
 	transform: translateY(-1px);
 }
 
@@ -478,6 +542,10 @@
 	border-color: var(--ng-brand-gold-dark, #a68428) !important;
 	color: #ffffff !important;
 	transform: translateY(-1px);
+}
+
+.qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__actions .ng-farmley-card-buttons .button.ng-farmley-buy-now:hover .ng-farmley-popular-btn-icon {
+	color: #ffffff !important;
 }
 
 /* Undo theme main.css width calc on paired loop buttons */
@@ -548,9 +616,9 @@
 /* Image on right — single rounded inset */
 .qodef-e-widget-area .qodef-woo-product-list .ng-farmley-popular-card__media,
 .qodef-e-widget-area .qodef-woo-product-list .qodef-e-media {
-	flex: 0 0 96px;
-	width: 96px;
-	min-width: 96px;
+	flex: 0 0 108px;
+	width: 108px;
+	min-width: 108px;
 	order: 2;
 	display: flex;
 	align-items: center;
@@ -563,10 +631,10 @@
 }
 
 .qodef-e-widget-area .qodef-woo-product-list .qodef-e-media-image {
-	width: 96px !important;
-	height: 96px !important;
-	min-width: 96px;
-	min-height: 96px;
+	width: 108px !important;
+	height: 108px !important;
+	min-width: 108px;
+	min-height: 108px;
 	border-radius: 16px !important;
 	background: #f3ebe2 !important;
 	overflow: hidden;
@@ -590,10 +658,10 @@
 }
 
 .qodef-e-widget-area .qodef-woo-product-list .qodef-e-media-image img {
-	width: 88% !important;
-	height: 88% !important;
-	max-width: 88% !important;
-	max-height: 88% !important;
+	width: 96% !important;
+	height: 96% !important;
+	max-width: 96% !important;
+	max-height: 96% !important;
 	object-fit: contain !important;
 	object-position: center !important;
 	border-radius: 0 !important;
@@ -912,11 +980,73 @@ body:not(.ng-farmley-product-cards) .qodef-woo-product-list.qodef-filter-type--s
 }
 
 .ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-footer__cart {
-	flex: 1 1 auto !important;
+	flex: 0 1 auto !important;
 	width: auto !important;
 	min-width: 0 !important;
 	max-width: 64% !important;
 	margin: 0 0 0 auto !important;
+}
+
+/* Category/archive cards — keep Add to Cart + Buy Now side-by-side */
+.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-buttons {
+	display: grid !important;
+	grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+	align-items: stretch !important;
+	gap: 6px !important;
+	width: 100% !important;
+	min-width: 0 !important;
+}
+
+.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-footer__cart .ng-farmley-card-buttons .button,
+.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-footer__cart .ng-farmley-card-buttons .add_to_cart_button,
+.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-footer__cart .ng-farmley-card-buttons .button.ng-farmley-buy-now {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex: none !important;
+	flex-basis: auto !important;
+	width: 100% !important;
+	min-width: 0 !important;
+	max-width: none !important;
+	min-height: 36px !important;
+	height: 36px !important;
+	margin: 0 !important;
+	padding: 0 8px !important;
+	font-size: 9px !important;
+	line-height: 1 !important;
+	border-radius: 100px !important;
+	box-sizing: border-box;
+}
+
+.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-footer__cart .ng-farmley-card-buttons .button:not(.ng-farmley-buy-now),
+.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-footer__cart .ng-farmley-card-buttons .add_to_cart_button:not(.ng-farmley-buy-now) {
+	background: var(--ng-brand-green, #0c533d) !important;
+	border: 1.5px solid var(--ng-brand-green, #0c533d) !important;
+	color: #ffffff !important;
+}
+
+.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-footer__cart .ng-farmley-card-buttons .button.ng-farmley-buy-now {
+	background: var(--ng-brand-gold, #b99531) !important;
+	border: 1.5px solid var(--ng-brand-gold, #b99531) !important;
+	color: #ffffff !important;
+}
+
+@media (max-width: 680px) {
+	.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-footer {
+		flex-direction: column !important;
+		align-items: stretch !important;
+	}
+
+	.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-footer__price,
+	.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-footer__cart {
+		width: 100% !important;
+		max-width: 100% !important;
+		margin: 0 !important;
+	}
+
+	.ng-farmley-product-cards .qodef-woo-product-list > ul.products > li.product .ng-farmley-card-buttons {
+		grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+	}
 }
 
 /* Catalog toolbar — sort + discount (shop + category archives) */
@@ -956,8 +1086,75 @@ body:not(.ng-farmley-product-cards) .qodef-woo-product-list.qodef-filter-type--s
 	gap: 10px 12px;
 }
 
-.ng-farmley-catalog-toolbar__sort {
+.ng-farmley-catalog-toolbar__sort,
+.ng-farmley-catalog-toolbar .woocommerce-ordering {
 	margin: 0;
+}
+
+.ng-farmley-catalog-toolbar--shop .qodef-product-list-ordering {
+	margin: 0;
+}
+
+.ng-farmley-catalog-toolbar--shop .qodef-product-list-ordering .qodef-current-value {
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	min-width: 220px;
+	min-height: 42px;
+	padding: 0 14px;
+	border: 1px solid rgba(12, 83, 61, 0.14);
+	border-radius: 10px;
+	background: #fff;
+	box-shadow: 0 2px 10px rgba(12, 83, 61, 0.05);
+}
+
+.ng-farmley-catalog-toolbar--shop .qodef-product-list-ordering .qodef-current-value .qodef-e-text {
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	color: #0c533d;
+}
+
+.ng-farmley-catalog-toolbar__toggles {
+	display: inline-flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.ng-farmley-catalog-toolbar__toggle,
+.qodef-woo-product-list .qodef-filter-top-bar .qodef-e-order-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 42px;
+	padding: 0 16px;
+	border: 1px solid rgba(12, 83, 61, 0.14);
+	border-radius: 100px;
+	background: #fff;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: #0c533d;
+	text-decoration: none;
+	cursor: pointer;
+	box-shadow: 0 2px 10px rgba(12, 83, 61, 0.05);
+	transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+	white-space: nowrap;
+}
+
+.ng-farmley-catalog-toolbar__toggle:hover,
+.qodef-woo-product-list .qodef-filter-top-bar .qodef-e-order-link:hover {
+	border-color: #0c533d;
+	color: #0c533d;
+}
+
+.ng-farmley-catalog-toolbar__toggle.is-active,
+.qodef-woo-product-list .qodef-filter-top-bar .qodef-e-order-link.qodef--active {
+	background: #0c533d;
+	border-color: #0c533d;
+	color: #fff;
 }
 
 .ng-farmley-catalog-toolbar__select {
@@ -985,37 +1182,99 @@ body:not(.ng-farmley-product-cards) .qodef-woo-product-list.qodef-filter-type--s
 	box-shadow: 0 0 0 3px rgba(12, 83, 61, 0.12);
 }
 
+/* Discount — label + sliding on/off switch (not a pill button) */
+.ng-farmley-discount-toggle,
 .ng-farmley-catalog-toolbar__discount,
-.ng-farmley-shop-discount-filter {
-	display: inline-flex;
+.ng-farmley-archive-discount-filter,
+.ng-farmley-shop-discount-filter,
+#qodef-woo-page .ng-farmley-discount-toggle,
+#qodef-woo-page .ng-farmley-archive-discount-filter,
+#qodef-woo-page .ng-farmley-shop-discount-filter {
+	display: inline-flex !important;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	gap: 10px;
 	min-height: 42px;
-	padding: 0 16px;
-	border: 1px solid rgba(12, 83, 61, 0.14);
-	border-radius: 10px;
-	background: #fff;
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
 	font-family: "Manrope", sans-serif;
 	font-size: 14px;
-	font-weight: 700;
-	color: #0c533d;
+	font-weight: 600;
+	line-height: 1.2;
+	color: #0c533d !important;
 	text-decoration: none;
 	cursor: pointer;
-	box-shadow: 0 2px 10px rgba(12, 83, 61, 0.05);
-	transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+	appearance: none;
+	-webkit-appearance: none;
+	transition: none;
 }
 
-.ng-farmley-catalog-toolbar__discount:hover,
-.ng-farmley-shop-discount-filter:hover {
-	border-color: #0c533d;
+.ng-farmley-discount-toggle:hover,
+.ng-farmley-discount-toggle:focus,
+.ng-farmley-archive-discount-filter:hover,
+.ng-farmley-archive-discount-filter:focus,
+.ng-farmley-shop-discount-filter:hover,
+.ng-farmley-shop-discount-filter:focus,
+#qodef-woo-page .ng-farmley-discount-toggle:hover,
+#qodef-woo-page .ng-farmley-discount-toggle:focus {
+	background: transparent !important;
+	border: 0 !important;
+	color: #0c533d !important;
+	box-shadow: none !important;
+	outline: none;
+}
+
+.ng-farmley-discount-toggle:focus-visible .ng-farmley-discount-toggle__track,
+.ng-farmley-archive-discount-filter:focus-visible .ng-farmley-discount-toggle__track,
+.ng-farmley-shop-discount-filter:focus-visible .ng-farmley-discount-toggle__track {
+	box-shadow: 0 0 0 3px rgba(12, 83, 61, 0.18);
+}
+
+.ng-farmley-discount-toggle__label {
+	flex: 0 0 auto;
+	font-size: 14px;
+	font-weight: 600;
 	color: #0c533d;
+	white-space: nowrap;
+	user-select: none;
 }
 
-.ng-farmley-catalog-toolbar__discount.is-active,
-.ng-farmley-shop-discount-filter.is-active {
+.ng-farmley-discount-toggle__track {
+	position: relative;
+	flex: 0 0 auto;
+	width: 44px;
+	height: 24px;
+	border-radius: 999px;
+	background: #d4d4d4;
+	transition: background 0.22s ease;
+}
+
+.ng-farmley-discount-toggle__thumb {
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #ffffff;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+	transition: transform 0.22s ease;
+}
+
+.ng-farmley-discount-toggle.is-active .ng-farmley-discount-toggle__track,
+.ng-farmley-archive-discount-filter.is-active .ng-farmley-discount-toggle__track,
+.ng-farmley-shop-discount-filter.is-active .ng-farmley-discount-toggle__track {
 	background: #0c533d;
-	border-color: #0c533d;
-	color: #fff;
+}
+
+.ng-farmley-discount-toggle.is-active .ng-farmley-discount-toggle__thumb,
+.ng-farmley-archive-discount-filter.is-active .ng-farmley-discount-toggle__thumb,
+.ng-farmley-shop-discount-filter.is-active .ng-farmley-discount-toggle__thumb {
+	transform: translateX(20px);
 }
 
 .qodef-woo-product-list .qodef-filter-top-bar .qodef-product-list-ordering .qodef-dropdown-options {
@@ -1035,13 +1294,21 @@ body:not(.ng-farmley-product-cards) .qodef-woo-product-list.qodef-filter-type--s
 		justify-content: stretch;
 	}
 
-	.ng-farmley-catalog-toolbar__select {
+	.ng-farmley-catalog-toolbar__select,
+	.ng-farmley-catalog-toolbar--shop .qodef-product-list-ordering .qodef-current-value {
 		width: 100%;
 		min-width: 0;
 	}
 
-	.ng-farmley-catalog-toolbar__discount,
+	.ng-farmley-catalog-toolbar__toggles {
+		width: 100%;
+	}
+
+	.ng-farmley-catalog-toolbar__toggle,
+	.ng-farmley-discount-toggle,
+	.ng-farmley-archive-discount-filter,
 	.ng-farmley-shop-discount-filter {
-		flex: 1 1 auto;
+		flex: 0 0 auto;
+		min-width: 0;
 	}
 }

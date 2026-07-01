@@ -1,27 +1,27 @@
 {
 	"dry-fruits": {
 		"png": "ng-cat-dry-fruits.png",
-		"bg": "#f3f3f3",
+		"bg": "#fcf4eb",
 		"label": "Dry Fruits"
 	},
 	"chips": {
 		"png": "ng-cat-chips.png",
-		"bg": "#f3f3f3",
+		"bg": "#fcf4eb",
 		"label": "Chips"
 	},
 	"mixes": {
 		"png": "ng-cat-mixes.png",
-		"bg": "#f3f3f3",
+		"bg": "#fcf4eb",
 		"label": "Mixes"
 	},
 	"brittles": {
 		"png": "ng-cat-brittles.png",
-		"bg": "#f3f3f3",
+		"bg": "#fcf4eb",
 		"label": "Brittles"
 	},
 	"mouth-fresheners": {
 		"png": "ng-cat-mukhwas.png",
-		"bg": "#f3f3f3",
+		"bg": "#fcf4eb",
 		"label": "Mukhwas"
 	}
 }

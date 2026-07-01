@@ -51,6 +51,25 @@
 }
 
 /* Buy Now only — leave original quantity and Add to cart styling untouched */
+#qodef-woo-page.qodef--single .summary .price {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+}
+
+#qodef-woo-page.qodef--single .summary .price ins {
+	order: 1;
+	text-decoration: none;
+}
+
+#qodef-woo-page.qodef--single .summary .price del {
+	order: 2;
+	color: #9a9a9a;
+	font-size: 14px;
+	font-weight: 500;
+}
+
 #qodef-woo-page.qodef--single form.cart .ng-farmley-sp-buy-now {
 	display: inline-flex;
 	align-items: center;

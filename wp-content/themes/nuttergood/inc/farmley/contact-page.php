@@ -16,14 +16,18 @@ if ( ! function_exists( 'nuttergood_farmley_contact_details' ) ) {
 			: array();
 
 		return array(
-			'company' => $info['company'] ?? 'Nutterly Good',
-			'email'   => $info['email'] ?? 'contact@nutterlygood.com',
-			'phone'   => $info['phone'] ?? '+91 74162 85566',
-			'address' => $info['address'] ?? 'CS-09, Etna Block, Rajapushpa Atria, Golden Mile Road, Kokapet, Hyderabad, Telangana 500075',
-			'hours'   => $info['hours'] ?? 'All Days: 11:00 AM – 9:00 PM IST',
-			'map_lat' => $info['map_lat'] ?? '17.3921',
-			'map_lng' => $info['map_lng'] ?? '78.3396',
-			'map_url' => $info['map_url'] ?? '',
+			'company'       => $info['company'] ?? 'Nutterly Good',
+			'email'         => $info['email'] ?? 'contact@nutterlygood.com',
+			'phone'         => $info['phone'] ?? '+91 74162 85566',
+			'phone_tel'     => $info['phone_tel'] ?? '+917416285566',
+			'whatsapp_url'  => function_exists( 'nuttergood_farmley_contact_whatsapp_url' )
+				? nuttergood_farmley_contact_whatsapp_url()
+				: 'https://wa.me/917416285566',
+			'address'       => $info['address'] ?? 'CS-09, Etna Block, Rajapushpa Atria, Golden Mile Road, Kokapet, Hyderabad, Telangana 500075',
+			'hours'         => $info['hours'] ?? 'All Days: 11:00 AM – 9:00 PM IST',
+			'map_lat'       => $info['map_lat'] ?? '17.3921',
+			'map_lng'       => $info['map_lng'] ?? '78.3396',
+			'map_url'       => $info['map_url'] ?? '',
 		);
 	}
 }
@@ -76,7 +80,11 @@ if ( ! function_exists( 'nuttergood_farmley_render_contact_page' ) ) {
 						</li>
 						<li>
 							<span class="ng-farmley-contact__label"><?php esc_html_e( 'Phone', 'nuttergood' ); ?></span>
-							<a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', $details['phone'] ) ); ?>"><?php echo esc_html( $details['phone'] ); ?></a>
+							<a href="tel:<?php echo esc_attr( $details['phone_tel'] ); ?>"><?php echo esc_html( $details['phone'] ); ?></a>
+						</li>
+						<li>
+							<span class="ng-farmley-contact__label"><?php esc_html_e( 'WhatsApp', 'nuttergood' ); ?></span>
+							<a class="ng-farmley-contact__whatsapp" href="<?php echo esc_url( $details['whatsapp_url'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $details['phone'] ); ?></a>
 						</li>
 						<li>
 							<span class="ng-farmley-contact__label"><?php esc_html_e( 'Address', 'nuttergood' ); ?></span>

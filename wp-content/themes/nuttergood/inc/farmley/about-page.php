@@ -9,12 +9,6 @@ if ( ! function_exists( 'nuttergood_farmley_is_about_page' ) ) {
 	}
 }
 
-if ( ! function_exists( 'nuttergood_farmley_uploads_url' ) ) {
-	function nuttergood_farmley_uploads_url( $relative ) {
-		return content_url( 'uploads/' . ltrim( $relative, '/' ) );
-	}
-}
-
 if ( ! function_exists( 'nuttergood_farmley_get_term_link_safe' ) ) {
 	function nuttergood_farmley_get_term_link_safe( $slug ) {
 		$term = get_term_by( 'slug', $slug, 'product_cat' );
@@ -32,25 +26,25 @@ if ( ! function_exists( 'nuttergood_farmley_about_categories' ) ) {
 			array(
 				'title'       => __( 'Dry Fruits', 'nuttergood' ),
 				'description' => __( 'Premium almonds, raisins, pistachios and more — jewel-toned gifts of the earth, sourced for natural sweetness and wholesome goodness.', 'nuttergood' ),
-				'image'       => '2026/06/ai-products/df-prclassicalmd-250-premium-classic-almonds-8.png',
+				'image'       => 'ng-media/products/df-prclassicalmd-250-premium-classic-almonds-8.png',
 				'url'         => nuttergood_farmley_get_term_link_safe( 'dry-fruits' ),
 			),
 			array(
 				'title'       => __( 'Chips', 'nuttergood' ),
 				'description' => __( 'Flavorful savory snacks made with quality ingredients — crunchy, bold, and a healthier alternative to everyday munching.', 'nuttergood' ),
-				'image'       => '2026/06/ai-products/ch-mv-ch-150-mix-vegetable-chips-33.png',
+				'image'       => 'ng-media/products/ch-mv-ch-150-mix-vegetable-chips-33.png',
 				'url'         => nuttergood_farmley_get_term_link_safe( 'chips' ),
 			),
 			array(
 				'title'       => __( 'Mixes', 'nuttergood' ),
 				'description' => __( 'Thoughtfully blended trail mixes and fruit blends — perfect for gifting, travel, and elevating everyday snacking moments.', 'nuttergood' ),
-				'image'       => '2026/06/ai-products/mx-mf-mx-250-masala-fruit-mix-80.png',
+				'image'       => 'ng-media/products/mx-mf-mx-250-masala-fruit-mix-80.png',
 				'url'         => nuttergood_farmley_get_term_link_safe( 'mixes' ),
 			),
 			array(
 				'title'       => __( 'Mouth Freshners', 'nuttergood' ),
 				'description' => __( 'Traditional Indian mouth fresheners and mukhwas — refreshing, authentic flavours rooted in Hyderabad\'s culinary heritage.', 'nuttergood' ),
-				'image'       => '2026/06/ai-products/anardana-goli-39.png',
+				'image'       => 'ng-media/products/anardana-goli-39.png',
 				'url'         => nuttergood_farmley_get_term_link_safe( 'mouth-fresheners' ),
 			),
 		);
@@ -60,7 +54,7 @@ if ( ! function_exists( 'nuttergood_farmley_about_categories' ) ) {
 if ( ! function_exists( 'nuttergood_farmley_render_about_page' ) ) {
 	function nuttergood_farmley_render_about_page() {
 		$shop_url   = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop/' );
-		$hero_image = nuttergood_farmley_uploads_url( '2026/06/about/ng-about-hero.jpg' );
+		$hero_image = nuttergood_farmley_uploads_url( 'ng-media/about/ng-about-hero.jpg' );
 		$categories = nuttergood_farmley_about_categories();
 		?>
 		<div class="ng-farmley-about">

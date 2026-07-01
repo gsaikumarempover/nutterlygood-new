@@ -1,0 +1,653 @@
+/* OTP login / register */
+
+.ng-farmley-otp-form {
+	display: grid;
+	gap: 14px;
+}
+
+.ng-farmley-otp-form__test-banner {
+	padding: 10px 12px;
+	border-radius: 10px;
+	background: #fff8e8;
+	border: 1px solid rgba(185, 149, 49, 0.35);
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	color: #6b4f12;
+}
+
+.ng-farmley-otp-form__field label {
+	display: block;
+	margin-bottom: 6px;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 700;
+	color: #0c533d;
+}
+
+.ng-farmley-otp-form__field input[type="text"],
+.ng-farmley-otp-form__field input[type="email"],
+.ng-farmley-otp-form__field input[type="tel"] {
+	width: 100%;
+	padding: 12px 14px;
+	border: 1px solid rgba(12, 83, 61, 0.14);
+	border-radius: 10px;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	box-sizing: border-box;
+}
+
+.ng-farmley-otp-form__remember {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	margin: 2px 0 0;
+	padding: 10px 12px;
+	border-radius: 10px;
+	background: rgba(12, 83, 61, 0.04);
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	color: #3d3d3d;
+	cursor: pointer;
+	user-select: none;
+}
+
+.ng-farmley-otp-form__remember input[type="checkbox"] {
+	display: inline-block !important;
+	width: 20px !important;
+	height: 20px !important;
+	min-width: 20px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	opacity: 1 !important;
+	visibility: hidden !important;
+	position: relative !important;
+	appearance: none !important;
+	-webkit-appearance: none !important;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+.ng-farmley-otp-form__remember input[type="checkbox"]:before {
+	content: "" !important;
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: 1px solid #0c533d;
+	box-sizing: border-box;
+	visibility: visible !important;
+	border-radius: 4px;
+}
+
+.ng-farmley-otp-form__remember input[type="checkbox"]:checked:before {
+	background-color: #0c533d !important;
+	border-color: #0c533d !important;
+}
+
+.ng-farmley-otp-form__remember input[type="checkbox"]:checked:after {
+	content: "" !important;
+	display: block !important;
+	position: absolute;
+	left: 6px;
+	bottom: 4px;
+	width: 7px;
+	height: 15px;
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+	visibility: visible !important;
+	box-sizing: border-box;
+	border-radius: 1px;
+}
+
+.ng-farmley-otp-form__remember span {
+	line-height: 1.4;
+}
+
+.ng-farmley-otp-form__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.ng-farmley-otp-form__actions .button {
+	flex: 1 1 auto;
+	min-width: 140px;
+	padding: 12px 18px !important;
+	border-radius: 10px !important;
+	font-family: "Manrope", sans-serif !important;
+	font-size: 14px !important;
+	font-weight: 700 !important;
+}
+
+.ng-farmley-otp-form__send.button {
+	background: #fff !important;
+	color: #0c533d !important;
+	border: 1px solid #0c533d !important;
+}
+
+.ng-farmley-otp-form__verify.button {
+	background: #0c533d !important;
+	color: #fff !important;
+	border: none !important;
+}
+
+.ng-farmley-otp-form__message {
+	margin: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	min-height: 1.2em;
+}
+
+.ng-farmley-otp-form__message.is-error {
+	color: #b42318;
+}
+
+.ng-farmley-otp-form__message.is-success {
+	color: #0c533d;
+}
+
+.ng-farmley-otp-form .is-hidden {
+	display: none !important;
+}
+
+@keyframes ngFarmleyOtpSpin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.ng-farmley-otp-form.is-busy {
+	position: relative;
+	pointer-events: none;
+	user-select: none;
+}
+
+.ng-farmley-otp-form.is-busy::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 5;
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.78);
+}
+
+.ng-farmley-otp-form.is-busy::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 6;
+	width: 28px;
+	height: 28px;
+	margin: -14px 0 0 -14px;
+	border: 3px solid rgba(12, 83, 61, 0.15);
+	border-top-color: #0c533d;
+	border-radius: 50%;
+	animation: ngFarmleyOtpSpin 0.65s linear infinite;
+}
+
+.ng-farmley-otp-form .ng-btn-loading {
+	position: relative;
+	pointer-events: none;
+	cursor: wait;
+}
+
+.ng-farmley-otp-form .ng-btn-loading::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 16px;
+	height: 16px;
+	border: 2px solid rgba(255, 255, 255, 0.35);
+	border-top-color: #fff;
+	border-radius: 50%;
+	animation: ngFarmleyOtpSpin 0.65s linear infinite;
+	transform: translate(-50%, -50%);
+}
+
+.ng-farmley-otp-form__send.ng-btn-loading::after {
+	border-color: rgba(12, 83, 61, 0.18);
+	border-top-color: #0c533d;
+}
+
+.ng-farmley-auth--tabs.is-busy .ng-farmley-auth__tab {
+	opacity: 0.55;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+/* My Account — 450px responsive auth card */
+.ng-farmley-auth--account.ng-farmley-auth--tabs {
+	display: block !important;
+	width: 100%;
+	max-width: 450px;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__shell {
+	width: 100%;
+	max-width: 450px;
+	margin: 0 auto;
+	overflow: hidden;
+	border: 1px solid rgba(12, 83, 61, 0.12);
+	border-radius: 20px;
+	background: #fff;
+	box-shadow: 0 16px 40px rgba(12, 83, 61, 0.1);
+	box-sizing: border-box;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__header {
+	position: relative;
+	padding: 22px 28px 18px;
+	text-align: center;
+	background:
+		radial-gradient(circle at 88% 18%, rgba(185, 149, 49, 0.28) 0 42px, transparent 43px),
+		linear-gradient(135deg, #0c533d 0%, #1a6b52 100%);
+	color: #fff;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__header::after {
+	content: "";
+	position: absolute;
+	inset: auto 0 0;
+	height: 1px;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__mark {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	margin-bottom: 8px;
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.14);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	color: #e9d199;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__title {
+	margin: 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 1.45rem;
+	font-weight: 800;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+	color: #fff;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__subtitle {
+	margin: 6px 0 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__body {
+	padding: 18px 24px 16px;
+	background: #fff;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form {
+	gap: 12px;
+	width: 100%;
+}
+
+.ng-farmley-otp-form__method {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px;
+	margin-bottom: 4px;
+	padding: 4px;
+	border-radius: 12px;
+	background: #f3f7f5;
+	border: 1px solid rgba(12, 83, 61, 0.1);
+}
+
+.ng-farmley-otp-form__method-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 40px;
+	padding: 8px 12px;
+	border: 0;
+	border-radius: 9px;
+	background: transparent;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 700;
+	color: #4b6b60;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ng-farmley-otp-form__method-btn.is-active {
+	background: #fff;
+	color: #0c533d;
+	box-shadow: 0 2px 8px rgba(12, 83, 61, 0.12);
+}
+
+.ng-farmley-otp-form__method-btn:focus-visible {
+	outline: 2px solid #b99531;
+	outline-offset: 2px;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__field {
+	width: 100%;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__field label {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0;
+	text-transform: none;
+	color: #0c533d;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__control {
+	position: relative;
+	display: block;
+	width: 100%;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__icon {
+	position: absolute;
+	top: 50%;
+	left: 14px;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #0c533d;
+	opacity: 0.75;
+	pointer-events: none;
+	transform: translateY(-50%);
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__field input[type="text"],
+.ng-farmley-auth--account .ng-farmley-otp-form__field input[type="email"],
+.ng-farmley-auth--account .ng-farmley-otp-form__field input[type="tel"] {
+	display: block;
+	width: 100%;
+	padding: 12px 14px 12px 42px;
+	border: 1px solid rgba(12, 83, 61, 0.2);
+	border-radius: 12px;
+	background: #fbf8f1;
+	font-family: "Manrope", sans-serif;
+	font-size: 15px;
+	color: #173a2e;
+	box-sizing: border-box;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__field input:focus {
+	outline: none;
+	border-color: rgba(12, 83, 61, 0.45);
+	background: #fff;
+	box-shadow: 0 0 0 3px rgba(12, 83, 61, 0.08);
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__otp {
+	letter-spacing: 0.22em;
+	font-weight: 700;
+	text-align: center;
+	padding-left: 38px !important;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__remember {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	gap: 10px;
+	margin: 0;
+	padding: 8px 12px;
+	border-radius: 10px;
+	background: rgba(12, 83, 61, 0.04);
+	border: 1px solid rgba(12, 83, 61, 0.07);
+	font-size: 13px;
+	box-sizing: border-box;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 4px;
+	width: 100%;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__actions .button {
+	width: 100%;
+	min-height: 46px !important;
+	padding: 12px 16px !important;
+	border-radius: 12px !important;
+	font-size: 14px !important;
+	font-weight: 800 !important;
+	letter-spacing: 0.02em;
+	transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__send.button {
+	background: linear-gradient(135deg, #0c533d 0%, #157a5b 100%) !important;
+	color: #fff !important;
+	border: none !important;
+	box-shadow: 0 8px 18px rgba(12, 83, 61, 0.2) !important;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__send.button:hover {
+	box-shadow: 0 10px 22px rgba(12, 83, 61, 0.28) !important;
+	transform: translateY(-1px);
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__verify.button {
+	background: linear-gradient(135deg, #0c533d 0%, #157a5b 100%) !important;
+	color: #fff !important;
+	border: none !important;
+	box-shadow: 0 8px 18px rgba(12, 83, 61, 0.22) !important;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__verify.button:hover {
+	box-shadow: 0 10px 22px rgba(12, 83, 61, 0.28) !important;
+	transform: translateY(-1px);
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__verify.is-hidden {
+	display: none !important;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__message {
+	min-height: 0;
+	margin-top: 2px;
+	padding: 6px 8px;
+	border-radius: 8px;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__message.is-error {
+	background: rgba(180, 35, 24, 0.06);
+	color: #b42318;
+}
+
+.ng-farmley-auth--account .ng-farmley-otp-form__message.is-success {
+	background: rgba(12, 83, 61, 0.06);
+	color: #0c533d;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__secure {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	width: 100%;
+	margin: 10px 0 0;
+	font-family: "Manrope", sans-serif;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: #7a8b84;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__secure-icon {
+	display: inline-flex;
+	color: #b99531;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__tabs {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px;
+	margin-bottom: 16px;
+	padding: 5px;
+	border-radius: 14px;
+	background: rgba(12, 83, 61, 0.07);
+	border: 1px solid rgba(12, 83, 61, 0.06);
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__tab {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	margin: 0;
+	padding: 11px 14px;
+	border: none;
+	border-radius: 10px;
+	background: transparent;
+	font-family: "Manrope", sans-serif;
+	font-size: 14px;
+	font-weight: 800;
+	color: #5f6f68;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__tab-icon {
+	display: inline-flex;
+	opacity: 0.85;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__tab.is-active {
+	background: #fff;
+	color: #0c533d;
+	box-shadow: 0 4px 12px rgba(12, 83, 61, 0.12);
+}
+
+.ng-farmley-auth__tabs {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 6px;
+	margin-bottom: 14px;
+	padding: 4px;
+	border-radius: 10px;
+	background: rgba(12, 83, 61, 0.06);
+}
+
+.ng-farmley-auth__tab {
+	margin: 0;
+	padding: 8px 12px;
+	border: none;
+	border-radius: 8px;
+	background: transparent;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	font-weight: 700;
+	color: #5a5a5a;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ng-farmley-auth__tab.is-active {
+	background: #0c533d;
+	color: #fff;
+	box-shadow: 0 6px 16px rgba(12, 83, 61, 0.22);
+}
+
+.ng-farmley-auth__panels {
+	position: relative;
+	min-height: 0;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__panel {
+	display: none !important;
+	padding: 0;
+	border: none;
+	background: transparent;
+	box-shadow: none;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__panel.is-active {
+	display: block !important;
+}
+
+.ng-farmley-auth--account .ng-farmley-auth__panel[hidden] {
+	display: none !important;
+}
+
+.ng-farmley-auth__footer {
+	margin: 14px 0 0;
+	padding-top: 12px;
+	border-top: 1px solid rgba(12, 83, 61, 0.08);
+	text-align: center;
+	font-family: "Manrope", sans-serif;
+	font-size: 13px;
+	color: #5a5a5a;
+}
+
+.ng-farmley-auth__switch {
+	margin: 0 0 0 4px;
+	padding: 0;
+	border: none;
+	background: none;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: 800;
+	color: #0c533d;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	cursor: pointer;
+}
+
+.ng-farmley-auth__switch:hover {
+	color: #b99531;
+}
+
+#qodef-membership-login-modal .ng-farmley-otp-form {
+	padding: 0;
+}
+
+@media (max-width: 640px) {
+	.ng-farmley-auth--account.ng-farmley-auth--tabs,
+	.ng-farmley-auth--account .ng-farmley-auth__shell {
+		max-width: none;
+		border-radius: 16px;
+	}
+
+	.ng-farmley-auth--account .ng-farmley-auth__header {
+		padding: 16px 18px 14px;
+	}
+
+	.ng-farmley-auth--account .ng-farmley-auth__body {
+		padding: 14px 16px 12px;
+	}
+
+	.ng-farmley-auth--account .ng-farmley-auth__title {
+		font-size: 1.25rem;
+	}
+}

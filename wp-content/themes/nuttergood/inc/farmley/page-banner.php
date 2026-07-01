@@ -65,7 +65,7 @@ if ( ! function_exists( 'nuttergood_farmley_get_page_banner_map' ) ) {
 	 * @return array<string, string>
 	 */
 	function nuttergood_farmley_get_page_banner_map() {
-		$base = '2026/06/banners';
+		$base = 'ng-media/banners';
 		return array(
 			'shop'                 => $base . '/banner-shop.jpg',
 			'about-us'             => $base . '/banner-about.jpg',
@@ -74,7 +74,6 @@ if ( ! function_exists( 'nuttergood_farmley_get_page_banner_map' ) ) {
 			'terms-and-conditions' => $base . '/banner-policy.jpg',
 			'refund-policy'        => $base . '/banner-policy.jpg',
 			'wishlist'             => $base . '/banner-shop.jpg',
-			'wishlist-2'           => $base . '/banner-shop.jpg',
 			'default'              => $base . '/banner-default.jpg',
 		);
 	}

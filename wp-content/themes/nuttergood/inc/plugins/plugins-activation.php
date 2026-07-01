@@ -53,44 +53,9 @@ if ( ! function_exists( 'greenpath_register_required_plugins' ) ) {
 				'required' => true,
 			),
 			array(
-				'name'     => esc_html__( 'Qi Blocks', 'nuttergood' ),
-				'slug'     => 'qi-blocks',
-				'required' => true,
-			),
-			array(
 				'name'     => esc_html__( 'WooCommerce Plugin', 'nuttergood' ),
 				'slug'     => 'woocommerce',
-				'required' => false,
-			),
-			array(
-				'name'     => esc_html__( 'Contact Form 7', 'nuttergood' ),
-				'slug'     => 'contact-form-7',
-				'required' => false,
-			),
-			array(
-				'name'     => esc_html__( 'Instagram Feed', 'nuttergood' ),
-				'slug'     => 'instagram-feed',
-				'required' => false,
-			),
-			array(
-				'name'     => esc_html__( 'YITH Quick View', 'nuttergood' ),
-				'slug'     => 'yith-woocommerce-quick-view',
-				'required' => false,
-			),
-			array(
-				'name'     => esc_html__( 'YITH Wishlist', 'nuttergood' ),
-				'slug'     => 'yith-woocommerce-wishlist',
-				'required' => false,
-			),
-			array(
-				'name'     => esc_html__( 'YITH WooCommerce Compare', 'nuttergood' ),
-				'slug'     => 'yith-woocommerce-compare',
-				'required' => false,
-			),
-			array(
-				'name'     => esc_html__( 'YITH Color and Label Variations', 'nuttergood' ),
-				'slug'     => 'yith-color-and-label-variations-for-woocommerce',
-				'required' => false,
+				'required' => true,
 			),
 		);
 

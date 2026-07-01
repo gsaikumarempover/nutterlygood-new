@@ -10,12 +10,17 @@ if ( ! function_exists( 'nuttergood_farmley_configure_hybrid_checkout_accounts' 
 	 * Guest checkout stays on; login reminder + delayed account creation enabled.
 	 */
 	function nuttergood_farmley_configure_hybrid_checkout_accounts() {
+		if ( get_option( 'ng_farmley_hybrid_checkout_configured' ) ) {
+			return;
+		}
+
 		update_option( 'woocommerce_enable_guest_checkout', 'yes' );
 		update_option( 'woocommerce_enable_checkout_login_reminder', 'yes' );
 		update_option( 'woocommerce_enable_delayed_account_creation', 'yes' );
 		update_option( 'woocommerce_enable_signup_and_login_from_checkout', 'no' );
 		update_option( 'woocommerce_registration_generate_username', 'yes' );
 		update_option( 'woocommerce_registration_generate_password', 'yes' );
+		update_option( 'ng_farmley_hybrid_checkout_configured', 1, false );
 	}
 
 	add_action( 'after_setup_theme', 'nuttergood_farmley_configure_hybrid_checkout_accounts', 25 );

@@ -138,16 +138,20 @@ if ( ! function_exists( 'nuttergood_farmley_qv_render_panel' ) ) {
 		echo '<div class="ng-farmley-qv__gallery">';
 		echo '<div class="ng-farmley-qv__stage">';
 		foreach ( $gallery as $i => $img_id ) {
-			$src = wp_get_attachment_image_url( $img_id, 'large' );
+			$src = wp_get_attachment_image_url( $img_id, 'woocommerce_single' );
+			if ( ! $src ) {
+				$src = wp_get_attachment_image_url( $img_id, 'large' );
+			}
 			if ( ! $src ) {
 				continue;
 			}
 			printf(
-				'<img class="ng-farmley-qv__stage-img%1$s" src="%2$s" alt="%3$s" data-index="%4$d" loading="lazy" />',
+				'<img class="ng-farmley-qv__stage-img%1$s" src="%2$s" alt="%3$s" data-index="%4$d" loading="%5$s" decoding="async" />',
 				0 === $i ? ' is-active' : '',
 				esc_url( $src ),
 				esc_attr( $product->get_name() ),
-				(int) $i
+				(int) $i,
+				0 === $i ? 'eager' : 'lazy'
 			);
 		}
 		echo '</div>';
@@ -178,10 +182,10 @@ if ( ! function_exists( 'nuttergood_farmley_qv_render_panel' ) ) {
 		echo '<h2 class="ng-farmley-qv__title">' . esc_html( $product->get_name() ) . '</h2>';
 		echo '<div class="ng-farmley-qv__price-row">';
 		echo '<span class="ng-farmley-qv__price-values">';
+		echo '<ins class="ng-farmley-qv__price-sale">' . wp_kses_post( nuttergood_farmley_format_money( $sale_display ) ) . '</ins>';
 		if ( $regular_display && (float) $regular_display > (float) $sale_display ) {
 			echo '<del class="ng-farmley-qv__price-regular">' . wp_kses_post( nuttergood_farmley_format_money( $regular_display ) ) . '</del>';
 		}
-		echo '<ins class="ng-farmley-qv__price-sale">' . wp_kses_post( nuttergood_farmley_format_money( $sale_display ) ) . '</ins>';
 		echo '</span></div>';
 		echo '</div>';
 

@@ -178,33 +178,70 @@
 			});
 	}
 
+	function buildDiscountToggle(active) {
+		var $toggle = $(
+			'<button type="button" class="ng-farmley-discount-toggle ng-farmley-shop-discount-filter" role="switch" aria-checked="false" aria-label="Show discounted products only">' +
+				'<span class="ng-farmley-discount-toggle__label">Discount</span>' +
+				'<span class="ng-farmley-discount-toggle__track" aria-hidden="true"><span class="ng-farmley-discount-toggle__thumb"></span></span>' +
+			'</button>'
+		);
+
+		if (active) {
+			$toggle.addClass('is-active').attr('aria-checked', 'true');
+		}
+
+		return $toggle;
+	}
+
+	function setDiscountToggleState($button, active) {
+		$button.toggleClass('is-active', !!active).attr('aria-checked', active ? 'true' : 'false');
+	}
+
 	function initCatalogToolbar() {
 		$('.qodef-woo-product-list .qodef-filter-top-bar .qodef-e-info-right').each(function () {
 			var $right = $(this);
-			if ($right.find('.ng-farmley-shop-discount-filter').length) {
+
+			if ($right.data('ngToolbarReady')) {
 				return;
 			}
 
 			var $list = $right.closest('.qodef-woo-product-list');
 			var options = $list.data('options') || {};
 			var active = options.ng_discount === '1' || options.ng_discount === 1;
+			var $toolbar = $right.children('.ng-farmley-catalog-toolbar.ng-farmley-catalog-toolbar--shop');
 
-			$right.find('.qodef-e-order-link').each(function () {
-				var value = $(this).data('value');
-				if ($.inArray(value, ['popularity', 'price-range-low', 'price-range-high']) === -1) {
-					$(this).remove();
+			if (!$toolbar.length) {
+				$toolbar = $('<div class="ng-farmley-catalog-toolbar ng-farmley-catalog-toolbar--shop"></div>');
+				var $ordering = $right.find('.qodef-product-list-ordering').first();
+
+				if ($ordering.length) {
+					$toolbar.append($ordering);
 				}
-			});
 
-			var $discount = $('<button type="button" class="ng-farmley-catalog-toolbar__discount ng-farmley-shop-discount-filter">' +
-				'Discount</button>');
-
-			if (active) {
-				$discount.addClass('is-active').attr('aria-pressed', 'true');
+				$right.append($toolbar);
 			}
 
-			$right.append($discount);
+			if (!$toolbar.find('.ng-farmley-shop-discount-filter').length) {
+				$toolbar.append(buildDiscountToggle(active));
+			}
+
+			$right.data('ngToolbarReady', true);
 		});
+	}
+
+	function toggleArchiveDiscountFilter($button) {
+		var url = new URL(window.location.href);
+
+		if ($button.hasClass('is-active')) {
+			url.searchParams.delete('ng_discount');
+			setDiscountToggleState($button, false);
+		} else {
+			url.searchParams.set('ng_discount', '1');
+			setDiscountToggleState($button, true);
+		}
+
+		url.searchParams.delete('paged');
+		window.location.assign(url.toString());
 	}
 
 	function toggleShopDiscountFilter($button) {
@@ -218,10 +255,10 @@
 
 		if (active) {
 			delete options.ng_discount;
-			$button.removeClass('is-active').attr('aria-pressed', 'false');
+			setDiscountToggleState($button, false);
 		} else {
 			options.ng_discount = '1';
-			$button.addClass('is-active').attr('aria-pressed', 'true');
+			setDiscountToggleState($button, true);
 		}
 
 		$list.data('options', options);
@@ -234,8 +271,9 @@
 		toggleShopDiscountFilter($(this));
 	});
 
-	$(document).on('change', '.ng-farmley-catalog-toolbar__select', function () {
-		$(this).closest('form').trigger('submit');
+	$(document).on('click', '.ng-farmley-archive-discount-filter', function (e) {
+		e.preventDefault();
+		toggleArchiveDiscountFilter($(this));
 	});
 
 	$(document.body).on('added_to_cart', function (event, fragments, cartHash, $button) {
@@ -250,6 +288,9 @@
 			var $button = $(this);
 			$button.find('.qodef-svg--button-icon').remove();
 			$button.removeClass('qodef-button qodef-layout--filled');
+			if ($button.find('.ng-farmley-popular-btn-icon').length) {
+				return;
+			}
 			$button.children('.qodef-m-text').each(function () {
 				var $wrap = $(this);
 				if ($wrap.children('.ng-farmley-card-btn__inner').length) {

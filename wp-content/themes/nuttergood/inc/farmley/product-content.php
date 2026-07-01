@@ -31,6 +31,15 @@ if ( ! function_exists( 'nuttergood_farmley_clean_product_html' ) ) {
 		// Strip Elementor CSS blobs accidentally stored in descriptions.
 		$content = preg_replace( '/\/\*! elementor.*?}\s*/is', '', $content );
 
+		// Unwrap Odoo text blocks and blockquotes (left border line in quick view).
+		$content = preg_replace( '/<section[^>]*data-snippet="s_text_block"[^>]*>\s*<div[^>]*class="[^"]*container[^"]*"[^>]*>/is', '', $content );
+		$content = preg_replace( '/<\/div>\s*<\/section>/is', '', $content );
+		$content = preg_replace( '/<blockquote[^>]*>(.*?)<\/blockquote>/is', '$1', $content );
+
+		// Remove leading rules / empty paragraphs before description text.
+		$content = preg_replace( '/^(?:\s*<hr[^>]*>\s*)+/i', '', $content );
+		$content = preg_replace( '/^(?:\s*<p[^>]*>\s*(?:&nbsp;|\s|<br\s*\/?>)*\s*<\/p>\s*)+/i', '', $content );
+
 		return trim( $content );
 	}
 }

@@ -189,24 +189,30 @@ if ( ! function_exists( 'nuttergood_farmley_home_category_png_attachment_id' ) )
 	 * @param string $slug Category slug.
 	 */
 	function nuttergood_farmley_home_category_png_attachment_id( $slug ) {
+		static $cache = array();
+
+		if ( isset( $cache[ $slug ] ) ) {
+			return $cache[ $slug ];
+		}
+
 		$icons = nuttergood_farmley_home_category_icons_data();
 		if ( empty( $icons[ $slug ]['png'] ) ) {
+			$cache[ $slug ] = 0;
 			return 0;
 		}
 
-		$filename = $icons[ $slug ]['png'];
-		$url      = content_url( 'uploads/2026/06/categories/' . $filename );
-		$attach   = attachment_url_to_postid( $url );
-		if ( $attach ) {
-			return (int) $attach;
-		}
+		$rel = nuttergood_farmley_media_rel( 'categories', $icons[ $slug ]['png'] );
 
-		$term = get_term_by( 'slug', $slug, 'product_cat' );
-		if ( $term && ! is_wp_error( $term ) ) {
-			return (int) get_term_meta( $term->term_id, 'thumbnail_id', true );
-		}
+		global $wpdb;
+		$attach = (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND meta_value = %s LIMIT 1",
+				$rel
+			)
+		);
 
-		return 0;
+		$cache[ $slug ] = $attach;
+		return $attach;
 	}
 }
 
@@ -222,16 +228,28 @@ if ( ! function_exists( 'nuttergood_farmley_home_category_thumbnail_meta' ) ) {
 	 * @return mixed
 	 */
 	function nuttergood_farmley_home_category_thumbnail_meta( $value, $object_id, $meta_key, $single, $meta_type ) {
+		static $resolving = array();
+
 		if ( ! is_front_page() || 'term' !== $meta_type || 'thumbnail_id' !== $meta_key ) {
 			return $value;
 		}
 
-		$term = get_term( (int) $object_id, 'product_cat' );
+		$guard_key = (int) $object_id;
+		if ( isset( $resolving[ $guard_key ] ) ) {
+			return $value;
+		}
+
+		$resolving[ $guard_key ] = true;
+
+		$term = get_term( $guard_key, 'product_cat' );
 		if ( ! $term || is_wp_error( $term ) ) {
+			unset( $resolving[ $guard_key ] );
 			return $value;
 		}
 
 		$attach_id = nuttergood_farmley_home_category_png_attachment_id( $term->slug );
+		unset( $resolving[ $guard_key ] );
+
 		if ( $attach_id > 0 ) {
 			return $single ? (string) $attach_id : array( (string) $attach_id );
 		}
@@ -330,7 +348,7 @@ if ( ! function_exists( 'nuttergood_farmley_sync_home_category_icons' ) ) {
 			return;
 		}
 
-		$version    = 5;
+		$version    = 6;
 		$option_key = 'ng_farmley_home_category_icons_v';
 		if ( (int) get_option( $option_key, 0 ) >= $version ) {
 			return;

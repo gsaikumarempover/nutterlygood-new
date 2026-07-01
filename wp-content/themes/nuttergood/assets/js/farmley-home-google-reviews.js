@@ -18,6 +18,16 @@
 			var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 			function getScrollAmount() {
+				var feed = $feed[0];
+				if (!feed) {
+					return 0;
+				}
+
+				if (window.matchMedia('(max-width: 767px)').matches) {
+					var mobileGap = parseFloat($feed.css('column-gap') || $feed.css('gap')) || 12;
+					return feed.clientWidth + mobileGap;
+				}
+
 				var $card = $feed.find('.ng-farmley-greviews__card').first();
 				if (!$card.length) {
 					return 0;

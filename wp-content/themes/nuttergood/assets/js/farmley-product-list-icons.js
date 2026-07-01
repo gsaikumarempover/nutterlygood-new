@@ -69,14 +69,26 @@
 			var $product = $(this);
 			var $card = $product.find('> .qodef-e-inner').first();
 			var $content = $card.find('> .qodef-e-content').first();
-			var $title = $content.find('> .qodef-woo-product-title').first();
-			var $priceHolder = $content.find('> .qodef-e-price-holder').first();
-			var $actions = $content.find('> .qodef-action-holder').first();
-			var $cartButton = $actions.find('.add_to_cart_button, .button.product_type_variable, .button.product_type_grouped').first();
+			var $foot = $content.find('> .ng-farmley-card-foot').first();
 
 			if (!$card.length || !$content.length || $content.data('ngNativeCardReady')) {
 				return;
 			}
+
+			if ($foot.length && $foot.find('> .ng-farmley-card-footer').length) {
+				$card.addClass('ng-farmley-card');
+				$content.data('ngNativeCardReady', true);
+				return;
+			}
+
+			var $title = $content.find('> .qodef-woo-product-title').first();
+			var $priceHolder = $content.find('> .qodef-e-price-holder').first();
+			var $actions = $content.find('> .qodef-action-holder').first();
+			var $buttonWrap = $actions.find('.ng-farmley-card-buttons').first();
+			var $cartButton = ($buttonWrap.length ? $buttonWrap : $actions)
+				.find('.add_to_cart_button, .button.product_type_variable, .button.product_type_grouped')
+				.not('.ng-farmley-buy-now')
+				.first();
 
 			$card.addClass('ng-farmley-card');
 			$content.addClass('ng-farmley-card-foot');
@@ -98,9 +110,10 @@
 				var $footer = $('<div class="ng-farmley-card-footer"></div>');
 				var $priceCol = $('<div class="ng-farmley-card-footer__price"></div>');
 				var $cartCol = $('<div class="ng-farmley-card-footer__cart"></div>');
+				var $buttons = $buttonWrap.length ? $buttonWrap : $cartButton;
 
 				$priceCol.append($priceHolder);
-				$cartCol.append($cartButton);
+				$cartCol.append($buttons);
 
 				var $readerText = $actions.find('.screen-reader-text').first();
 				if ($readerText.length) {

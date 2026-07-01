@@ -1,0 +1,25 @@
+# Legacy media paths → ng-media (fast static rewrites, no WordPress bootstrap).
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Products (PNG → WebP when originals were converted).
+RewriteRule ^2026/06/ai-products/(.+)\.png$ ng-media/products/$1.webp [L,NC]
+RewriteRule ^2026/06/hd-products/(.+)\.png$ ng-media/products/$1.webp [L,NC]
+RewriteRule ^2026/06/ng-branded-packets/(.+)\.png$ ng-media/products/$1.webp [L,NC]
+RewriteRule ^2026/06/ai-products/(.+)$ ng-media/products/$1 [L,NC]
+RewriteRule ^2026/06/hd-products/(.+)$ ng-media/products/$1 [L,NC]
+RewriteRule ^2026/06/ng-branded-packets/(.+)$ ng-media/products/$1 [L,NC]
+
+# Slider hero sources (RevSlider still references hd-heroes/source/).
+RewriteRule ^2026/06/slider/hd-heroes/source/(.+)$ ng-media/slider/$1 [L,NC]
+RewriteRule ^2026/06/slider/(.+)$ ng-media/slider/$1 [L,NC]
+
+# Other migrated folders.
+RewriteRule ^2026/06/categories/(.+)$ ng-media/categories/$1 [L,NC]
+RewriteRule ^2026/06/category-thumbs/(.+)$ ng-media/categories/$1 [L,NC]
+RewriteRule ^2026/06/ai-categories/(.+)$ ng-media/categories/$1 [L,NC]
+RewriteRule ^2026/06/banners/(.+)$ ng-media/banners/$1 [L,NC]
+RewriteRule ^2026/06/about/(.+)$ ng-media/about/$1 [L,NC]
+RewriteRule ^2026/06/blog/(.+)$ ng-media/blog/$1 [L,NC]
+RewriteRule ^2026/06/shop-assets/(.+)$ ng-media/shop/$1 [L,NC]
+</IfModule>

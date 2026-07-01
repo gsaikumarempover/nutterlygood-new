@@ -68,7 +68,26 @@ if ( ! function_exists( 'nuttergood_farmley_get_gallery_ids' ) ) {
 			return array();
 		}
 
-		$ids   = array();
+		$ids = array();
+
+		if ( function_exists( 'nuttergood_farmley_get_card_primary_image_id' ) ) {
+			$primary = nuttergood_farmley_get_card_primary_image_id( $product );
+			if ( $primary ) {
+				$ids[] = (int) $primary;
+			}
+
+			if ( function_exists( 'nuttergood_farmley_get_product_hover_image_id' ) ) {
+				$hover = nuttergood_farmley_get_product_hover_image_id( $product, $primary );
+				if ( $hover && ! in_array( $hover, $ids, true ) ) {
+					$ids[] = (int) $hover;
+				}
+			}
+		}
+
+		if ( ! empty( $ids ) ) {
+			return $ids;
+		}
+
 		$thumb = $product->get_image_id();
 		if ( $thumb ) {
 			$ids[] = (int) $thumb;

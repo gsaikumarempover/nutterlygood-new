@@ -3,12 +3,53 @@ wp-config.php
 .env
 .env.*
 
+# Internal deploy tooling — local only (never commit or upload via FTP)
+deploy/
+
+# Local export / scratch output
+export/
+tools/
+section1-fix-check/
+slider-browser-check/
+
+# Root-level dev snapshots & maintenance scripts (WordPress core files are kept)
+/*.py
+/*.html
+/*.png
+/*.txt
+/fix-*.php
+/align-*.php
+/attach-*.php
+/check-*.php
+/debug-*.php
+/dump-*.php
+/enrich-*.php
+/activate-*.php
+/benchmark-*.php
+/mix-*.php
+/inspect-*.php
+/generate-*.php
+/import-*.php
+/seed-*.php
+/sync-*.php
+/*-manifest*.json
+/*-cards.json
+/*-svgs.json
+/*-icons.json
+/remaining-*.json
+/*-ref.css
+/extracted-*.css
+
 # OS / editor
 .DS_Store
 Thumbs.db
 *.log
 .idea/
 .vscode/
+.cursor/
+mcps/
+agent-tools/
+terminals/
 
 # Dependencies (if added later)
 node_modules/

@@ -32,10 +32,10 @@ $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalin
 				woocommerce_output_all_notices();
 			}
 
-			if ( 'yes' === get_option( 'woocommerce_enable_myaccount_registration' ) && function_exists( 'wc_get_template' ) ) {
-				wc_get_template( 'myaccount/form-login.php' );
+			if ( function_exists( 'nuttergood_farmley_otp_render_form' ) ) {
+				nuttergood_farmley_otp_render_form( 'signup', 'register' );
 			} else {
-				echo '<p>' . esc_html__( 'Registration is not enabled. Please contact the store admin.', 'nuttergood' ) . '</p>';
+				echo '<p>' . esc_html__( 'Registration is not available right now. Please contact the store admin.', 'nuttergood' ) . '</p>';
 			}
 			?>
 

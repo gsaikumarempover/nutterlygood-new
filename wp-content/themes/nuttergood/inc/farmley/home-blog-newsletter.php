@@ -96,27 +96,37 @@ if ( ! function_exists( 'nuttergood_farmley_render_home_newsletter' ) ) {
 								<?php esc_html_e( 'on your next purchase', 'nuttergood' ); ?>
 							</h3>
 						</div>
-						<div class="qodef-newsletter-form-wrapper">
-							<form class="ng-farmley-newsletter-form" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="post" novalidate>
-								<?php wp_nonce_field( 'ng_farmley_newsletter', 'ng_farmley_newsletter_nonce' ); ?>
-								<input type="hidden" name="ng_farmley_newsletter" value="1" />
-								<span class="wpcf7-form-control-wrap" data-name="your-email">
-									<input
-										size="40"
-										maxlength="400"
-										class="wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-email"
-										aria-required="true"
-										aria-invalid="false"
-										placeholder="<?php esc_attr_e( 'Enter Your Email', 'nuttergood' ); ?>"
-										type="email"
-										name="your-email"
-										required
-									/>
-								</span>
-								<button class="wpcf7-form-control wpcf7-submit qodef-button qodef-size--normal qodef-layout--filled qodef-m" type="submit">
-									<span class="qodef-m-text"><?php esc_html_e( 'Submit', 'nuttergood' ); ?></span>
-								</button>
-							</form>
+						<div class="qodef-newsletter-form-wrapper" data-ng-newsletter-wrap>
+							<?php if ( isset( $_GET['newsletter'] ) && 'thanks' === sanitize_text_field( wp_unslash( $_GET['newsletter'] ) ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+								<div class="ng-farmley-newsletter-success" data-ng-newsletter-success role="status">
+									<span class="ng-farmley-newsletter-success__icon" aria-hidden="true">✓</span>
+									<p class="ng-farmley-newsletter-success__text">
+										<?php esc_html_e( 'Thank you! We have shared your 20% off coupon and login details by email. Please check your inbox and spam folder.', 'nuttergood' ); ?>
+									</p>
+								</div>
+							<?php else : ?>
+								<form class="ng-farmley-newsletter-form" data-ng-newsletter-form action="<?php echo esc_url( home_url( '/' ) ); ?>" method="post" novalidate>
+									<?php wp_nonce_field( 'ng_farmley_newsletter', 'ng_farmley_newsletter_nonce' ); ?>
+									<input type="hidden" name="ng_farmley_newsletter" value="1" />
+									<span class="wpcf7-form-control-wrap" data-name="your-email">
+										<input
+											size="40"
+											maxlength="400"
+											class="wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-email"
+											aria-required="true"
+											aria-invalid="false"
+											placeholder="<?php esc_attr_e( 'Enter Your Email', 'nuttergood' ); ?>"
+											type="email"
+											name="your-email"
+											required
+										/>
+									</span>
+									<button class="wpcf7-form-control wpcf7-submit qodef-button qodef-size--normal qodef-layout--filled qodef-m" type="submit">
+										<span class="qodef-m-text"><?php esc_html_e( 'Submit', 'nuttergood' ); ?></span>
+									</button>
+								</form>
+								<p class="ng-farmley-newsletter-form__feedback" data-ng-newsletter-feedback role="status" aria-live="polite"></p>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
@@ -125,6 +135,81 @@ if ( ! function_exists( 'nuttergood_farmley_render_home_newsletter' ) ) {
 		<?php
 	}
 	add_action( 'greenpath_action_page_footer_template', 'nuttergood_farmley_render_home_newsletter', 4 );
+}
+
+if ( ! function_exists( 'nuttergood_farmley_process_newsletter_signup' ) ) {
+	/**
+	 * @return array{success:bool,message:string}
+	 */
+	function nuttergood_farmley_process_newsletter_signup( $email ) {
+		$email = sanitize_email( $email );
+		if ( ! is_email( $email ) ) {
+			return array(
+				'success' => false,
+				'message' => __( 'Please enter a valid email address.', 'nuttergood' ),
+			);
+		}
+
+		if ( function_exists( 'nuttergood_farmley_newsletter_setup_account_and_email' ) ) {
+			$setup = nuttergood_farmley_newsletter_setup_account_and_email( $email );
+			if ( ! $setup['success'] ) {
+				return array(
+					'success' => false,
+					'message' => $setup['message'],
+				);
+			}
+
+			if ( is_user_logged_in() && function_exists( 'nuttergood_farmley_try_apply_newsletter_coupon_for_email' ) ) {
+				$user = wp_get_current_user();
+				if ( $user && strtolower( $user->user_email ) === strtolower( $email ) ) {
+					nuttergood_farmley_try_apply_newsletter_coupon_for_email( $email );
+				}
+			}
+		} else {
+			$signups   = get_option( 'ng_farmley_newsletter_signups', array() );
+			$signups   = is_array( $signups ) ? $signups : array();
+			$signups[] = array(
+				'email' => $email,
+				'time'  => current_time( 'mysql' ),
+			);
+			update_option( 'ng_farmley_newsletter_signups', array_slice( $signups, -500 ), false );
+		}
+
+		$admin = get_option( 'admin_email' );
+		if ( $admin ) {
+			wp_mail(
+				$admin,
+				'Nutterly Good newsletter signup',
+				"A new newsletter signup was received:\n\n{$email}\n"
+			);
+		}
+
+		$message = function_exists( 'nuttergood_farmley_newsletter_success_message' )
+			? nuttergood_farmley_newsletter_success_message( $email )
+			: __( 'Thank you! We have shared your 20% off coupon and login details by email. Please check your inbox and spam folder.', 'nuttergood' );
+
+		return array(
+			'success' => true,
+			'message' => $message,
+		);
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_ajax_newsletter_signup' ) ) {
+	function nuttergood_farmley_ajax_newsletter_signup() {
+		check_ajax_referer( 'ng_farmley_newsletter', 'security' );
+
+		$email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+		$result = nuttergood_farmley_process_newsletter_signup( $email );
+
+		if ( ! $result['success'] ) {
+			wp_send_json_error( array( 'message' => $result['message'] ) );
+		}
+
+		wp_send_json_success( array( 'message' => $result['message'] ) );
+	}
+	add_action( 'wp_ajax_ng_farmley_newsletter', 'nuttergood_farmley_ajax_newsletter_signup' );
+	add_action( 'wp_ajax_nopriv_ng_farmley_newsletter', 'nuttergood_farmley_ajax_newsletter_signup' );
 }
 
 if ( ! function_exists( 'nuttergood_farmley_handle_newsletter_signup' ) ) {
@@ -140,26 +225,11 @@ if ( ! function_exists( 'nuttergood_farmley_handle_newsletter_signup' ) ) {
 			return;
 		}
 
-		$email = isset( $_POST['your-email'] ) ? sanitize_email( wp_unslash( $_POST['your-email'] ) ) : '';
-		if ( ! is_email( $email ) ) {
-			return;
-		}
-
-		$signups   = get_option( 'ng_farmley_newsletter_signups', array() );
-		$signups   = is_array( $signups ) ? $signups : array();
-		$signups[] = array(
-			'email' => $email,
-			'time'  => current_time( 'mysql' ),
-		);
-		update_option( 'ng_farmley_newsletter_signups', array_slice( $signups, -500 ), false );
-
-		$admin = get_option( 'admin_email' );
-		if ( $admin ) {
-			wp_mail(
-				$admin,
-				'Nutterly Good newsletter signup',
-				"A new newsletter signup was received:\n\n{$email}\n"
-			);
+		$email  = isset( $_POST['your-email'] ) ? sanitize_email( wp_unslash( $_POST['your-email'] ) ) : '';
+		$result = nuttergood_farmley_process_newsletter_signup( $email );
+		if ( ! $result['success'] ) {
+			wp_safe_redirect( add_query_arg( 'newsletter', 'error', wp_get_referer() ? wp_get_referer() : home_url( '/' ) ) );
+			exit;
 		}
 
 		wp_safe_redirect( add_query_arg( 'newsletter', 'thanks', wp_get_referer() ? wp_get_referer() : home_url( '/' ) ) );
@@ -184,6 +254,32 @@ if ( ! function_exists( 'nuttergood_farmley_home_newsletter_assets' ) ) {
 				$uri . '/assets/css/farmley-home-newsletter.css',
 				array( 'nuttergood-farmley-home', 'nuttergood-farmley-footer', 'greenpath-core-style' ),
 				filemtime( $css )
+			);
+		}
+
+		$js = $dir . '/assets/js/farmley-home-newsletter.js';
+		if ( file_exists( $js ) ) {
+			wp_enqueue_script(
+				'nuttergood-farmley-home-newsletter',
+				$uri . '/assets/js/farmley-home-newsletter.js',
+				array( 'jquery' ),
+				filemtime( $js ),
+				true
+			);
+
+			wp_localize_script(
+				'nuttergood-farmley-home-newsletter',
+				'ngFarmleyNewsletter',
+				array(
+					'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+					'nonce'   => wp_create_nonce( 'ng_farmley_newsletter' ),
+					'i18n'    => array(
+						'submitting' => __( 'Submitting…', 'nuttergood' ),
+						'submit'     => __( 'Submit', 'nuttergood' ),
+						'failed'     => __( 'Something went wrong. Please try again.', 'nuttergood' ),
+						'invalid'    => __( 'Please enter a valid email address.', 'nuttergood' ),
+					),
+				)
 			);
 		}
 	}

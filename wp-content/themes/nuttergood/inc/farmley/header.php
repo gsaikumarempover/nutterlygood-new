@@ -337,27 +337,7 @@ if ( ! function_exists( 'nuttergood_farmley_filter_header_widgets' ) ) {
 	add_filter( 'widget_display_callback', 'nuttergood_farmley_filter_header_widgets', 20, 3 );
 }
 
-if ( ! function_exists( 'nuttergood_farmley_signup_register_view' ) ) {
-	/**
-	 * When guest hits My Account with ?action=register, show signup form prominently.
-	 */
-	function nuttergood_farmley_signup_register_view() {
-		if ( ! function_exists( 'is_account_page' ) || ! is_account_page() || is_user_logged_in() ) {
-			return;
-		}
 
-		if ( empty( $_GET['action'] ) || 'register' !== sanitize_key( wp_unslash( $_GET['action'] ) ) ) {
-			return;
-		}
-
-		echo '<style>
-			body.woocommerce-account .u-column1.col-1 { display: none !important; }
-			body.woocommerce-account .u-column2.col-2 { width: 100% !important; max-width: 480px; margin: 0 auto; float: none !important; }
-		</style>';
-	}
-
-	add_action( 'wp_head', 'nuttergood_farmley_signup_register_view', 40 );
-}
 
 if ( ! function_exists( 'nuttergood_farmley_main_menu_opener_label' ) ) {
 	function nuttergood_farmley_main_menu_opener_label( $value ) {

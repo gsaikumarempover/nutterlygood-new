@@ -712,8 +712,8 @@ if ( ! function_exists( 'nuttergood_farmley_render_card_price_markup' ) ) {
 	function nuttergood_farmley_render_card_price_markup( $offer, $mrp ) {
 		if ( $mrp > $offer && $mrp > 0 && $offer > 0 ) {
 			echo '<div class="qodef-woo-product-price price">';
-			echo '<del aria-hidden="true">' . wp_kses_post( wc_price( $mrp ) ) . '</del>';
 			echo '<ins aria-hidden="true">' . wp_kses_post( wc_price( $offer ) ) . '</ins>';
+			echo '<del aria-hidden="true">' . wp_kses_post( wc_price( $mrp ) ) . '</del>';
 			echo '</div>';
 			return;
 		}
@@ -901,7 +901,8 @@ if ( ! function_exists( 'nuttergood_farmley_product_list_layout_path' ) ) {
 			return $path;
 		}
 
-		$unified_layouts = array( 'info-below', 'horizontal', 'catalogue' );
+		// Horizontal keeps the plugin variation — theme info-below has no layouts/horizontal.php.
+		$unified_layouts = array( 'info-below', 'catalogue' );
 		if ( ! in_array( $params['layout'], $unified_layouts, true ) ) {
 			return $path;
 		}
@@ -953,6 +954,10 @@ if ( ! function_exists( 'nuttergood_farmley_get_loop_buy_now_link' ) ) {
 		$label      = esc_html__( 'BUY NOW', 'nuttergood' );
 		$is_popular = ! empty( $GLOBALS['ng_farmley_popular_card_actions'] );
 
+		if ( $is_popular ) {
+			$label = __( 'Buy Now', 'nuttergood' );
+		}
+
 		if ( $product->is_type( 'simple' ) ) {
 			$classes = 'button ng-farmley-buy-now ajax_add_to_cart product_type_simple';
 			if ( $is_popular ) {
@@ -961,9 +966,9 @@ if ( ! function_exists( 'nuttergood_farmley_get_loop_buy_now_link' ) ) {
 				$classes .= ' add_to_cart_button';
 			}
 
-			$inner = $is_popular
-				? '<span class="ng-farmley-card-btn__inner">' . $label . '</span>'
-				: '<span class="ng-farmley-card-btn__inner"><span class="qodef-m-text">' . $label . '</span></span>';
+			$inner = $is_popular && function_exists( 'nuttergood_farmley_popular_button_inner' )
+				? nuttergood_farmley_popular_button_inner( 'bag', $label )
+				: '<span class="ng-farmley-card-btn__inner"><span class="qodef-m-text">' . esc_html( $label ) . '</span></span>';
 
 			return sprintf(
 				'<a href="%1$s" class="%2$s" data-product_id="%3$d" data-product_sku="%4$s" data-quantity="1" rel="nofollow" aria-label="%5$s">%6$s</a>',
@@ -976,9 +981,9 @@ if ( ! function_exists( 'nuttergood_farmley_get_loop_buy_now_link' ) ) {
 			);
 		}
 
-		$inner = $is_popular
-			? '<span class="ng-farmley-card-btn__inner">' . $label . '</span>'
-			: '<span class="ng-farmley-card-btn__inner"><span class="qodef-m-text">' . $label . '</span></span>';
+		$inner = $is_popular && function_exists( 'nuttergood_farmley_popular_button_inner' )
+			? nuttergood_farmley_popular_button_inner( 'bag', $label )
+			: '<span class="ng-farmley-card-btn__inner"><span class="qodef-m-text">' . esc_html( $label ) . '</span></span>';
 
 		$link_classes = 'button ng-farmley-buy-now ng-farmley-buy-now--link';
 		if ( $is_popular ) {
@@ -1014,8 +1019,12 @@ if ( ! function_exists( 'nuttergood_farmley_loop_add_to_cart_link' ) ) {
 		}
 
 		$is_popular = ! empty( $GLOBALS['ng_farmley_popular_card_actions'] );
-		$inner      = $is_popular
-			? '<span class="ng-farmley-card-btn__inner">' . esc_html( $text ) . '</span>'
+		if ( $is_popular ) {
+			$text = __( 'Add to Cart', 'nuttergood' );
+		}
+
+		$inner = $is_popular && function_exists( 'nuttergood_farmley_popular_button_inner' )
+			? nuttergood_farmley_popular_button_inner( 'cart', $text )
 			: '<span class="ng-farmley-card-btn__inner"><span class="qodef-m-text">' . esc_html( $text ) . '</span></span>';
 		$buy_now = nuttergood_farmley_get_loop_buy_now_link( $product );
 

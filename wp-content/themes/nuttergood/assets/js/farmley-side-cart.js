@@ -1,5 +1,5 @@
 /**
- * Side cart — whole-sidebar scroll, progress animates on cart updates.
+ * Side cart — granular fragment updates, scroll preservation, no full-panel rebuild flicker.
  */
 ( function ( $ ) {
 	'use strict';
@@ -9,23 +9,92 @@
 	var burstDoneThisOpen = false;
 	var lastProgressPercent = 0;
 	var unlockedMilestones = {};
+	var layoutReady = false;
+	var fragmentUpdateTimer = null;
+	var fragmentUpdatePending = false;
+	var updatingCount = 0;
+
+	function $widgets() {
+		return $( '.widget_greenpath_core_woo_side_area_cart' );
+	}
 
 	function $widget() {
-		return $( '.widget_greenpath_core_woo_side_area_cart' ).first();
+		return $widgets().first();
 	}
 
 	function $panel() {
 		return $widget().find( '.qodef-widget-side-area-cart-content' ).first();
 	}
 
+	function $scroll() {
+		return $panel().children( '.ng-farmley-sc-scroll' ).first();
+	}
+
 	function reducedMotion() {
 		return window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 	}
 
-	function destroyPerfectScrollbar() {
-		var $items = $panel().find( '.qodef-woo-side-area-cart' );
+	function setUpdating( active ) {
+		if ( active ) {
+			updatingCount += 1;
+		} else {
+			updatingCount = Math.max( 0, updatingCount - 1 );
+		}
 
-		$items.each( function () {
+		$widget().toggleClass( 'ng-farmley-sc-is-updating', updatingCount > 0 );
+	}
+
+	function captureUIState() {
+		var $scrollEl = $scroll();
+		var state = {
+			scrollTop: $scrollEl.length ? $scrollEl[0].scrollTop : 0,
+			recoScroll: {},
+			couponExpanded: false,
+		};
+
+		$panel().find( '.ng-farmley-sc-reco__row' ).each( function () {
+			var key = $( this ).closest( '.ng-farmley-sc-reco' ).attr( 'data-ng-sc-reco-id' ) || 'reco-' + $( this ).index();
+			state.recoScroll[ key ] = this.scrollLeft;
+		} );
+
+		var $couponToggle = $panel().find( '[data-ng-sc-toggle-coupons][aria-expanded="true"]' ).first();
+		state.couponExpanded = !! $couponToggle.length;
+
+		return state;
+	}
+
+	function restoreUIState( state ) {
+		if ( ! state ) {
+			return;
+		}
+
+		var $scrollEl = $scroll();
+		if ( $scrollEl.length ) {
+			$scrollEl[0].scrollTop = state.scrollTop;
+		}
+
+		$panel().find( '.ng-farmley-sc-reco' ).each( function ( index ) {
+			var key = $( this ).attr( 'data-ng-sc-reco-id' ) || 'reco-' + index;
+			var left = state.recoScroll[ key ];
+			var $row = $( this ).find( '.ng-farmley-sc-reco__row' ).first();
+
+			if ( typeof left === 'number' && $row.length ) {
+				$row[0].scrollLeft = left;
+			}
+		} );
+
+		if ( state.couponExpanded ) {
+			var $btn = $panel().find( '[data-ng-sc-toggle-coupons]' ).first();
+			var $panelCoupons = $btn.closest( '.ng-farmley-sc-coupon__card' ).find( '[data-ng-sc-coupons-panel]' ).first();
+			if ( $btn.length && $panelCoupons.length ) {
+				$btn.attr( 'aria-expanded', 'true' ).addClass( 'is-open' );
+				$panelCoupons.prop( 'hidden', false );
+			}
+		}
+	}
+
+	function destroyPerfectScrollbar() {
+		$panel().find( '.qodef-woo-side-area-cart' ).each( function () {
 			try {
 				if ( this._ps ) {
 					this._ps.destroy();
@@ -47,6 +116,7 @@
 		$panel().find( '.ng-farmley-sc-reco' ).not( $footer.find( '.ng-farmley-sc-reco' ) ).remove();
 		$panel().find( '.ng-farmley-sc-reco-slot' ).not( $footer.find( '.ng-farmley-sc-reco-slot' ) ).remove();
 		$panel().find( '.ng-farmley-sc-coupon' ).not( $footer.find( '.ng-farmley-sc-coupon' ) ).remove();
+		$panel().find( '.ng-farmley-sc-coupon-slot' ).not( $footer.find( '.ng-farmley-sc-coupon-slot' ) ).remove();
 		$panel().find( '.ng-farmley-sc-items-scroll' ).remove();
 
 		if ( $footer.length && $footer.find( '.ng-farmley-sc-reco' ).length > 1 ) {
@@ -86,14 +156,20 @@
 			$footer.append( $recoSlot );
 		}
 
+		var $orderSlot = $footer.find( '.ng-farmley-sc-order-slot' ).first();
+		if ( ! $orderSlot.length ) {
+			$orderSlot = $( '<div class="ng-farmley-sc-order-slot"></div>' );
+			$footer.append( $orderSlot );
+		}
+
 		var $directReco = $footer.children( '.ng-farmley-sc-reco' ).first();
 		if ( $directReco.length ) {
 			$directReco.appendTo( $recoSlot );
 		}
 
-		var $orderDetails = $p.find( '.qodef-m-order-details' ).first();
-		if ( $orderDetails.length && ! $.contains( $footer[0], $orderDetails[0] ) ) {
-			$orderDetails.detach().insertAfter( $recoSlot );
+		var $orderDetails = $p.find( '.ng-farmley-sc-order-details, .qodef-m-order-details' ).first();
+		if ( $orderDetails.length && ! $.contains( $orderSlot[0], $orderDetails[0] ) ) {
+			$orderDetails.detach().appendTo( $orderSlot );
 		}
 
 		var $action = $p.find( '.qodef-m-action' ).first();
@@ -109,14 +185,53 @@
 		var $couponSlot = $footer.find( '.ng-farmley-sc-coupon-slot' ).first();
 		var $recoSlot = $footer.find( '.ng-farmley-sc-reco-slot' ).first();
 
-		if ( window.ngFarmleySideCart ) {
-			if ( ( force || ! $couponSlot.children().length ) && ngFarmleySideCart.couponHtml ) {
-				$couponSlot.html( ngFarmleySideCart.couponHtml );
-			}
-			if ( ( force || ! $recoSlot.find( '.ng-farmley-sc-reco' ).length ) && ngFarmleySideCart.recoHtml ) {
-				$recoSlot.html( ngFarmleySideCart.recoHtml );
-			}
+		if ( ! window.ngFarmleySideCart ) {
+			return;
 		}
+
+		if ( ( force || ! $couponSlot.children().length ) && ngFarmleySideCart.couponHtml ) {
+			$couponSlot.html( ngFarmleySideCart.couponHtml );
+		}
+
+		if ( ( force || ! $recoSlot.find( '.ng-farmley-sc-reco' ).length ) && ngFarmleySideCart.recoHtml ) {
+			$recoSlot.html( ngFarmleySideCart.recoHtml );
+		}
+	}
+
+	function applySideCartMeta( data ) {
+		if ( ! data || ! window.ngFarmleySideCart ) {
+			return;
+		}
+
+		if ( typeof data.couponHtml === 'string' ) {
+			ngFarmleySideCart.couponHtml = data.couponHtml;
+		}
+		if ( typeof data.recoHtml === 'string' ) {
+			ngFarmleySideCart.recoHtml = data.recoHtml;
+		}
+		if ( typeof data.percent !== 'undefined' ) {
+			ngFarmleySideCart.percent = data.percent;
+		}
+		if ( typeof data.itemCount !== 'undefined' ) {
+			ngFarmleySideCart.itemCount = data.itemCount;
+		}
+	}
+
+	function resolveFragmentTargets( selector ) {
+		var scopedPrefix = '.widget_greenpath_core_woo_side_area_cart ';
+		var $targets = $( selector );
+
+		if ( ! $targets.length && selector.indexOf( scopedPrefix ) === 0 ) {
+			var innerSelector = selector.slice( scopedPrefix.length );
+			$widgets().each( function () {
+				var $match = $( this ).find( innerSelector );
+				if ( $match.length ) {
+					$targets = $targets.add( $match );
+				}
+			} );
+		}
+
+		return $targets;
 	}
 
 	function applyCartFragments( fragments ) {
@@ -124,12 +239,62 @@
 			return;
 		}
 
+		if ( ! $widgets().length && ! $( '.qodef-widget-side-area-cart-inner' ).length ) {
+			return;
+		}
+
 		$.each( fragments, function ( selector, html ) {
-			var $target = $( selector );
-			if ( $target.length ) {
-				$target.replaceWith( html );
+			var $targets = resolveFragmentTargets( selector );
+
+			if ( ! $targets.length ) {
+				return;
 			}
+
+			if ( html === '' || html === null ) {
+				$targets.remove();
+				return;
+			}
+
+			$targets.each( function () {
+				$( this ).replaceWith( html );
+			} );
 		} );
+	}
+
+	function normalizeCartMarkup( $root ) {
+		var $scope = $root && $root.length ? $root : $panel();
+		if ( ! $scope.length ) {
+			return;
+		}
+
+		var $content = $scope.hasClass( 'qodef-widget-side-area-cart-content' )
+			? $scope
+			: $scope.find( '.qodef-widget-side-area-cart-content' ).first();
+
+		if ( ! $content.length ) {
+			return;
+		}
+
+		var $cartSlot = $content.children( '.ng-farmley-sc-cart-slot' ).first();
+		if ( ! $cartSlot.length ) {
+			$cartSlot = $( '<div class="ng-farmley-sc-cart-slot"></div>' );
+			var $notFound = $content.children( '.qodef-m-posts-not-found' ).first();
+			var $cartList = $content.children( '.qodef-woo-side-area-cart' ).first();
+
+			if ( $notFound.length ) {
+				$notFound.appendTo( $cartSlot );
+			} else if ( $cartList.length ) {
+				$cartList.appendTo( $cartSlot );
+			} else {
+				$content.children().not( '.qodef-side-area-cart-top, .ng-farmley-sc-progress, .ng-farmley-sc-footer, .qodef-m-action, .ng-farmley-sc-burst, .ng-farmley-sc-scroll' ).appendTo( $cartSlot );
+			}
+
+			if ( $cartSlot.children().length ) {
+				$content.children( '.qodef-side-area-cart-top' ).last().after( $cartSlot );
+			}
+		}
+
+		ensureFooter();
 	}
 
 	function syncSideCartMeta( callback ) {
@@ -145,9 +310,7 @@
 			{ security: ngFarmleySideCart.nonce }
 		).done( function ( response ) {
 			if ( response && response.success && response.data ) {
-				ngFarmleySideCart.couponHtml = response.data.couponHtml || '';
-				ngFarmleySideCart.recoHtml = response.data.recoHtml || '';
-				ngFarmleySideCart.percent = response.data.percent || 0;
+				applySideCartMeta( response.data );
 			}
 		} ).always( function () {
 			if ( callback ) {
@@ -156,70 +319,102 @@
 		} );
 	}
 
-	function bindCouponApply() {
-		var widget = $widget()[0];
-		if ( ! widget || widget._ngCouponBound ) {
+	function applyCouponCode( $btn, code ) {
+		if ( typeof wc_add_to_cart_params === 'undefined' || ! window.ngFarmleySideCart || ! ngFarmleySideCart.nonce ) {
 			return;
 		}
 
-		widget._ngCouponBound = true;
+		if ( ! $btn || ! $btn.length || $btn.prop( 'disabled' ) || $btn.hasClass( 'ng-farmley-sc-coupon__apply--busy' ) ) {
+			return;
+		}
 
-		$( widget ).on( 'click.ngScCoupon', '[data-ng-sc-apply-coupon]', function ( event ) {
+		var $couponWrap = $btn.closest( '[data-ng-sc-coupon]' );
+		var $feedback = $couponWrap.find( '[data-ng-sc-coupon-feedback]' ).first();
+		var applying = ngFarmleySideCart.i18n && ngFarmleySideCart.i18n.couponApplying ? ngFarmleySideCart.i18n.couponApplying : 'Applying…';
+
+		$couponWrap.find( '.ng-farmley-sc-coupon__apply--busy' ).removeClass( 'ng-farmley-sc-coupon__apply--busy' ).prop( 'disabled', false ).filter( ':not(:disabled)' ).text( 'Apply' );
+		$btn.addClass( 'ng-farmley-sc-coupon__apply--busy' ).prop( 'disabled', true ).text( applying );
+		$feedback.removeClass( 'is-error is-success' ).text( '' );
+		setUpdating( true );
+
+		$.post(
+			wc_add_to_cart_params.wc_ajax_url.toString().replace( '%%endpoint%%', 'ng_farmley_side_cart_apply_coupon' ),
+			{
+				security: ngFarmleySideCart.nonce,
+				coupon_code: code,
+			}
+		).done( function ( response ) {
+			if ( response && response.success && response.data ) {
+				finishCartUpdate( response.data, { animateProgress: true } );
+				$feedback.addClass( 'is-success' ).text( response.data.message || '' );
+			} else {
+				var msg = response && response.data && response.data.message ? response.data.message : ( ngFarmleySideCart.i18n ? ngFarmleySideCart.i18n.couponFailed : 'Could not apply coupon.' );
+				$feedback.addClass( 'is-error' ).text( msg );
+				$btn.removeClass( 'ng-farmley-sc-coupon__apply--busy' ).prop( 'disabled', false ).text( 'Apply' );
+			}
+		} ).fail( function () {
+			$feedback.addClass( 'is-error' ).text( ngFarmleySideCart.i18n ? ngFarmleySideCart.i18n.couponFailed : 'Could not apply coupon.' );
+			$btn.removeClass( 'ng-farmley-sc-coupon__apply--busy' ).prop( 'disabled', false ).text( 'Apply' );
+		} ).always( function () {
+			setUpdating( false );
+		} );
+	}
+
+	function bindCouponApply() {
+		if ( document.body._ngCouponBound ) {
+			return;
+		}
+
+		document.body._ngCouponBound = true;
+
+		$( document.body ).on( 'click.ngScCoupon', '.widget_greenpath_core_woo_side_area_cart [data-ng-sc-apply-coupon]', function ( event ) {
 			event.preventDefault();
+			event.stopPropagation();
 
 			var $btn = $( this );
-			if ( $btn.prop( 'disabled' ) || $btn.hasClass( 'ng-farmley-sc-coupon__apply--busy' ) ) {
+			var code = $btn.attr( 'data-coupon-code' ) || ( window.ngFarmleySideCart ? ngFarmleySideCart.couponCode : '' );
+			if ( ! code ) {
 				return;
 			}
 
-			if ( typeof wc_add_to_cart_params === 'undefined' || ! window.ngFarmleySideCart ) {
+			applyCouponCode( $btn, code );
+		} );
+	}
+
+	function bindCouponViewAll() {
+		if ( document.body._ngCouponViewAllBound ) {
+			return;
+		}
+
+		document.body._ngCouponViewAllBound = true;
+
+		$( document.body ).on( 'click.ngScCouponViewAll', '.widget_greenpath_core_woo_side_area_cart [data-ng-sc-toggle-coupons]', function ( event ) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var $btn = $( this );
+			var $couponPanel = $btn.closest( '.ng-farmley-sc-coupon__card' ).find( '[data-ng-sc-coupons-panel]' ).first();
+			if ( ! $couponPanel.length ) {
 				return;
 			}
 
-			var code = $btn.attr( 'data-coupon-code' ) || ngFarmleySideCart.couponCode || 'SAVER8';
-			var $feedback = $btn.closest( '.ng-farmley-sc-coupon' ).find( '[data-ng-sc-coupon-feedback]' ).first();
-			var applying = ngFarmleySideCart.i18n && ngFarmleySideCart.i18n.couponApplying ? ngFarmleySideCart.i18n.couponApplying : 'Applying…';
+			var isOpen = $btn.attr( 'aria-expanded' ) === 'true';
+			isOpen = ! isOpen;
 
-			$btn.addClass( 'ng-farmley-sc-coupon__apply--busy' ).prop( 'disabled', true ).text( applying );
-			$feedback.removeClass( 'is-error is-success' ).text( '' );
-
-			$.post(
-				wc_add_to_cart_params.wc_ajax_url.toString().replace( '%%endpoint%%', 'ng_farmley_side_cart_apply_coupon' ),
-				{
-					security: ngFarmleySideCart.nonce,
-					coupon_code: code,
-				}
-			).done( function ( response ) {
-				if ( response && response.success && response.data ) {
-					ngFarmleySideCart.couponHtml = response.data.couponHtml || ngFarmleySideCart.couponHtml;
-					ngFarmleySideCart.recoHtml = response.data.recoHtml || ngFarmleySideCart.recoHtml;
-					ngFarmleySideCart.percent = response.data.percent || ngFarmleySideCart.percent;
-					applyCartFragments( response.data.fragments );
-					buildLayout();
-					fillFooterContent( true );
-					updateProgress( true );
-					$feedback.addClass( 'is-success' ).text( response.data.message || '' );
-				} else {
-					var msg = response && response.data && response.data.message ? response.data.message : ( ngFarmleySideCart.i18n ? ngFarmleySideCart.i18n.couponFailed : 'Could not apply coupon.' );
-					$feedback.addClass( 'is-error' ).text( msg );
-					$btn.removeClass( 'ng-farmley-sc-coupon__apply--busy' ).prop( 'disabled', false ).text( 'Apply' );
-				}
-			} ).fail( function () {
-				$feedback.addClass( 'is-error' ).text( ngFarmleySideCart.i18n ? ngFarmleySideCart.i18n.couponFailed : 'Could not apply coupon.' );
-				$btn.removeClass( 'ng-farmley-sc-coupon__apply--busy' ).prop( 'disabled', false ).text( 'Apply' );
-			} );
+			$btn.attr( 'aria-expanded', isOpen ? 'true' : 'false' );
+			$btn.toggleClass( 'is-open', isOpen );
+			$couponPanel.prop( 'hidden', ! isOpen );
 		} );
 	}
 
 	function bindRemoveItem() {
-		var widget = $widget()[0];
-		if ( ! widget || widget._ngRemoveBound ) {
+		if ( document.body._ngRemoveBound ) {
 			return;
 		}
 
-		widget._ngRemoveBound = true;
+		document.body._ngRemoveBound = true;
 
-		$( widget ).on( 'click.ngScRemove', '.qodef-woo-side-area-cart .remove_from_cart_button', function ( event ) {
+		$( document.body ).on( 'click.ngScRemove', '.widget_greenpath_core_woo_side_area_cart .qodef-woo-side-area-cart .remove_from_cart_button', function ( event ) {
 			event.preventDefault();
 			event.stopImmediatePropagation();
 
@@ -237,6 +432,7 @@
 			var $item = $btn.closest( '.qodef-woo-side-area-cart-item' );
 			$btn.addClass( 'ng-farmley-sc-removing' );
 			$item.addClass( 'ng-farmley-sc-item--removing' );
+			setUpdating( true );
 
 			$.ajax( {
 				type: 'POST',
@@ -245,13 +441,14 @@
 				dataType: 'json',
 			} ).done( function ( response ) {
 				if ( response && response.fragments ) {
-					applyCartFragments( response.fragments );
+					finishCartUpdate(
+						{
+							fragments: response.fragments,
+							cart_hash: response.cart_hash,
+						},
+						{ animateProgress: true }
+					);
 					$( document.body ).trigger( 'removed_from_cart', [ response.fragments, response.cart_hash, $btn ] );
-					syncSideCartMeta( function () {
-						buildLayout();
-						fillFooterContent( true );
-						updateProgress( true );
-					} );
 				} else {
 					$btn.removeClass( 'ng-farmley-sc-removing' );
 					$item.removeClass( 'ng-farmley-sc-item--removing' );
@@ -259,19 +456,20 @@
 			} ).fail( function () {
 				$btn.removeClass( 'ng-farmley-sc-removing' );
 				$item.removeClass( 'ng-farmley-sc-item--removing' );
+			} ).always( function () {
+				setUpdating( false );
 			} );
 		} );
 	}
 
 	function bindQtyStepper() {
-		var widget = $widget()[0];
-		if ( ! widget || widget._ngQtyBound ) {
+		if ( document.body._ngQtyBound ) {
 			return;
 		}
 
-		widget._ngQtyBound = true;
+		document.body._ngQtyBound = true;
 
-		$( widget ).on( 'click.ngScQty', '[data-ng-sc-qty] [data-action]', function ( event ) {
+		$( document.body ).on( 'click.ngScQty', '.widget_greenpath_core_woo_side_area_cart [data-ng-sc-qty] [data-action]', function ( event ) {
 			event.preventDefault();
 			event.stopImmediatePropagation();
 
@@ -311,6 +509,7 @@
 			var $item = $wrap.closest( '.qodef-woo-side-area-cart-item' );
 			$wrap.addClass( 'ng-farmley-sc-qty--busy' );
 			$item.addClass( 'ng-farmley-sc-item--updating' );
+			setUpdating( true );
 
 			$.post(
 				wc_add_to_cart_params.wc_ajax_url.toString().replace( '%%endpoint%%', 'ng_farmley_side_cart_update_qty' ),
@@ -321,17 +520,8 @@
 				}
 			).done( function ( response ) {
 				if ( response && response.success && response.data ) {
-					ngFarmleySideCart.couponHtml = response.data.couponHtml || ngFarmleySideCart.couponHtml;
-					ngFarmleySideCart.recoHtml = response.data.recoHtml || ngFarmleySideCart.recoHtml;
-					ngFarmleySideCart.percent = response.data.percent || ngFarmleySideCart.percent;
-					applyCartFragments( response.data.fragments );
+					finishCartUpdate( response.data, { animateProgress: true } );
 					$( document.body ).trigger( 'updated_wc_div' );
-					syncSideCartMeta( function () {
-						buildLayout();
-						fillFooterContent( true );
-						updateProgress( true );
-						updateHeading();
-					} );
 				} else {
 					$wrap.removeClass( 'ng-farmley-sc-qty--busy' );
 					$item.removeClass( 'ng-farmley-sc-item--updating' );
@@ -339,6 +529,8 @@
 			} ).fail( function () {
 				$wrap.removeClass( 'ng-farmley-sc-qty--busy' );
 				$item.removeClass( 'ng-farmley-sc-item--updating' );
+			} ).always( function () {
+				setUpdating( false );
 			} );
 		} );
 	}
@@ -349,17 +541,17 @@
 			return;
 		}
 
-		var $scroll = $p.children( '.ng-farmley-sc-scroll' ).first();
+		var $scrollEl = $p.children( '.ng-farmley-sc-scroll' ).first();
 
-		if ( ! $scroll.length ) {
-			$scroll = $( '<div class="ng-farmley-sc-scroll" tabindex="-1"></div>' );
-			$p.children().not( '.ng-farmley-sc-burst' ).appendTo( $scroll );
-			$p.append( $scroll );
-		} else {
-			$p.children().not( '.ng-farmley-sc-burst, .ng-farmley-sc-scroll' ).appendTo( $scroll );
+		if ( $scrollEl.length ) {
+			attachScrollWheel( $scrollEl[0] );
+			return;
 		}
 
-		attachScrollWheel( $scroll[0] );
+		$scrollEl = $( '<div class="ng-farmley-sc-scroll" tabindex="-1"></div>' );
+		$p.children().not( '.ng-farmley-sc-burst' ).appendTo( $scrollEl );
+		$p.append( $scrollEl );
+		attachScrollWheel( $scrollEl[0] );
 	}
 
 	function attachScrollWheel( scrollEl ) {
@@ -424,24 +616,40 @@
 		} );
 	}
 
-	function buildLayout() {
+	function buildLayout( options ) {
+		options = options || {};
 		var $p = $panel();
+
 		if ( ! $p.length ) {
 			return;
 		}
 
-		$widget().addClass( 'ng-farmley-sc-ready' );
-		cleanupDuplicates();
+		normalizeCartMarkup( $p );
+		$widgets().addClass( 'ng-farmley-sc-ready' );
+
+		if ( ! options.light ) {
+			cleanupDuplicates();
+		}
+
 		ensureFooter();
-		fillFooterContent();
+
+		if ( options.forceFooter || ! options.light ) {
+			fillFooterContent( !! options.forceFooter );
+		} else {
+			fillFooterContent( false );
+		}
+
 		ensureScrollWrap();
 		updateHeading();
 		destroyPerfectScrollbar();
-		initRecoCarousels();
+		initRecoCarousels( options );
+		layoutReady = true;
 	}
 
-	function initRecoCarousels() {
-		$panel().find( '.ng-farmley-sc-reco' ).each( function () {
+	function initRecoCarousels( options ) {
+		options = options || {};
+
+		$panel().find( '.ng-farmley-sc-reco' ).each( function ( index ) {
 			var $reco = $( this );
 			var $row = $reco.find( '.ng-farmley-sc-reco__row' ).first();
 			var $prev = $reco.find( '.ng-farmley-sc-reco__prev' ).first();
@@ -450,6 +658,16 @@
 			if ( ! $row.length || ! $prev.length || ! $next.length ) {
 				return;
 			}
+
+			if ( ! $reco.attr( 'data-ng-sc-reco-id' ) ) {
+				$reco.attr( 'data-ng-sc-reco-id', 'reco-' + index );
+			}
+
+			if ( $reco.data( 'ngRecoReady' ) && ! options.reinitReco ) {
+				return;
+			}
+
+			$reco.data( 'ngRecoReady', true );
 
 			$prev.off( 'click.ngRecoCarousel' );
 			$next.off( 'click.ngRecoCarousel' );
@@ -475,12 +693,7 @@
 				var maxScroll = Math.max( 0, el.scrollWidth - el.clientWidth );
 
 				target = Math.max( 0, Math.min( maxScroll, target ) );
-
 				$row.stop( true ).animate( { scrollLeft: target }, 280, updateNav );
-			}
-
-			function refreshNavSoon() {
-				window.setTimeout( updateNav, 80 );
 			}
 
 			$prev.on( 'click.ngRecoCarousel', function ( event ) {
@@ -496,9 +709,33 @@
 			} );
 
 			$row.on( 'scroll.ngRecoCarousel', updateNav );
-			$reco.find( 'img' ).off( 'load.ngRecoCarousel error.ngRecoCarousel' ).on( 'load.ngRecoCarousel error.ngRecoCarousel', refreshNavSoon );
-			$( window ).off( 'resize.ngRecoCarousel' ).on( 'resize.ngRecoCarousel', refreshNavSoon );
-			refreshNavSoon();
+			updateNav();
+		} );
+	}
+
+	function finishCartUpdate( payload, options ) {
+		options = options || {};
+		var uiState = captureUIState();
+		var previousPercent = lastProgressPercent;
+
+		setUpdating( true );
+		applySideCartMeta( payload );
+
+		if ( ! options.skipFragments ) {
+			applyCartFragments( payload && payload.fragments );
+		}
+
+		window.requestAnimationFrame( function () {
+			buildLayout( {
+				light: true,
+				forceFooter: typeof payload.couponHtml === 'string' || typeof payload.recoHtml === 'string',
+				reinitReco: typeof payload.recoHtml === 'string',
+			} );
+			updateProgress( options.animateProgress && cartIsOpen && Math.abs( readProgressPercent() - previousPercent ) > 0.5 );
+			restoreUIState( uiState );
+			$panel().find( '.ng-farmley-sc-qty--busy' ).removeClass( 'ng-farmley-sc-qty--busy' );
+			$panel().find( '.ng-farmley-sc-item--updating, .ng-farmley-sc-item--removing' ).removeClass( 'ng-farmley-sc-item--updating ng-farmley-sc-item--removing' );
+			setUpdating( false );
 		} );
 	}
 
@@ -708,20 +945,38 @@
 		}
 	}
 
-	function onFragmentsUpdated() {
-		var previousPercent = lastProgressPercent;
+	function scheduleFragmentUpdate( delay, animateProgress ) {
+		fragmentUpdatePending = true;
 
-		syncSideCartMeta( function () {
-			buildLayout();
-			fillFooterContent( true );
-			updateProgress( cartIsOpen && Math.abs( readProgressPercent() - previousPercent ) > 0.5 );
-			window.setTimeout( destroyPerfectScrollbar, 50 );
-		} );
+		if ( fragmentUpdateTimer ) {
+			window.clearTimeout( fragmentUpdateTimer );
+		}
+
+		fragmentUpdateTimer = window.setTimeout( function () {
+			fragmentUpdateTimer = null;
+
+			if ( ! fragmentUpdatePending ) {
+				return;
+			}
+
+			fragmentUpdatePending = false;
+			var previousPercent = lastProgressPercent;
+			var uiState = captureUIState();
+
+			setUpdating( true );
+			window.requestAnimationFrame( function () {
+				buildLayout( { light: true, reinitReco: true } );
+				updateProgress( cartIsOpen && animateProgress && Math.abs( readProgressPercent() - previousPercent ) > 0.5 );
+				restoreUIState( uiState );
+				setUpdating( false );
+			} );
+		}, delay || 80 );
 	}
 
 	$( function () {
 		bindRecoAddLoading();
 		bindCouponApply();
+		bindCouponViewAll();
 		bindRemoveItem();
 		bindQtyStepper();
 		buildLayout();
@@ -731,10 +986,10 @@
 	} );
 
 	$( document.body ).on( 'wc_fragments_refreshed wc_fragments_loaded', function () {
-		window.setTimeout( onFragmentsUpdated, 100 );
+		finishCartUpdate( {}, { animateProgress: true, skipFragments: true } );
 	} );
 
 	$( document.body ).on( 'added_to_cart', function () {
-		window.setTimeout( onFragmentsUpdated, 150 );
+		finishCartUpdate( {}, { animateProgress: true, skipFragments: true } );
 	} );
 }( jQuery ) );

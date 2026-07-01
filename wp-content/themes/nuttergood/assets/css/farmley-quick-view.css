@@ -404,6 +404,11 @@ body.ng-farmley-qv-open {
 	opacity: 1;
 	transform: scale(1.06);
 	position: relative;
+	z-index: 2;
+}
+
+.ng-farmley-qv__stage-img:first-child.is-active {
+	opacity: 1;
 }
 
 .ng-farmley-qv__thumbs {
@@ -463,8 +468,8 @@ body.ng-farmley-qv-open {
 	align-items: stretch;
 	gap: 12px;
 	margin-bottom: 16px;
-	padding-bottom: 16px;
-	border-bottom: 1px solid rgba(12, 83, 61, 0.08);
+	padding-bottom: 0;
+	border-bottom: none;
 }
 
 .ng-farmley-qv__title-row {
@@ -530,11 +535,13 @@ body.ng-farmley-qv-open {
 .ng-farmley-qv__price-row {
 	display: flex;
 	flex-shrink: 0;
-	align-items: baseline;
+	flex-direction: column;
+	align-items: flex-start;
 	justify-content: flex-start;
 	margin: 0;
 	text-align: left;
 	width: 100%;
+	gap: 4px;
 }
 
 .ng-farmley-qv__price-label {
@@ -545,10 +552,9 @@ body.ng-farmley-qv-open {
 
 .ng-farmley-qv__price-values {
 	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: baseline;
-	gap: 8px;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 3px;
 }
 
 .ng-farmley-qv__price-regular,
@@ -556,6 +562,7 @@ body.ng-farmley-qv-open {
 	font-size: 14px;
 	color: #9a9a9a;
 	text-decoration: line-through;
+	order: 2;
 }
 
 .ng-farmley-qv__price-sale,
@@ -564,6 +571,7 @@ body.ng-farmley-qv-open {
 	font-weight: 700;
 	color: #0c533d;
 	text-decoration: none;
+	order: 1;
 }
 
 .ng-farmley-qv__price-sale .woocommerce-Price-currencySymbol,
@@ -924,11 +932,29 @@ body.ng-farmley-qv-open {
 	font-size: 13px;
 	line-height: 1.65;
 	color: #3d3d3d;
-	margin: 20px 0 0;
+	margin: 16px 0 0;
 	padding: 0;
 	text-align: left;
 	width: 100%;
 	box-sizing: border-box;
+	border: none;
+}
+
+.ng-farmley-qv__description::before {
+	content: none;
+	display: none;
+}
+
+.ng-farmley-qv__description blockquote {
+	margin: 0 0 12px;
+	padding: 0;
+	border: none;
+	border-left: none;
+	background: transparent;
+}
+
+.ng-farmley-qv__description hr {
+	display: none;
 }
 
 .ng-farmley-qv__description p,
@@ -1017,23 +1043,23 @@ body.ng-farmley-qv-open {
 	display: none !important;
 }
 
-/* Open animation stagger */
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__gallery {
+/* Open animation stagger — run once per open (no re-trigger on enhance retries) */
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__gallery {
 	animation: ng-fv-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > * {
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__info > * {
 	animation: ng-fv-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(1) { animation-delay: 0.06s; }
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(2) { animation-delay: 0.1s; }
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(3) { animation-delay: 0.14s; }
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(4) { animation-delay: 0.18s; }
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(5) { animation-delay: 0.22s; }
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(6) { animation-delay: 0.26s; }
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(7) { animation-delay: 0.3s; }
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__info > *:nth-child(8) { animation-delay: 0.34s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__info > *:nth-child(1) { animation-delay: 0.06s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__info > *:nth-child(2) { animation-delay: 0.1s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__info > *:nth-child(3) { animation-delay: 0.14s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__info > *:nth-child(4) { animation-delay: 0.18s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__info > *:nth-child(5) { animation-delay: 0.22s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__info > *:nth-child(6) { animation-delay: 0.26s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__info > *:nth-child(7) { animation-delay: 0.3s; }
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__info > *:nth-child(8) { animation-delay: 0.34s; }
 
 @keyframes ng-fv-slide-up {
 	from {
@@ -1055,7 +1081,7 @@ body.ng-farmley-qv-open {
 	}
 }
 
-.ng-farmley-qv-drawer.ng-farmley-qv--ready .ng-farmley-qv__head {
+.ng-farmley-qv-drawer.ng-farmley-qv--ready:not(.ng-farmley-qv--enhanced) .ng-farmley-qv__head {
 	animation: ng-fv-fade-in 0.4s ease both;
 }
 
@@ -1112,8 +1138,8 @@ body.ng-farmley-qv-open {
 	}
 
 	.ng-farmley-qv__price-values {
-		flex-direction: row;
-		align-items: baseline;
+		flex-direction: column;
+		align-items: flex-start;
 	}
 
 	.ng-farmley-qv__purchase {

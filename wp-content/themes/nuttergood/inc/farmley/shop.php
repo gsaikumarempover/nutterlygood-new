@@ -163,6 +163,10 @@ if ( ! function_exists( 'nuttergood_farmley_prepare_single_product_sub_loop_icon
 
 if ( ! function_exists( 'nuttergood_farmley_shop_product_list_atts' ) ) {
 	function nuttergood_farmley_shop_product_list_atts() {
+		$category_ids = function_exists( 'nuttergood_farmley_home_category_ids' )
+			? nuttergood_farmley_home_category_ids()
+			: array();
+
 		return array(
 			'behavior'               => 'columns',
 			'columns'                => '3',
@@ -192,6 +196,8 @@ if ( ! function_exists( 'nuttergood_farmley_shop_product_list_atts' ) ) {
 			'first_attribute_filter' => '',
 			'second_attribute_filter'=> '',
 			'pagination_type'        => 'standard',
+			'tax'                    => 'product_cat',
+			'tax__in'                => ! empty( $category_ids ) ? implode( ', ', $category_ids ) : '',
 		);
 	}
 }

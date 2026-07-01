@@ -10,6 +10,7 @@
 
 .ng-farmley-greviews__inner {
 	width: 100%;
+	box-sizing: border-box;
 }
 
 .ng-farmley-greviews__head {
@@ -18,7 +19,7 @@
 	align-items: flex-end;
 	justify-content: space-between;
 	gap: 20px 28px;
-	margin-bottom: 28px;
+	margin-bottom: 24px;
 }
 
 .ng-farmley-greviews__title {
@@ -70,6 +71,7 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 2px;
+	flex-shrink: 0;
 }
 
 .ng-farmley-greviews__star {
@@ -109,16 +111,21 @@
 
 .ng-farmley-greviews__feed-wrap {
 	position: relative;
+	padding: 0 52px;
+	box-sizing: border-box;
 }
 
 .ng-farmley-greviews__feed {
 	display: flex;
 	gap: 18px;
-	overflow-x: hidden;
+	overflow-x: auto;
+	overflow-y: hidden;
 	scroll-behavior: smooth;
-	padding: 4px 2px 12px;
+	scroll-snap-type: x mandatory;
+	padding: 4px 0 10px;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
+	-webkit-overflow-scrolling: touch;
 }
 
 .ng-farmley-greviews__feed::-webkit-scrollbar {
@@ -126,13 +133,16 @@
 }
 
 .ng-farmley-greviews__card {
-	flex: 0 0 min(320px, calc(100% - 8px));
+	flex: 0 0 min(300px, 100%);
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
 	background: #fff;
 	border: 1px solid rgba(12, 83, 61, 0.08);
 	border-radius: 16px;
 	padding: 18px 18px 20px;
 	box-shadow: 0 8px 24px rgba(12, 83, 61, 0.06);
 	box-sizing: border-box;
+	min-width: 0;
 }
 
 .ng-farmley-greviews__card-top {
@@ -141,6 +151,10 @@
 	align-items: center;
 	gap: 10px;
 	margin-bottom: 10px;
+}
+
+.ng-farmley-greviews__meta {
+	min-width: 0;
 }
 
 .ng-farmley-greviews__avatar {
@@ -155,6 +169,7 @@
 	font-family: "Manrope", sans-serif;
 	font-size: 15px;
 	font-weight: 700;
+	flex-shrink: 0;
 }
 
 .ng-farmley-greviews__avatar--photo {
@@ -177,6 +192,13 @@
 	font-size: 12px;
 	color: #8a8a8a;
 	margin-top: 2px;
+}
+
+.ng-farmley-greviews__g-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
 }
 
 .ng-farmley-greviews__card .ng-farmley-greviews__stars {
@@ -215,16 +237,66 @@
 }
 
 .ng-farmley-greviews__nav--prev {
-	left: -10px;
+	left: 0;
 }
 
 .ng-farmley-greviews__nav--next {
-	right: -10px;
+	right: 0;
 }
 
 @media (max-width: 1024px) {
 	.ng-farmley-greviews {
 		padding: 52px 0 60px;
+	}
+
+	.ng-farmley-greviews__feed-wrap {
+		padding: 0 44px;
+	}
+}
+
+@media (max-width: 767px) {
+	.ng-farmley-greviews {
+		padding: 44px 0 52px;
+	}
+
+	.ng-farmley-greviews__inner.qodef-content-grid {
+		padding-left: 16px !important;
+		padding-right: 16px !important;
+	}
+
+	.ng-farmley-greviews__head {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 14px;
+		margin-bottom: 18px;
+	}
+
+	.ng-farmley-greviews__summary {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.ng-farmley-greviews__feed-wrap {
+		padding: 0 38px;
+		margin-top: 4px;
+	}
+
+	.ng-farmley-greviews__feed {
+		gap: 12px;
+		padding: 2px 0 8px;
+	}
+
+	.ng-farmley-greviews__card {
+		flex: 0 0 100%;
+		width: 100%;
+		padding: 16px 16px 18px;
+	}
+
+	.ng-farmley-greviews__nav {
+		width: 32px;
+		height: 32px;
+		font-size: 20px;
 	}
 
 	.ng-farmley-greviews__nav--prev {
@@ -236,13 +308,18 @@
 	}
 }
 
-@media (max-width: 680px) {
-	.ng-farmley-greviews__head {
-		flex-direction: column;
-		align-items: flex-start;
+@media (max-width: 480px) {
+	.ng-farmley-greviews__feed-wrap {
+		padding: 0 34px;
 	}
 
 	.ng-farmley-greviews__card {
-		flex-basis: min(280px, 88vw);
+		padding: 14px 14px 16px;
+	}
+
+	.ng-farmley-greviews__nav {
+		width: 30px;
+		height: 30px;
+		font-size: 18px;
 	}
 }

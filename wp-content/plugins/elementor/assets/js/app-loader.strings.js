@@ -236,17 +236,17 @@ __( 'Plugins', 'elementor' );
 __( 'All plugins are required for this website templates to work', 'elementor' );
 __( 'Import', 'elementor' );
 __( 'Export', 'elementor' );
-__( 'View Demo', 'elementor' );
-__( 'Kit Library', 'elementor' );
-__( 'Loading...', 'elementor' );
-__( 'WHAT\'S INSIDE', 'elementor' );
-__( 'View Demo', 'elementor' );
 __( 'Desktop', 'elementor' );
 __( 'Tablet', 'elementor' );
 __( 'Mobile', 'elementor' );
 __( 'Overview', 'elementor' );
 __( 'Kit Library', 'elementor' );
 __( 'Loading...', 'elementor' );
+__( 'View Demo', 'elementor' );
+__( 'Kit Library', 'elementor' );
+__( 'Loading...', 'elementor' );
+__( 'WHAT\'S INSIDE', 'elementor' );
+__( 'View Demo', 'elementor' );
 __( 'Website Templates', 'elementor' );
 __( 'Featured', 'elementor' );
 __( 'New', 'elementor' );
@@ -403,9 +403,6 @@ __( 'Learn More', 'elementor' );
 __( 'Upload a .zip file', 'elementor' );
 __( 'Click to upload', 'elementor' );
 __( 'or drag and drop', 'elementor' );
-__( 'Must add a website template name', 'elementor' );
-__( 'Use characters only', 'elementor' );
-__( 'Description exceeds 300 characters', 'elementor' );
 __( 'Setting up your website template...', 'elementor' );
 __( 'Processing media files...', 'elementor' );
 __( 'Export failed', 'elementor' );
@@ -433,6 +430,9 @@ __( 'Once the download is complete, you can upload it to be used for other sites
 __( 'Take me there', 'elementor' );
 __( 'Is the automatic download not starting?', 'elementor' );
 __( 'Download manually', 'elementor' );
+__( 'Must add a website template name', 'elementor' );
+__( 'Use characters only', 'elementor' );
+__( 'Description exceeds 300 characters', 'elementor' );
 __( 'Website template name', 'elementor' );
 __( 'Type name here...', 'elementor' );
 __( 'Description (Optional)', 'elementor' );
@@ -536,6 +536,8 @@ __( 'Custom Post Type', 'elementor' );
 __( 'Click to select custom post types', 'elementor' );
 __( 'No custom post types in your site...', 'elementor' );
 __( 'Add the custom posts types to export. The latest 20 items from each type will be included.', 'elementor' );
+__( 'Export', 'elementor' );
+__( 'Close', 'elementor' );
 __( 'Unable to download the Website Template', 'elementor' );
 __( 'We couldn’t download the Website Template due to technical difficulties on our part. Try again and if the problem persists contact ', 'elementor' );
 __( 'Support', 'elementor' );
@@ -585,21 +587,34 @@ __( 'Upgrade now', 'elementor' );
 __( 'Cancel', 'elementor' );
 __( 'Export as .zip', 'elementor' );
 __( 'Try Again', 'elementor' );
-__( 'Export', 'elementor' );
-__( 'Close', 'elementor' );
-__( 'Version' ) } ${ cellLinkProps.text }` } <Icon className="eicon-editor-external-link" />
-		</InlineLink>
-	);
-
-	const getHeaders = () => {
-		if ( ! withHeader ) {
-			return [];
-		}
-
-		const headers = [ 'Plugin Name', 'Version' ];
-
-		if ( withStatus ) {
-			headers.splice( 1, 0, 'Status' );
+__( 'Learn More', 'elementor' );
+__( 'Select which plugins to export', 'elementor' );
+__( 'Your Website Template may not work as expected if key plugins are missing.', 'elementor' );
+__( 'By default, we’ll include everything in your file. Uncheck the items you don\'t want.', 'elementor' );
+__( 'Next', 'elementor' );
+__( 'Learn More', 'elementor' );
+__( 'Select which items to export', 'elementor' );
+__( 'You can export the content, site settings, and templates as a Website Template to be reused in the future.', 'elementor' );
+__( 'Uncheck the items you don\'t want to include.', 'elementor' );
+__( 'Open library', 'elementor' );
+__( 'Done', 'elementor' );
+__( 'Download manually', 'elementor' );
+__( 'Show me how', 'elementor' );
+__( 'Take me there', 'elementor' );
+__( 'Your website template is now saved to the library!', 'elementor' );
+__( 'Your .zip file is ready', 'elementor' );
+__( 'You can find it in the My Website Templates tab.', 'elementor' );
+__( 'Once the download is complete, you can upload it to be used for other sites.', 'elementor' );
+__( 'Build sites faster with Website Templates.', 'elementor' );
+__( 'Is the automatic download not starting?', 'elementor' );
+__( 'Previous', 'elementor' );
+__( 'Next', 'elementor' );
+__( 'Learn More', 'elementor' );
+__( 'Import a Website Kit to your site', 'elementor' );
+__( 'Parts of this kit overlap with your site’s templates, design and settings. The items you leave checked on this list will replace your current design.', 'elementor' );
+__( 'Note:', 'elementor' );
+__( "Your site's homepage will be determined by the kit. You can change this later.", 'elementor' );
+__( 'Select the items you want to keep and apply:', 'elementor' );
 __( 'Importing your content, templates and site settings', 'elementor' );
 __( 'This allows Elementor to scan your SVGs for malicious content. Otherwise, you can skip any SVGs in this import.', 'elementor' );
 __( 'Nothing to worry about, just continue without importing SVGs or go back and start the import again.', 'elementor' );
@@ -630,34 +645,27 @@ __( 'We applied your template and your site is online!', 'elementor' );
 __( 'You\'ve imported and applied the following to your site:', 'elementor' );
 __( 'Click here', 'elementor' );
 __( 'to learn more about building your site with Elementor Website Templates', 'elementor' );
-__( 'Previous', 'elementor' );
-__( 'Next', 'elementor' );
-__( 'Learn More', 'elementor' );
-__( 'Import a Website Kit to your site', 'elementor' );
-__( 'Parts of this kit overlap with your site’s templates, design and settings. The items you leave checked on this list will replace your current design.', 'elementor' );
-__( 'Note:', 'elementor' );
-__( "Your site's homepage will be determined by the kit. You can change this later.", 'elementor' );
-__( 'Select the items you want to keep and apply:', 'elementor' );
-__( 'Learn More', 'elementor' );
-__( 'Select which plugins to export', 'elementor' );
-__( 'Your Website Template may not work as expected if key plugins are missing.', 'elementor' );
-__( 'By default, we’ll include everything in your file. Uncheck the items you don\'t want.', 'elementor' );
-__( 'Next', 'elementor' );
-__( 'Learn More', 'elementor' );
-__( 'Select which items to export', 'elementor' );
-__( 'You can export the content, site settings, and templates as a Website Template to be reused in the future.', 'elementor' );
-__( 'Uncheck the items you don\'t want to include.', 'elementor' );
-__( 'Open library', 'elementor' );
-__( 'Done', 'elementor' );
-__( 'Download manually', 'elementor' );
-__( 'Show me how', 'elementor' );
-__( 'Take me there', 'elementor' );
-__( 'Your website template is now saved to the library!', 'elementor' );
-__( 'Your .zip file is ready', 'elementor' );
-__( 'You can find it in the My Website Templates tab.', 'elementor' );
-__( 'Once the download is complete, you can upload it to be used for other sites.', 'elementor' );
-__( 'Build sites faster with Website Templates.', 'elementor' );
-__( 'Is the automatic download not starting?', 'elementor' );
+__( 'Version' ) } ${ cellLinkProps.text }` } <Icon className="eicon-editor-external-link" />
+		</InlineLink>
+	);
+
+	const getHeaders = () => {
+		if ( ! withHeader ) {
+			return [];
+		}
+
+		const headers = [ 'Plugin Name', 'Version' ];
+
+		if ( withStatus ) {
+			headers.splice( 1, 0, 'Status' );
+__( 'Save to library', 'elementor' );
+__( 'Save to library', 'elementor' );
+__( 'Save to library', 'elementor' );
+__( 'Back', 'elementor' );
+__( 'Export as .zip', 'elementor' );
+__( 'Edit Template', 'elementor' );
+__( 'Imported', 'elementor' );
+__( 'Existing', 'elementor' );
 __( 'Install Elementor Pro', 'elementor' );
 __( "Without Elementor Pro, importing components like templates, widgets and popups won't work.", 'elementor' );
 __( 'Is your Elementor Pro ready?', 'elementor' );
@@ -686,16 +694,8 @@ __( "There are few plugins that we couldn't install:", 'elementor' );
 __( 'Let’s do it', 'elementor' );
 __( 'Tip:', 'elementor' );
 __( 'Make sure your Elementor Pro account is connected', 'elementor' );
-__( 'Edit Template', 'elementor' );
-__( 'Imported', 'elementor' );
-__( 'Existing', 'elementor' );
-__( 'Save to library', 'elementor' );
-__( 'Save to library', 'elementor' );
-__( 'Save to library', 'elementor' );
-__( 'Back', 'elementor' );
-__( 'Export as .zip', 'elementor' );
+__( 'Description (Optional)', 'elementor' );
+__( 'Type description here...', 'elementor' );
 __( 'Must add a name', 'elementor' );
 __( 'Name', 'elementor' );
 __( 'Type name here...', 'elementor' );
-__( 'Description (Optional)', 'elementor' );
-__( 'Type description here...', 'elementor' );

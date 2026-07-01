@@ -14,6 +14,11 @@
 	}
 
 	function initGallery($panel) {
+		if ($panel.data('ngFvGallery')) {
+			return;
+		}
+		$panel.data('ngFvGallery', true);
+
 		var $gallery = $panel.find('.ng-farmley-qv__gallery');
 		var $stage = $panel.find('.ng-farmley-qv__stage');
 		var $imgs = $stage.find('.ng-farmley-qv__stage-img');
@@ -75,7 +80,8 @@
 				setBodyLock(true);
 			} else {
 				setBodyLock(false);
-				$holder.removeClass('ng-farmley-qv--closing ng-farmley-qv--ready');
+				$holder.removeClass('ng-farmley-qv--closing ng-farmley-qv--ready ng-farmley-qv--enhanced');
+				$holder.find('.ng-farmley-qv').removeData('ngFvGallery ngFvQty');
 			}
 		});
 
@@ -116,7 +122,7 @@
 			}
 			if (regular && parseFloat(regular) > parseFloat(price)) {
 				if (!$regular.length) {
-					$panel.find('.ng-farmley-qv__price-values').prepend('<del class="ng-farmley-qv__price-regular"></del>');
+					$panel.find('.ng-farmley-qv__price-values').append('<del class="ng-farmley-qv__price-regular"></del>');
 					$regular = $panel.find('.ng-farmley-qv__price-regular');
 				}
 				$regular.html(formatPrice(regular)).show();
@@ -364,7 +370,9 @@
 		).remove();
 	}
 
-	function enhanceDrawer($holder) {
+	function enhanceDrawer($holder, options) {
+		options = options || {};
+
 		if (!$holder || !$holder.length) {
 			$holder = getDrawer();
 		}
@@ -376,12 +384,17 @@
 		stripReviewBlocks($panel);
 		initDrawerScroll($holder);
 
-		$holder.removeClass('ng-farmley-qv--ready');
-		window.requestAnimationFrame(function () {
+		if (!options.skipReadyAnim && !$holder.hasClass('ng-farmley-qv--ready')) {
+			$holder.removeClass('ng-farmley-qv--enhanced');
 			window.requestAnimationFrame(function () {
-				$holder.addClass('ng-farmley-qv--ready');
+				window.requestAnimationFrame(function () {
+					$holder.addClass('ng-farmley-qv--ready');
+					window.setTimeout(function () {
+						$holder.addClass('ng-farmley-qv--enhanced');
+					}, 520);
+				});
 			});
-		});
+		}
 
 		initGallery($panel);
 		initSizeOptions($panel);
@@ -396,13 +409,17 @@
 	function scheduleEnhance($holder) {
 		var target = $holder && $holder.length ? $holder : getDrawer();
 		patchPluginScrollbar(target);
+		target.removeClass('ng-farmley-qv--ready ng-farmley-qv--closing ng-farmley-qv--enhanced');
+		target.find('.ng-farmley-qv').removeData('ngFvGallery ngFvQty');
 		enhanceDrawer(target);
-		[0, 80, 200, 450].forEach(function (delay) {
-			setTimeout(function () {
-				enhanceDrawer(target);
-				initDrawerScroll(target);
-			}, delay);
-		});
+
+		setTimeout(function () {
+			if (!target.hasClass('qqvfw--opened')) {
+				return;
+			}
+			enhanceDrawer(target, { skipReadyAnim: true });
+			initDrawerScroll(target);
+		}, 150);
 	}
 
 	$(document.body).on('qode_quick_view_for_woocommerce_trigger_quick_view', function (e, $holder) {

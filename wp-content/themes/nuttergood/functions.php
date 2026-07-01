@@ -542,10 +542,10 @@ if ( ! function_exists( 'nuttergood_home_slider_css' ) ) {
 	}
 	.page-id-' . (int) get_option( 'page_on_front' ) . ' .elementor-element-fae9d0a {
 		display: flex !important;
-		flex-direction: row !important;
+		flex-direction: column !important;
 		flex-wrap: nowrap !important;
 		align-items: stretch !important;
-		gap: 12px !important;
+		gap: 16px !important;
 		flex: 0 0 auto !important;
 		height: auto !important;
 		min-height: 0 !important;
@@ -572,8 +572,8 @@ if ( ! function_exists( 'nuttergood_home_slider_css' ) ) {
 	}
 	.page-id-' . (int) get_option( 'page_on_front' ) . ' .elementor-element-064fe67 .elementor-element-9f9672e,
 	.page-id-' . (int) get_option( 'page_on_front' ) . ' .elementor-element-064fe67 .elementor-element-62f9b1e {
-		flex: 1 1 0 !important;
-		width: calc(50% - 6px) !important;
+		flex: 0 0 auto !important;
+		width: 100% !important;
 		min-width: 0 !important;
 		height: auto !important;
 		min-height: 0 !important;
@@ -602,8 +602,8 @@ if ( ! function_exists( 'nuttergood_home_slider_css' ) ) {
 	}
 	.page-id-' . (int) get_option( 'page_on_front' ) . ' .elementor-element-064fe67 .elementor-element-9f9672e .qodef-banner,
 	.page-id-' . (int) get_option( 'page_on_front' ) . ' .elementor-element-064fe67 .elementor-element-62f9b1e .qodef-banner {
-		min-height: 200px;
-		aspect-ratio: 3 / 4;
+		min-height: 220px;
+		aspect-ratio: 16 / 10;
 	}
 	.page-id-' . (int) get_option( 'page_on_front' ) . ' .elementor-element-064fe67 .qodef-banner .qodef-m-image {
 		position: absolute !important;
@@ -625,13 +625,23 @@ if ( ! function_exists( 'nuttergood_home_slider_css' ) ) {
 		width: 100% !important;
 		height: 100% !important;
 		object-fit: cover !important;
-		object-position: center center !important;
+		object-position: 78% center !important;
+	}
+	.page-id-' . (int) get_option( 'page_on_front' ) . ' .elementor-element-064fe67 .qodef-banner::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		border-radius: inherit;
+		pointer-events: none;
+		background: linear-gradient(90deg, rgba(252, 244, 235, 0.94) 0%, rgba(252, 244, 235, 0.82) 32%, rgba(252, 244, 235, 0.45) 52%, rgba(252, 244, 235, 0.08) 72%, transparent 100%);
 	}
 	.page-id-' . (int) get_option( 'page_on_front' ) . ' .elementor-element-064fe67 .qodef-banner .qodef-m-content {
 		position: absolute !important;
 		inset: 0 !important;
 		width: 100% !important;
 		height: 100% !important;
+		z-index: 2 !important;
 	}
 }
 .page-id-' . (int) get_option( 'page_on_front' ) . ' .qodef-woo-product-list.qodef-filter--on {

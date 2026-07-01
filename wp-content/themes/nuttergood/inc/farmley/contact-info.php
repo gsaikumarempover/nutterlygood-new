@@ -26,6 +26,39 @@ if ( ! function_exists( 'nuttergood_farmley_contact_info' ) ) {
 	}
 }
 
+if ( ! function_exists( 'nuttergood_farmley_contact_phone_digits' ) ) {
+	/**
+	 * Digits-only phone for tel:/WhatsApp links.
+	 */
+	function nuttergood_farmley_contact_phone_digits() {
+		$info = nuttergood_farmley_contact_info();
+		$raw  = $info['phone_tel'] ?? $info['phone'] ?? '';
+
+		return preg_replace( '/\D+/', '', (string) $raw );
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_contact_whatsapp_url' ) ) {
+	/**
+	 * WhatsApp chat link — same number as phone.
+	 *
+	 * @param string $message Optional pre-filled message.
+	 */
+	function nuttergood_farmley_contact_whatsapp_url( $message = '' ) {
+		$digits = nuttergood_farmley_contact_phone_digits();
+		if ( '' === $digits ) {
+			return '';
+		}
+
+		$url = 'https://wa.me/' . $digits;
+		if ( '' !== $message ) {
+			$url .= '?text=' . rawurlencode( $message );
+		}
+
+		return $url;
+	}
+}
+
 if ( ! function_exists( 'nuttergood_farmley_contact_address_html' ) ) {
 	/**
 	 * Multi-line address for display blocks.

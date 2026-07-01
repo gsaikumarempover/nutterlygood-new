@@ -10,7 +10,7 @@ if ( ! function_exists( 'nuttergood_farmley_get_footer_logo_id' ) ) {
 			return $logo_id;
 		}
 
-		$by_slug = attachment_url_to_postid( home_url( '/wp-content/uploads/2026/06/Group-25204.png' ) );
+		$by_slug = attachment_url_to_postid( nuttergood_farmley_media_url( 'logos', 'Group-25204.png' ) );
 		if ( $by_slug ) {
 			return (int) $by_slug;
 		}

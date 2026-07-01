@@ -48,19 +48,170 @@ if ( ! function_exists( 'nuttergood_farmley_side_cart_subtotal' ) ) {
 
 if ( ! function_exists( 'nuttergood_farmley_side_cart_coupon_code' ) ) {
 	function nuttergood_farmley_side_cart_coupon_code() {
-		return apply_filters( 'nuttergood_farmley_side_cart_coupon_code', 'SAVER8' );
+		$featured = nuttergood_farmley_side_cart_featured_coupon();
+		return $featured ? $featured->get_code() : apply_filters( 'nuttergood_farmley_side_cart_coupon_code', 'SAVER8' );
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_get_wc_coupons' ) ) {
+	/**
+	 * @return WC_Coupon[]
+	 */
+	function nuttergood_farmley_side_cart_get_wc_coupons() {
+		if ( ! function_exists( 'WC' ) || ! class_exists( 'WC_Coupon' ) ) {
+			return array();
+		}
+
+		$posts = get_posts(
+			array(
+				'post_type'      => 'shop_coupon',
+				'post_status'    => 'publish',
+				'posts_per_page' => 50,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+			)
+		);
+
+		$coupons = array();
+		foreach ( $posts as $post ) {
+			$coupon = new WC_Coupon( $post->ID );
+			if ( $coupon->get_id() ) {
+				$coupons[] = $coupon;
+			}
+		}
+
+		return apply_filters( 'nuttergood_farmley_side_cart_wc_coupons', $coupons );
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_coupon_email_allowed' ) ) {
+	function nuttergood_farmley_side_cart_coupon_email_allowed( WC_Coupon $coupon ) {
+		$restrictions = $coupon->get_email_restrictions();
+		if ( empty( $restrictions ) ) {
+			return true;
+		}
+
+		$email = '';
+		if ( is_user_logged_in() ) {
+			$user  = wp_get_current_user();
+			$email = $user->user_email;
+		}
+
+		if ( ! $email || ! is_email( $email ) ) {
+			return false;
+		}
+
+		$email = strtolower( $email );
+		foreach ( $restrictions as $allowed ) {
+			if ( strtolower( $allowed ) === $email ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_coupon_is_eligible' ) ) {
+	function nuttergood_farmley_side_cart_coupon_is_eligible( WC_Coupon $coupon ) {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart || WC()->cart->is_empty() ) {
+			return false;
+		}
+
+		if ( nuttergood_farmley_side_cart_coupon_is_applied( $coupon->get_code() ) ) {
+			return false;
+		}
+
+		if ( ! nuttergood_farmley_side_cart_coupon_email_allowed( $coupon ) ) {
+			return false;
+		}
+
+		$expires = $coupon->get_date_expires();
+		if ( $expires && $expires->getTimestamp() < time() ) {
+			return false;
+		}
+
+		$usage_limit = $coupon->get_usage_limit();
+		if ( $usage_limit > 0 && $coupon->get_usage_count() >= $usage_limit ) {
+			return false;
+		}
+
+		$minimum = (float) $coupon->get_minimum_amount();
+		if ( $minimum > 0 && nuttergood_farmley_side_cart_subtotal() < $minimum ) {
+			return false;
+		}
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_featured_coupon' ) ) {
+	/**
+	 * @return WC_Coupon|null
+	 */
+	function nuttergood_farmley_side_cart_featured_coupon() {
+		$coupons = nuttergood_farmley_side_cart_get_wc_coupons();
+		if ( empty( $coupons ) ) {
+			return null;
+		}
+
+		$applied_codes = nuttergood_farmley_side_cart_applied_coupon_codes();
+		if ( ! empty( $applied_codes ) ) {
+			foreach ( $coupons as $coupon ) {
+				foreach ( $applied_codes as $applied_code ) {
+					if ( strcasecmp( $coupon->get_code(), $applied_code ) === 0 ) {
+						return $coupon;
+					}
+				}
+			}
+		}
+
+		if ( is_user_logged_in() && function_exists( 'nuttergood_farmley_newsletter_coupon_for_email' ) ) {
+			$newsletter_code = nuttergood_farmley_newsletter_coupon_for_email( wp_get_current_user()->user_email );
+			if ( $newsletter_code ) {
+				foreach ( $coupons as $coupon ) {
+					if ( strcasecmp( $coupon->get_code(), $newsletter_code ) === 0 && nuttergood_farmley_side_cart_coupon_is_eligible( $coupon ) ) {
+						return $coupon;
+					}
+				}
+			}
+		}
+
+		$visible = nuttergood_farmley_side_cart_visible_coupons();
+		foreach ( $visible as $coupon ) {
+			if ( nuttergood_farmley_side_cart_coupon_is_eligible( $coupon ) ) {
+				return $coupon;
+			}
+		}
+
+		foreach ( $visible as $coupon ) {
+			if ( ! nuttergood_farmley_side_cart_coupon_is_applied( $coupon->get_code() ) ) {
+				return $coupon;
+			}
+		}
+
+		return ! empty( $visible[0] ) ? $visible[0] : null;
 	}
 }
 
 if ( ! function_exists( 'nuttergood_farmley_side_cart_coupon_is_applied' ) ) {
-	function nuttergood_farmley_side_cart_coupon_is_applied() {
+	function nuttergood_farmley_side_cart_coupon_is_applied( $code = null ) {
 		if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
 			return false;
 		}
 
-		$code = strtolower( nuttergood_farmley_side_cart_coupon_code() );
-		foreach ( WC()->cart->get_applied_coupons() as $applied ) {
-			if ( strtolower( $applied ) === $code ) {
+		$applied = WC()->cart->get_applied_coupons();
+		if ( empty( $applied ) ) {
+			return false;
+		}
+
+		if ( null === $code || '' === $code ) {
+			return true;
+		}
+
+		$code = strtolower( wc_format_coupon_code( $code ) );
+		foreach ( $applied as $applied_code ) {
+			if ( strtolower( $applied_code ) === $code ) {
 				return true;
 			}
 		}
@@ -461,7 +612,6 @@ if ( ! function_exists( 'nuttergood_farmley_render_side_cart_loop' ) ) {
 				}
 				nuttergood_farmley_render_side_cart_loop_item( $cart_item_key, $cart_item );
 			}
-			greenpath_core_template_part( 'plugins/woocommerce/widgets/side-area-cart', 'templates/parts/order-details' );
 			?>
 		</ul>
 		<?php
@@ -489,10 +639,29 @@ if ( ! function_exists( 'nuttergood_farmley_render_side_cart_content' ) ) {
 			<?php do_action( 'greenpath_core_action_woocommerce_before_side_area_cart_content' ); ?>
 			<?php
 			if ( ! WC()->cart->is_empty() ) {
-				nuttergood_farmley_render_side_cart_loop();
+				?>
+				<div class="ng-farmley-sc-cart-slot">
+					<?php nuttergood_farmley_render_side_cart_loop(); ?>
+				</div>
+				<div class="ng-farmley-sc-footer">
+					<div class="ng-farmley-sc-coupon-slot">
+						<?php nuttergood_farmley_render_side_cart_coupon(); ?>
+					</div>
+					<div class="ng-farmley-sc-reco-slot">
+						<?php nuttergood_farmley_render_side_cart_recommendations(); ?>
+					</div>
+					<div class="ng-farmley-sc-order-slot">
+						<?php nuttergood_farmley_render_side_cart_order_details(); ?>
+					</div>
+				</div>
+				<?php
 				greenpath_core_template_part( 'plugins/woocommerce/widgets/side-area-cart', 'templates/parts/button' );
 			} else {
-				greenpath_core_template_part( 'plugins/woocommerce/widgets/side-area-cart', 'templates/parts/posts-not-found' );
+				?>
+				<div class="ng-farmley-sc-cart-slot">
+					<?php greenpath_core_template_part( 'plugins/woocommerce/widgets/side-area-cart', 'templates/parts/posts-not-found' ); ?>
+				</div>
+				<?php
 			}
 			?>
 		</div>
@@ -501,21 +670,241 @@ if ( ! function_exists( 'nuttergood_farmley_render_side_cart_content' ) ) {
 }
 
 if ( ! function_exists( 'nuttergood_farmley_side_cart_coupon_savings_amount' ) ) {
-	function nuttergood_farmley_side_cart_coupon_savings_amount() {
-		$code     = nuttergood_farmley_side_cart_coupon_code();
+	function nuttergood_farmley_side_cart_coupon_savings_amount( $coupon = null ) {
 		$subtotal = nuttergood_farmley_side_cart_subtotal();
-		$coupon   = new WC_Coupon( $code );
 
-		if ( $coupon->get_id() ) {
-			if ( $coupon->is_type( 'percent' ) ) {
-				return max( 0, $subtotal * ( (float) $coupon->get_amount() / 100 ) );
+		if ( $coupon instanceof WC_Coupon ) {
+			$wc_coupon = $coupon;
+		} else {
+			$wc_coupon = new WC_Coupon( nuttergood_farmley_side_cart_coupon_code() );
+		}
+
+		if ( $wc_coupon->get_id() ) {
+			if ( $wc_coupon->is_type( 'percent' ) ) {
+				return max( 0, $subtotal * ( (float) $wc_coupon->get_amount() / 100 ) );
 			}
-			if ( $coupon->is_type( 'fixed_cart' ) ) {
-				return min( (float) $coupon->get_amount(), $subtotal );
+			if ( $wc_coupon->is_type( 'fixed_cart' ) ) {
+				return min( (float) $wc_coupon->get_amount(), $subtotal );
 			}
 		}
 
 		return max( 0, $subtotal * 0.08 );
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_visible_coupons' ) ) {
+	/**
+	 * Coupons the current shopper may see in the side cart (email + expiry).
+	 *
+	 * @return WC_Coupon[]
+	 */
+	function nuttergood_farmley_side_cart_visible_coupons() {
+		$coupons = nuttergood_farmley_side_cart_get_wc_coupons();
+		$visible = array();
+
+		foreach ( $coupons as $coupon ) {
+			if ( ! nuttergood_farmley_side_cart_coupon_email_allowed( $coupon ) ) {
+				continue;
+			}
+
+			$expires = $coupon->get_date_expires();
+			if ( $expires && $expires->getTimestamp() < time() ) {
+				continue;
+			}
+
+			$usage_limit = $coupon->get_usage_limit();
+			if ( $usage_limit > 0 && $coupon->get_usage_count() >= $usage_limit ) {
+				continue;
+			}
+
+			$visible[] = $coupon;
+		}
+
+		return apply_filters( 'nuttergood_farmley_side_cart_visible_coupons', $visible );
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_coupon_minimum_remaining' ) ) {
+	function nuttergood_farmley_side_cart_coupon_minimum_remaining( WC_Coupon $coupon ) {
+		$minimum = (float) $coupon->get_minimum_amount();
+		if ( $minimum <= 0 ) {
+			return 0.0;
+		}
+
+		return max( 0.0, $minimum - nuttergood_farmley_side_cart_subtotal() );
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_applied_coupon_codes' ) ) {
+	/**
+	 * @return string[]
+	 */
+	function nuttergood_farmley_side_cart_applied_coupon_codes() {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+			return array();
+		}
+
+		return array_map( 'strval', WC()->cart->get_applied_coupons() );
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_estimated_total_html' ) ) {
+	function nuttergood_farmley_side_cart_estimated_total_html() {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart || WC()->cart->is_empty() ) {
+			return '';
+		}
+
+		WC()->cart->calculate_totals();
+
+		return WC()->cart->get_total();
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_discount_total_html' ) ) {
+	function nuttergood_farmley_side_cart_discount_total_html() {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart || WC()->cart->is_empty() ) {
+			return '';
+		}
+
+		$discount = (float) WC()->cart->get_discount_total();
+		if ( WC()->cart->display_prices_including_tax() ) {
+			$discount += (float) WC()->cart->get_discount_tax();
+		}
+
+		if ( $discount <= 0 ) {
+			return '';
+		}
+
+		return wc_price( $discount * -1 );
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_render_side_cart_order_details' ) ) {
+	function nuttergood_farmley_render_side_cart_order_details() {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart || WC()->cart->is_empty() ) {
+			return;
+		}
+
+		$discount_html = nuttergood_farmley_side_cart_discount_total_html();
+		?>
+		<div class="qodef-m-order-details ng-farmley-sc-order-details">
+			<?php if ( $discount_html ) : ?>
+				<div class="ng-farmley-sc-order-details__discount">
+					<span class="ng-farmley-sc-order-details__discount-label"><?php esc_html_e( 'Coupon savings', 'nuttergood' ); ?></span>
+					<span class="ng-farmley-sc-order-details__discount-amount"><?php echo wp_kses_post( $discount_html ); ?></span>
+				</div>
+			<?php endif; ?>
+			<div class="ng-farmley-sc-order-details__total">
+				<h6 class="qodef-m-order-label"><?php esc_html_e( 'Total:', 'greenpath-core' ); ?></h6>
+				<div class="qodef-m-order-amount"><?php echo wp_kses_post( nuttergood_farmley_side_cart_estimated_total_html() ); ?></div>
+			</div>
+		</div>
+		<?php
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_coupon_label' ) ) {
+	function nuttergood_farmley_side_cart_coupon_label( WC_Coupon $coupon ) {
+		if ( $coupon->is_type( 'percent' ) ) {
+			return sprintf(
+				/* translators: %s: percent amount */
+				__( '%s%% OFF', 'nuttergood' ),
+				wc_format_decimal( $coupon->get_amount(), 0 )
+			);
+		}
+
+		if ( $coupon->is_type( 'fixed_cart' ) || $coupon->is_type( 'fixed_product' ) ) {
+			return sprintf(
+				/* translators: %s: amount */
+				__( '%s OFF', 'nuttergood' ),
+				wp_strip_all_tags( wc_price( $coupon->get_amount() ) )
+			);
+		}
+
+		return $coupon->get_code();
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_render_side_cart_coupon_row' ) ) {
+	/**
+	 * @param WC_Coupon $coupon
+	 * @param bool      $is_featured
+	 */
+	function nuttergood_farmley_render_side_cart_coupon_row( $coupon, $is_featured = false ) {
+		$code     = $coupon->get_code();
+		$applied  = nuttergood_farmley_side_cart_coupon_is_applied( $code );
+		$eligible = nuttergood_farmley_side_cart_coupon_is_eligible( $coupon );
+		$savings  = nuttergood_farmley_side_cart_coupon_savings_amount( $coupon );
+		$label    = nuttergood_farmley_side_cart_coupon_label( $coupon );
+		$row_class = 'ng-farmley-sc-coupon__row';
+		if ( $is_featured ) {
+			$row_class .= ' ng-farmley-sc-coupon__row--primary';
+		} else {
+			$row_class .= ' ng-farmley-sc-coupon__row--list';
+		}
+		?>
+		<div class="<?php echo esc_attr( $row_class ); ?>" data-coupon-code="<?php echo esc_attr( $code ); ?>">
+			<span class="ng-farmley-sc-coupon__icon<?php echo $is_featured ? '' : ' ng-farmley-sc-coupon__icon--sm'; ?>"><?php echo nuttergood_farmley_side_cart_coupon_badge_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			<div class="ng-farmley-sc-coupon__copy">
+				<?php if ( $applied ) : ?>
+					<p class="ng-farmley-sc-coupon__save"><?php echo esc_html( $label ); ?> — <?php esc_html_e( 'Applied', 'nuttergood' ); ?></p>
+					<p class="ng-farmley-sc-coupon__code-line">
+						<?php
+						printf(
+							/* translators: %s: coupon code */
+							esc_html__( "with '%s'", 'nuttergood' ),
+							esc_html( $code )
+						);
+						?>
+					</p>
+				<?php else : ?>
+					<p class="ng-farmley-sc-coupon__save">
+						<?php
+						printf(
+							/* translators: 1: discount label, 2: savings amount */
+							esc_html__( '%1$s — Save %2$s', 'nuttergood' ),
+							esc_html( $label ),
+							wp_kses_post( wc_price( $savings ) )
+						);
+						?>
+					</p>
+					<p class="ng-farmley-sc-coupon__code-line">
+						<?php
+						printf(
+							/* translators: %s: coupon code */
+							esc_html__( "with '%s'", 'nuttergood' ),
+							esc_html( $code )
+						);
+						?>
+					</p>
+					<?php if ( ! $eligible && nuttergood_farmley_side_cart_coupon_minimum_remaining( $coupon ) > 0 ) : ?>
+						<p class="ng-farmley-sc-coupon__row-hint">
+							<?php
+							printf(
+								/* translators: %s: amount remaining */
+								esc_html__( 'Add %s more to unlock', 'nuttergood' ),
+								wp_kses_post( wc_price( nuttergood_farmley_side_cart_coupon_minimum_remaining( $coupon ) ) )
+							);
+							?>
+						</p>
+					<?php endif; ?>
+				<?php endif; ?>
+			</div>
+			<?php if ( $applied ) : ?>
+				<span class="ng-farmley-sc-coupon__applied-badge"><?php esc_html_e( 'Applied', 'nuttergood' ); ?></span>
+			<?php else : ?>
+				<button
+					type="button"
+					class="ng-farmley-sc-coupon__apply"
+					data-ng-sc-apply-coupon
+					data-coupon-code="<?php echo esc_attr( $code ); ?>"
+					<?php disabled( ! $eligible ); ?>
+					aria-label="<?php echo esc_attr( sprintf( __( 'Apply coupon %s', 'nuttergood' ), $code ) ); ?>">
+					<?php esc_html_e( 'Apply', 'nuttergood' ); ?>
+				</button>
+			<?php endif; ?>
+		</div>
+		<?php
 	}
 }
 
@@ -525,85 +914,64 @@ if ( ! function_exists( 'nuttergood_farmley_render_side_cart_coupon' ) ) {
 			return;
 		}
 
-		$code     = nuttergood_farmley_side_cart_coupon_code();
-		$applied  = nuttergood_farmley_side_cart_coupon_is_applied();
-		$subtotal = nuttergood_farmley_side_cart_subtotal();
-		$eligible = $subtotal >= 899;
-		$savings  = nuttergood_farmley_side_cart_coupon_savings_amount();
+		$visible  = nuttergood_farmley_side_cart_visible_coupons();
+		if ( empty( $visible ) ) {
+			return;
+		}
+
+		$featured     = nuttergood_farmley_side_cart_featured_coupon();
+		$featured_code = $featured ? $featured->get_code() : '';
+		$applied_codes = nuttergood_farmley_side_cart_applied_coupon_codes();
+		$has_applied   = ! empty( $applied_codes );
+		$other_count   = 0;
+
+		foreach ( $visible as $coupon ) {
+			if ( $featured_code && strcasecmp( $coupon->get_code(), $featured_code ) === 0 ) {
+				continue;
+			}
+			++$other_count;
+		}
 		?>
-		<div class="ng-farmley-sc-coupon<?php echo $applied ? ' ng-farmley-sc-coupon--applied' : ''; ?>">
+		<div class="ng-farmley-sc-coupon<?php echo $has_applied ? ' ng-farmley-sc-coupon--applied' : ''; ?>" data-ng-sc-coupon>
 			<div class="ng-farmley-sc-coupon__card">
-				<div class="ng-farmley-sc-coupon__row ng-farmley-sc-coupon__row--primary">
-					<span class="ng-farmley-sc-coupon__icon"><?php echo nuttergood_farmley_side_cart_coupon_badge_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-					<div class="ng-farmley-sc-coupon__copy">
-						<?php if ( $applied ) : ?>
-							<p class="ng-farmley-sc-coupon__save"><?php esc_html_e( 'Coupon applied', 'nuttergood' ); ?></p>
-							<p class="ng-farmley-sc-coupon__code-line">
-								<?php
-								printf(
-									/* translators: %s: coupon code */
-									esc_html__( "with '%s'", 'nuttergood' ),
-									esc_html( $code )
-								);
-								?>
-							</p>
-						<?php else : ?>
-							<p class="ng-farmley-sc-coupon__save">
-								<?php
-								printf(
-									/* translators: %s: savings amount */
-									esc_html__( 'Save %s', 'nuttergood' ),
-									wp_kses_post( wc_price( $savings ) )
-								);
-								?>
-							</p>
-							<p class="ng-farmley-sc-coupon__code-line">
-								<?php
-								printf(
-									/* translators: %s: coupon code */
-									esc_html__( "with '%s'", 'nuttergood' ),
-									esc_html( $code )
-								);
-								?>
-							</p>
-						<?php endif; ?>
-					</div>
-					<?php if ( $applied ) : ?>
-						<span class="ng-farmley-sc-coupon__applied-badge"><?php esc_html_e( 'Applied', 'nuttergood' ); ?></span>
-					<?php else : ?>
-						<button
-							type="button"
-							class="ng-farmley-sc-coupon__apply"
-							data-ng-sc-apply-coupon
-							data-coupon-code="<?php echo esc_attr( $code ); ?>"
-							<?php disabled( ! $eligible ); ?>
-							aria-label="<?php echo esc_attr( sprintf( __( 'Apply coupon %s', 'nuttergood' ), $code ) ); ?>">
-							<?php esc_html_e( 'Apply', 'nuttergood' ); ?>
-						</button>
-					<?php endif; ?>
-				</div>
-				<?php if ( ! $applied ) : ?>
+				<?php
+				if ( $featured ) {
+					nuttergood_farmley_render_side_cart_coupon_row( $featured, true );
+				} elseif ( ! empty( $visible[0] ) ) {
+					nuttergood_farmley_render_side_cart_coupon_row( $visible[0], true );
+					$featured_code = $visible[0]->get_code();
+					$other_count   = max( 0, count( $visible ) - 1 );
+				}
+				?>
+				<?php if ( $other_count > 0 ) : ?>
 					<div class="ng-farmley-sc-coupon__row ng-farmley-sc-coupon__row--more">
 						<span class="ng-farmley-sc-coupon__icon ng-farmley-sc-coupon__icon--sm"><?php echo nuttergood_farmley_side_cart_coupon_badge_icon(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-						<p class="ng-farmley-sc-coupon__more-text"><?php esc_html_e( '+1 more offer', 'nuttergood' ); ?></p>
-						<a class="ng-farmley-sc-coupon__view-all" href="<?php echo esc_url( wc_get_cart_url() ); ?>">
+						<p class="ng-farmley-sc-coupon__more-text">
+							<?php
+							printf(
+								/* translators: %d: number of additional coupons */
+								esc_html( _n( '+%d more offer', '+%d more offers', $other_count, 'nuttergood' ) ),
+								(int) $other_count
+							);
+							?>
+						</p>
+						<button type="button" class="ng-farmley-sc-coupon__view-all" data-ng-sc-toggle-coupons aria-expanded="false">
 							<?php esc_html_e( 'View all coupons', 'nuttergood' ); ?>
-							<span aria-hidden="true">›</span>
-						</a>
+							<span class="ng-farmley-sc-coupon__view-all-icon" aria-hidden="true">›</span>
+						</button>
+					</div>
+					<div class="ng-farmley-sc-coupon__all" data-ng-sc-coupons-panel hidden>
+						<?php
+						foreach ( $visible as $coupon ) {
+							if ( $featured_code && strcasecmp( $coupon->get_code(), $featured_code ) === 0 ) {
+								continue;
+							}
+							nuttergood_farmley_render_side_cart_coupon_row( $coupon, false );
+						}
+						?>
 					</div>
 				<?php endif; ?>
 			</div>
-			<?php if ( ! $applied && ! $eligible ) : ?>
-				<p class="ng-farmley-sc-coupon__hint">
-					<?php
-					printf(
-						/* translators: %s: amount remaining */
-						esc_html__( 'Add %s more to use this coupon.', 'nuttergood' ),
-						wp_kses_post( wc_price( max( 0, 899 - $subtotal ) ) )
-					);
-					?>
-				</p>
-			<?php endif; ?>
 			<p class="ng-farmley-sc-coupon__feedback" data-ng-sc-coupon-feedback role="status" aria-live="polite"></p>
 		</div>
 		<?php
@@ -633,8 +1001,20 @@ if ( ! function_exists( 'nuttergood_farmley_side_cart_hooks' ) ) {
 	add_action( 'init', 'nuttergood_farmley_side_cart_hooks', 20 );
 }
 
-if ( ! function_exists( 'nuttergood_farmley_side_cart_add_to_cart_fragment' ) ) {
-	function nuttergood_farmley_side_cart_add_to_cart_fragment( $fragments ) {
+if ( ! function_exists( 'nuttergood_farmley_side_cart_heading_text' ) ) {
+	function nuttergood_farmley_side_cart_heading_text() {
+		$count = function_exists( 'WC' ) && WC()->cart ? (int) WC()->cart->get_cart_contents_count() : 0;
+		$label = __( 'Your cart', 'nuttergood' );
+
+		return $label . ' (' . $count . ')';
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_inner_html' ) ) {
+	/**
+	 * Full side-cart inner markup (opener + drawer content).
+	 */
+	function nuttergood_farmley_side_cart_inner_html() {
 		ob_start();
 		?>
 		<div class="qodef-widget-side-area-cart-inner">
@@ -642,9 +1022,86 @@ if ( ! function_exists( 'nuttergood_farmley_side_cart_add_to_cart_fragment' ) ) 
 			<?php nuttergood_farmley_render_side_cart_content(); ?>
 		</div>
 		<?php
-		$fragments['.qodef-widget-side-area-cart-inner'] = ob_get_clean();
+		return ob_get_clean();
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_build_fragments' ) ) {
+	/**
+	 * Cart fragments: full inner (legacy-compatible) plus granular slots when present.
+	 *
+	 * @param array<string, string> $fragments Existing fragments.
+	 * @return array<string, string>
+	 */
+	function nuttergood_farmley_side_cart_build_fragments( $fragments = array() ) {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+			return $fragments;
+		}
+
+		$scope      = '.widget_greenpath_core_woo_side_area_cart';
+		$inner_html = nuttergood_farmley_side_cart_inner_html();
+
+		// Primary — matches GreenPath selector so WooCommerce + legacy DOM always update.
+		$fragments['.qodef-widget-side-area-cart-inner'] = $inner_html;
+
+		ob_start();
+		greenpath_core_template_part( 'plugins/woocommerce/widgets/side-area-cart', 'templates/parts/opener' );
+		$fragments[ $scope . ' .qodef-m-opener' ] = ob_get_clean();
+
+		$fragments[ $scope . ' .qodef-side-area-cart-heading' ] = sprintf(
+			'<h6 class="qodef-side-area-cart-heading">%s</h6>',
+			esc_html( nuttergood_farmley_side_cart_heading_text() )
+		);
+
+		if ( WC()->cart->is_empty() ) {
+			ob_start();
+			greenpath_core_template_part( 'plugins/woocommerce/widgets/side-area-cart', 'templates/parts/posts-not-found' );
+			$not_found_html = ob_get_clean();
+
+			$fragments[ $scope . ' .ng-farmley-sc-cart-slot' ]                          = '<div class="ng-farmley-sc-cart-slot">' . $not_found_html . '</div>';
+			$fragments[ $scope . ' .qodef-m-posts-not-found' ]                          = $not_found_html;
+			$fragments[ $scope . ' .ng-farmley-sc-footer .ng-farmley-sc-coupon-slot' ]  = '<div class="ng-farmley-sc-coupon-slot"></div>';
+			$fragments[ $scope . ' .ng-farmley-sc-footer .ng-farmley-sc-reco-slot' ]    = '<div class="ng-farmley-sc-reco-slot"></div>';
+			$fragments[ $scope . ' .ng-farmley-sc-footer .ng-farmley-sc-order-slot' ]   = '<div class="ng-farmley-sc-order-slot"></div>';
+			$fragments[ $scope . ' .qodef-m-action' ]                                    = '';
+			$fragments[ $scope . ' .ng-farmley-sc-progress' ]                           = '';
+			$fragments[ $scope . ' .qodef-woo-side-area-cart' ]                         = '';
+		} else {
+			ob_start();
+			nuttergood_farmley_render_side_cart_loop();
+			$loop_html = ob_get_clean();
+
+			$fragments[ $scope . ' .ng-farmley-sc-cart-slot' ] = '<div class="ng-farmley-sc-cart-slot">' . $loop_html . '</div>';
+			$fragments[ $scope . ' .qodef-woo-side-area-cart' ] = $loop_html;
+
+			ob_start();
+			greenpath_core_template_part( 'plugins/woocommerce/widgets/side-area-cart', 'templates/parts/button' );
+			$fragments[ $scope . ' .qodef-m-action' ] = ob_get_clean();
+
+			ob_start();
+			nuttergood_farmley_render_side_cart_progress();
+			$fragments[ $scope . ' .ng-farmley-sc-progress' ] = ob_get_clean();
+
+			ob_start();
+			nuttergood_farmley_render_side_cart_coupon();
+			$fragments[ $scope . ' .ng-farmley-sc-footer .ng-farmley-sc-coupon-slot' ] = '<div class="ng-farmley-sc-coupon-slot">' . ob_get_clean() . '</div>';
+
+			ob_start();
+			nuttergood_farmley_render_side_cart_recommendations();
+			$fragments[ $scope . ' .ng-farmley-sc-footer .ng-farmley-sc-reco-slot' ] = '<div class="ng-farmley-sc-reco-slot">' . ob_get_clean() . '</div>';
+
+			ob_start();
+			nuttergood_farmley_render_side_cart_order_details();
+			$fragments[ $scope . ' .ng-farmley-sc-footer .ng-farmley-sc-order-slot' ] = '<div class="ng-farmley-sc-order-slot">' . ob_get_clean() . '</div>';
+		}
 
 		return $fragments;
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_side_cart_add_to_cart_fragment' ) ) {
+	function nuttergood_farmley_side_cart_add_to_cart_fragment( $fragments ) {
+		return nuttergood_farmley_side_cart_build_fragments( $fragments );
 	}
 }
 
@@ -658,17 +1115,14 @@ if ( ! function_exists( 'nuttergood_farmley_side_cart_register_overrides' ) ) {
 		add_filter( 'woocommerce_add_to_cart_fragments', 'nuttergood_farmley_side_cart_add_to_cart_fragment', 10 );
 
 		if ( class_exists( 'Nuttergood_WooCommerce_Side_Area_Cart_Widget' ) ) {
+			unregister_widget( 'GreenPathCore_WooCommerce_Side_Area_Cart_Widget' );
+			register_widget( 'Nuttergood_WooCommerce_Side_Area_Cart_Widget' );
 			return;
 		}
 
 		class Nuttergood_WooCommerce_Side_Area_Cart_Widget extends GreenPathCore_WooCommerce_Side_Area_Cart_Widget {
 			public function render( $atts ) {
-				?>
-				<div class="qodef-widget-side-area-cart-inner">
-					<?php greenpath_core_template_part( 'plugins/woocommerce/widgets/side-area-cart', 'templates/parts/opener' ); ?>
-					<?php nuttergood_farmley_render_side_cart_content(); ?>
-				</div>
-				<?php
+				echo nuttergood_farmley_side_cart_inner_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
@@ -774,13 +1228,23 @@ if ( ! function_exists( 'nuttergood_farmley_side_cart_ajax_apply_coupon' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Please enter a coupon code.', 'nuttergood' ) ) );
 		}
 
-		if ( nuttergood_farmley_side_cart_subtotal() < 899 && strtolower( $code ) === strtolower( nuttergood_farmley_side_cart_coupon_code() ) ) {
+		$coupon = new WC_Coupon( $code );
+		if ( ! $coupon->get_id() ) {
+			wp_send_json_error( array( 'message' => __( 'Coupon does not exist.', 'nuttergood' ) ) );
+		}
+
+		if ( ! nuttergood_farmley_side_cart_coupon_email_allowed( $coupon ) ) {
+			wp_send_json_error( array( 'message' => __( 'This coupon is not available for your account.', 'nuttergood' ) ) );
+		}
+
+		$remaining = nuttergood_farmley_side_cart_coupon_minimum_remaining( $coupon );
+		if ( $remaining > 0 ) {
 			wp_send_json_error(
 				array(
 					'message' => sprintf(
 						/* translators: %s: minimum amount */
 						__( 'Add items worth %s more to use this coupon.', 'nuttergood' ),
-						wp_strip_all_tags( wc_price( max( 0, 899 - nuttergood_farmley_side_cart_subtotal() ) ) )
+						wp_strip_all_tags( wc_price( $remaining ) )
 					),
 				)
 			);
@@ -811,7 +1275,7 @@ if ( ! function_exists( 'nuttergood_farmley_side_cart_ajax_apply_coupon' ) ) {
 			}
 		}
 
-		if ( ! nuttergood_farmley_side_cart_coupon_is_applied() ) {
+		if ( ! nuttergood_farmley_side_cart_coupon_is_applied( $code ) ) {
 			wp_send_json_error( array( 'message' => __( 'Could not apply coupon.', 'nuttergood' ) ) );
 		}
 
@@ -832,33 +1296,6 @@ if ( ! function_exists( 'nuttergood_farmley_side_cart_ajax_apply_coupon' ) ) {
 	}
 	add_action( 'wc_ajax_ng_farmley_side_cart_apply_coupon', 'nuttergood_farmley_side_cart_ajax_apply_coupon' );
 	add_action( 'wc_ajax_nopriv_ng_farmley_side_cart_apply_coupon', 'nuttergood_farmley_side_cart_ajax_apply_coupon' );
-}
-
-if ( ! function_exists( 'nuttergood_farmley_side_cart_fragment' ) ) {
-	function nuttergood_farmley_side_cart_fragment( $fragments ) {
-		if ( ! function_exists( 'WC' ) || ! WC()->cart || WC()->cart->is_empty() ) {
-			return $fragments;
-		}
-
-		ob_start();
-		nuttergood_farmley_render_side_cart_progress();
-		$fragments['.ng-farmley-sc-progress'] = ob_get_clean();
-
-		ob_start();
-		echo '<div class="ng-farmley-sc-coupon-slot">';
-		nuttergood_farmley_render_side_cart_coupon();
-		echo '</div>';
-		$fragments['.ng-farmley-sc-footer .ng-farmley-sc-coupon-slot'] = ob_get_clean();
-
-		ob_start();
-		echo '<div class="ng-farmley-sc-reco-slot">';
-		nuttergood_farmley_render_side_cart_recommendations();
-		echo '</div>';
-		$fragments['.ng-farmley-sc-footer .ng-farmley-sc-reco-slot'] = ob_get_clean();
-
-		return $fragments;
-	}
-	add_filter( 'woocommerce_add_to_cart_fragments', 'nuttergood_farmley_side_cart_fragment', 99 );
 }
 
 if ( ! function_exists( 'nuttergood_farmley_side_cart_should_load' ) ) {

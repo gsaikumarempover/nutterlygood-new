@@ -178,6 +178,42 @@ if ( ! function_exists( 'nuttergood_farmley_catalog_filter_query_args' ) ) {
 	}
 }
 
+if ( ! function_exists( 'nuttergood_farmley_render_discount_toggle' ) ) {
+	/**
+	 * Discount on/off switch beside the sort dropdown.
+	 *
+	 * @param bool   $active  Whether the discount filter is on.
+	 * @param string $context archive|shop
+	 */
+	function nuttergood_farmley_render_discount_toggle( $active = false, $context = 'archive' ) {
+		$classes = array( 'ng-farmley-discount-toggle' );
+
+		if ( 'shop' === $context ) {
+			$classes[] = 'ng-farmley-shop-discount-filter';
+		} else {
+			$classes[] = 'ng-farmley-archive-discount-filter';
+		}
+
+		if ( $active ) {
+			$classes[] = 'is-active';
+		}
+		?>
+		<button
+			type="button"
+			class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"
+			role="switch"
+			aria-checked="<?php echo $active ? 'true' : 'false'; ?>"
+			aria-label="<?php esc_attr_e( 'Show discounted products only', 'nuttergood' ); ?>"
+		>
+			<span class="ng-farmley-discount-toggle__label"><?php esc_html_e( 'Discount', 'nuttergood' ); ?></span>
+			<span class="ng-farmley-discount-toggle__track" aria-hidden="true">
+				<span class="ng-farmley-discount-toggle__thumb"></span>
+			</span>
+		</button>
+		<?php
+	}
+}
+
 if ( ! function_exists( 'nuttergood_farmley_render_catalog_toolbar' ) ) {
 	function nuttergood_farmley_render_catalog_toolbar() {
 		if ( ! nuttergood_farmley_is_woo_archive_loop() ) {
@@ -188,32 +224,24 @@ if ( ! function_exists( 'nuttergood_farmley_render_catalog_toolbar' ) ) {
 		$base_args    = nuttergood_farmley_catalog_filter_query_args();
 		$current      = isset( $base_args['orderby'] ) ? $base_args['orderby'] : 'popularity';
 		$discount_on  = nuttergood_farmley_is_discount_filter_active();
-		$discount_url = add_query_arg(
-			array_merge(
-				$base_args,
-				array(
-					'ng_discount' => $discount_on ? null : '1',
-					'paged'       => null,
-				)
-			)
-		);
 		?>
 		<div class="ng-farmley-catalog-toolbar">
-			<form class="ng-farmley-catalog-toolbar__sort" method="get">
+			<form class="woocommerce-ordering ng-farmley-catalog-toolbar__sort" method="get">
 				<label class="screen-reader-text" for="ng-farmley-catalog-orderby"><?php esc_html_e( 'Sort products', 'nuttergood' ); ?></label>
-				<select id="ng-farmley-catalog-orderby" name="orderby" class="ng-farmley-catalog-toolbar__select">
+				<select id="ng-farmley-catalog-orderby" name="orderby" class="orderby ng-farmley-catalog-toolbar__select" aria-label="<?php esc_attr_e( 'Shop order', 'woocommerce' ); ?>">
 					<?php foreach ( $sort_options as $value => $label ) : ?>
 						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $current, $value ); ?>><?php echo esc_html( $label ); ?></option>
 					<?php endforeach; ?>
 				</select>
-				<?php if ( $discount_on ) : ?>
-					<input type="hidden" name="ng_discount" value="1" />
-				<?php endif; ?>
-				<?php wc_query_string_form_fields( null, array( 'orderby', 'submit', 'ng_discount', 'paged', 'product-page' ) ); ?>
+				<input type="hidden" name="paged" value="1" />
+				<?php
+				if ( $discount_on ) {
+					echo '<input type="hidden" name="ng_discount" value="1" />';
+				}
+				wc_query_string_form_fields( null, array( 'orderby', 'submit', 'paged', 'product-page', 'ng_discount' ) );
+				?>
 			</form>
-			<a class="ng-farmley-catalog-toolbar__discount<?php echo $discount_on ? ' is-active' : ''; ?>" href="<?php echo esc_url( $discount_url ); ?>">
-				<?php esc_html_e( 'Discount', 'nuttergood' ); ?>
-			</a>
+			<?php nuttergood_farmley_render_discount_toggle( $discount_on, 'archive' ); ?>
 		</div>
 		<?php
 	}
