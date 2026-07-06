@@ -13,6 +13,7 @@ if ( ! function_exists( 'nuttergood_farmley_setup_single_product_summary' ) ) {
 		add_action( 'woocommerce_single_product_summary', 'nuttergood_farmley_render_product_sku', 11 );
 		add_action( 'woocommerce_single_product_summary', 'nuttergood_farmley_render_product_share', 38 );
 		add_filter( 'woocommerce_product_tabs', 'nuttergood_farmley_customize_product_tabs', 60 );
+		add_filter( 'woocommerce_get_price_html', 'nuttergood_farmley_append_single_product_usp', 25, 2 );
 
 		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_sharing', 50 );
 		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
@@ -92,7 +93,7 @@ if ( ! function_exists( 'nuttergood_farmley_render_single_weight_row' ) ) {
 
 			if ( $multi ) {
 				printf(
-					'<button type="button" class="ng-farmley-card-weight__btn ng-farmley-sp-weight__btn%1$s" role="option" data-index="%2$d" data-price="%3$s" data-mrp="%4$s" data-regular="%5$s" data-discount="%6$d" data-image="%7$s" aria-selected="%8$s"><span class="ng-farmley-card-weight__text">%9$s</span></button>',
+					'<button type="button" class="ng-farmley-card-weight__btn ng-farmley-sp-weight__btn%1$s" role="option" data-index="%2$d" data-price="%3$s" data-mrp="%4$s" data-regular="%5$s" data-discount="%6$d" data-image="%7$s" data-weight="%10$s" aria-selected="%8$s"><span class="ng-farmley-card-weight__text">%9$s</span></button>',
 					0 === $idx ? ' is-active' : '',
 					(int) $idx,
 					esc_attr( $size['price'] ?? '' ),
@@ -101,11 +102,16 @@ if ( ! function_exists( 'nuttergood_farmley_render_single_weight_row' ) ) {
 					(int) $badge_discount,
 					esc_url( $img_src ? $img_src : '' ),
 					0 === $idx ? 'true' : 'false',
-					esc_html( $label )
+					esc_html( $label ),
+					esc_attr( $label )
 				);
 			} else {
+				$size_prices = nuttergood_farmley_resolve_size_prices( $size, $product );
 				printf(
-					'<span class="ng-farmley-card-weight__badge ng-farmley-sp-weight__badge"><span class="ng-farmley-card-weight__text">%s</span></span>',
+					'<span class="ng-farmley-card-weight__badge ng-farmley-sp-weight__badge" data-weight="%1$s" data-price="%2$s" data-mrp="%3$s"><span class="ng-farmley-card-weight__text">%4$s</span></span>',
+					esc_attr( $label ),
+					esc_attr( $size['price'] ?? $size_prices['offer'] ?? '' ),
+					esc_attr( $size['mrp'] ?? $size['regular_price'] ?? $size_prices['mrp'] ?? '' ),
 					esc_html( $label )
 				);
 			}
@@ -204,5 +210,32 @@ if ( ! function_exists( 'nuttergood_farmley_customize_product_tabs' ) ) {
 		unset( $tabs['reviews'] );
 
 		return $tabs;
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_append_single_product_usp' ) ) {
+	/**
+	 * Append unit selling price (USP) next to the main product price on detail pages.
+	 *
+	 * @param string     $html    Price HTML.
+	 * @param WC_Product $product Product object.
+	 */
+	function nuttergood_farmley_append_single_product_usp( $html, $product ) {
+		if ( ! function_exists( 'nuttergood_farmley_is_main_single_product_price' ) || ! nuttergood_farmley_is_main_single_product_price( $product ) ) {
+			return $html;
+		}
+
+		if ( ! $product instanceof WC_Product || '' === $html || false !== strpos( $html, 'ng-farmley-sp-usp' ) ) {
+			return $html;
+		}
+
+		$context = nuttergood_farmley_resolve_single_product_usp_context( $product, 0 );
+		$usp     = nuttergood_farmley_format_unit_selling_price( $context['price'], $context['weight_label'] );
+
+		if ( '' === $usp ) {
+			return $html;
+		}
+
+		return $html . $usp;
 	}
 }

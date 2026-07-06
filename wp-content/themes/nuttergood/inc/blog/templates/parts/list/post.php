@@ -34,6 +34,10 @@ if ( ! $has_media ) {
 			</div>
 			<div class="qodef-e-text">
 				<?php
+				if ( function_exists( 'nuttergood_farmley_render_blog_card_meta' ) ) {
+					nuttergood_farmley_render_blog_card_meta();
+				}
+
 				// Include post title
 				greenpath_template_part( 'blog', 'templates/parts/post-info/title', '', array( 'title_tag' => 'h2' ) );
 

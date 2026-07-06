@@ -302,16 +302,31 @@ if ( ! function_exists( 'nuttergood_farmley_render_side_cart_progress' ) ) {
 			<?php endif; ?>
 
 			<div class="ng-farmley-sc-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?php echo esc_attr( (string) round( $data['percent'] ) ); ?>">
-				<div class="ng-farmley-sc-progress__fill" data-ng-sc-fill style="width:<?php echo esc_attr( (string) round( $data['percent'] ) ); ?>%"></div>
-				<?php foreach ( $data['milestones'] as $milestone ) :
-					$marker_pct = min( 100, ( (float) $milestone['amount'] / $data['max'] ) * 100 );
-					$reached    = $data['subtotal'] >= (float) $milestone['amount'];
-					?>
-					<div class="ng-farmley-sc-progress__pin<?php echo $reached ? ' is-on' : ''; ?>" style="left:<?php echo esc_attr( (string) $marker_pct ); ?>%" title="<?php echo esc_attr( wc_price( $milestone['amount'] ) . ' — ' . $milestone['label'] ); ?>">
-						<span class="ng-farmley-sc-progress__pin-icon" aria-hidden="true"><?php echo 'gift' === $milestone['icon'] ? '🎁' : '🚚'; ?></span>
-						<span class="ng-farmley-sc-progress__pin-label"><?php echo esc_html( $milestone['label'] ); ?></span>
-					</div>
-				<?php endforeach; ?>
+				<div class="ng-farmley-sc-progress__rail">
+					<div class="ng-farmley-sc-progress__fill" data-ng-sc-fill style="width:<?php echo esc_attr( (string) round( $data['percent'] ) ); ?>%"></div>
+					<?php
+					$milestone_count = count( $data['milestones'] );
+					foreach ( $data['milestones'] as $index => $milestone ) :
+						$marker_pct = min( 100, ( (float) $milestone['amount'] / $data['max'] ) * 100 );
+						$reached    = $data['subtotal'] >= (float) $milestone['amount'];
+						$pin_class  = 'ng-farmley-sc-progress__pin';
+						if ( $reached ) {
+							$pin_class .= ' is-on';
+						}
+						if ( $index === $milestone_count - 1 ) {
+							$pin_class .= ' is-end';
+						}
+						?>
+						<div
+							class="<?php echo esc_attr( $pin_class ); ?>"
+							style="--pin-left: <?php echo esc_attr( (string) $marker_pct ); ?>%"
+							title="<?php echo esc_attr( wc_price( $milestone['amount'] ) . ' — ' . $milestone['label'] ); ?>"
+						>
+							<span class="ng-farmley-sc-progress__pin-icon" aria-hidden="true"><?php echo 'gift' === $milestone['icon'] ? '🎁' : '🚚'; ?></span>
+							<span class="ng-farmley-sc-progress__pin-label"><?php echo esc_html( $milestone['label'] ); ?></span>
+						</div>
+					<?php endforeach; ?>
+				</div>
 			</div>
 
 			<p class="ng-farmley-sc-progress__count">
@@ -1223,15 +1238,20 @@ if ( ! function_exists( 'nuttergood_farmley_side_cart_ajax_apply_coupon' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Cart is empty.', 'nuttergood' ) ) );
 		}
 
-		$code = isset( $_POST['coupon_code'] ) ? wc_format_coupon_code( wp_unslash( $_POST['coupon_code'] ) ) : '';
+		$code = isset( $_POST['coupon_code'] ) ? sanitize_text_field( wp_unslash( $_POST['coupon_code'] ) ) : '';
 		if ( ! $code ) {
 			wp_send_json_error( array( 'message' => __( 'Please enter a coupon code.', 'nuttergood' ) ) );
 		}
 
-		$coupon = new WC_Coupon( $code );
-		if ( ! $coupon->get_id() ) {
+		$coupon = function_exists( 'nuttergood_farmley_resolve_wc_coupon_by_code' )
+			? nuttergood_farmley_resolve_wc_coupon_by_code( $code )
+			: new WC_Coupon( wc_format_coupon_code( $code ) );
+
+		if ( ! $coupon || ! $coupon->get_id() ) {
 			wp_send_json_error( array( 'message' => __( 'Coupon does not exist.', 'nuttergood' ) ) );
 		}
+
+		$code = $coupon->get_code();
 
 		if ( ! nuttergood_farmley_side_cart_coupon_email_allowed( $coupon ) ) {
 			wp_send_json_error( array( 'message' => __( 'This coupon is not available for your account.', 'nuttergood' ) ) );

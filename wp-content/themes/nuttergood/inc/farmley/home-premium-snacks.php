@@ -67,9 +67,15 @@ if ( ! function_exists( 'nuttergood_farmley_home_premium_snacks_widget_settings'
 
 		return array(
 			'behavior'               => 'columns',
-			'columns'                => '1',
-			'columns_responsive'     => 'predefined',
-			'posts_per_page'         => '9',
+			'columns'                => '2',
+			'columns_responsive'     => 'custom',
+			'columns_1512'           => '2',
+			'columns_1368'           => '2',
+			'columns_1200'           => '2',
+			'columns_1024'           => '2',
+			'columns_880'            => '1',
+			'columns_680'              => '1',
+			'posts_per_page'         => '8',
 			'orderby'                => 'date',
 			'order'                  => 'ASC',
 			'layout'                 => 'horizontal',

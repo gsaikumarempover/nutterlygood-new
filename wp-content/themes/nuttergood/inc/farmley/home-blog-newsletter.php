@@ -150,6 +150,8 @@ if ( ! function_exists( 'nuttergood_farmley_process_newsletter_signup' ) ) {
 			);
 		}
 
+		$setup = array();
+
 		if ( function_exists( 'nuttergood_farmley_newsletter_setup_account_and_email' ) ) {
 			$setup = nuttergood_farmley_newsletter_setup_account_and_email( $email );
 			if ( ! $setup['success'] ) {
@@ -175,22 +177,38 @@ if ( ! function_exists( 'nuttergood_farmley_process_newsletter_signup' ) ) {
 			update_option( 'ng_farmley_newsletter_signups', array_slice( $signups, -500 ), false );
 		}
 
-		$admin = get_option( 'admin_email' );
-		if ( $admin ) {
-			wp_mail(
-				$admin,
-				'Nutterly Good newsletter signup',
-				"A new newsletter signup was received:\n\n{$email}\n"
-			);
+		$notify_to = function_exists( 'nuttergood_farmley_email_address' )
+			? nuttergood_farmley_email_address( 'offers' )
+			: get_option( 'admin_email' );
+		if ( $notify_to ) {
+			if ( function_exists( 'nuttergood_farmley_send_mail' ) ) {
+				nuttergood_farmley_send_mail(
+					$notify_to,
+					'Nutterly Good newsletter signup',
+					"A new newsletter signup was received:\n\n{$email}\n",
+					array(),
+					'noreply'
+				);
+			} else {
+				wp_mail(
+					$notify_to,
+					'Nutterly Good newsletter signup',
+					"A new newsletter signup was received:\n\n{$email}\n"
+				);
+			}
 		}
 
-		$message = function_exists( 'nuttergood_farmley_newsletter_success_message' )
-			? nuttergood_farmley_newsletter_success_message( $email )
-			: __( 'Thank you! We have shared your 20% off coupon and login details by email. Please check your inbox and spam folder.', 'nuttergood' );
+		$message = isset( $setup['message'] )
+			? $setup['message']
+			: ( function_exists( 'nuttergood_farmley_newsletter_success_message' )
+				? nuttergood_farmley_newsletter_success_message( $email )
+				: __( 'Thank you! We have shared your 20% off coupon and login details by email. Please check your inbox and spam folder.', 'nuttergood' ) );
 
 		return array(
-			'success' => true,
-			'message' => $message,
+			'success'     => true,
+			'message'     => $message,
+			'coupon_code' => isset( $setup['coupon_code'] ) ? (string) $setup['coupon_code'] : '',
+			'email_sent'  => isset( $setup['email_sent'] ) ? (bool) $setup['email_sent'] : true,
 		);
 	}
 }
@@ -206,7 +224,13 @@ if ( ! function_exists( 'nuttergood_farmley_ajax_newsletter_signup' ) ) {
 			wp_send_json_error( array( 'message' => $result['message'] ) );
 		}
 
-		wp_send_json_success( array( 'message' => $result['message'] ) );
+		wp_send_json_success(
+			array(
+				'message'     => $result['message'],
+				'coupon_code' => isset( $result['coupon_code'] ) ? $result['coupon_code'] : '',
+				'email_sent'  => isset( $result['email_sent'] ) ? (bool) $result['email_sent'] : true,
+			)
+		);
 	}
 	add_action( 'wp_ajax_ng_farmley_newsletter', 'nuttergood_farmley_ajax_newsletter_signup' );
 	add_action( 'wp_ajax_nopriv_ng_farmley_newsletter', 'nuttergood_farmley_ajax_newsletter_signup' );

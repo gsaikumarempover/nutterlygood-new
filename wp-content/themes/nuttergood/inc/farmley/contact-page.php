@@ -17,7 +17,7 @@ if ( ! function_exists( 'nuttergood_farmley_contact_details' ) ) {
 
 		return array(
 			'company'       => $info['company'] ?? 'Nutterly Good',
-			'email'         => $info['email'] ?? 'contact@nutterlygood.com',
+			'email'         => $info['email'] ?? 'support@nutterlygood.com',
 			'phone'         => $info['phone'] ?? '+91 74162 85566',
 			'phone_tel'     => $info['phone_tel'] ?? '+917416285566',
 			'whatsapp_url'  => function_exists( 'nuttergood_farmley_contact_whatsapp_url' )
@@ -170,7 +170,9 @@ if ( ! function_exists( 'nuttergood_farmley_handle_contact_submit' ) ) {
 		$to      = nuttergood_farmley_contact_details()['email'];
 		$headers = array( 'Content-Type: text/plain; charset=UTF-8', 'Reply-To: ' . $name . ' <' . $email . '>' );
 		$body    = "Name: {$name}\nEmail: {$email}\nSubject: {$subject}\n\n{$message}";
-		$sent    = wp_mail( $to, '[Nutterly Good] ' . $subject, $body, $headers );
+		$sent    = function_exists( 'nuttergood_farmley_send_mail' )
+			? nuttergood_farmley_send_mail( $to, '[Nutterly Good] ' . $subject, $body, $headers, 'noreply' )
+			: wp_mail( $to, '[Nutterly Good] ' . $subject, $body, $headers );
 
 		$redirect = add_query_arg( 'contact', $sent ? 'sent' : 'error', get_permalink( 3437 ) );
 		wp_safe_redirect( $redirect );

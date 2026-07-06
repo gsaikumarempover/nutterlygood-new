@@ -68,6 +68,7 @@ if ( ! function_exists( 'nuttergood_farmley_get_page_banner_map' ) ) {
 		$base = 'ng-media/banners';
 		return array(
 			'shop'                 => $base . '/banner-shop.jpg',
+			'blog'                 => 'ng-media/blog/ng-blog-healthy-snacking.jpg',
 			'about-us'             => $base . '/banner-about.jpg',
 			'contact'              => $base . '/banner-contact.jpg',
 			'privacy-policy'       => $base . '/banner-policy.jpg',
@@ -148,6 +149,8 @@ if ( ! function_exists( 'nuttergood_farmley_get_current_banner_attachment_id' ) 
 			$slug = 'shop';
 		} elseif ( function_exists( 'is_product_tag' ) && is_product_tag() ) {
 			$slug = 'shop';
+		} elseif ( is_home() || is_singular( 'post' ) || is_category() || is_tag() || is_author() || is_date() ) {
+			$slug = 'blog';
 		}
 
 		$path = $map[ $slug ] ?? $map['default'];

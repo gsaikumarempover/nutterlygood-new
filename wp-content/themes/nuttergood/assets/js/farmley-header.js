@@ -120,7 +120,23 @@
 		});
 	}
 
+	function fixWishlistLinks() {
+		if (typeof ngFarmleyHeader === 'undefined' || !ngFarmleyHeader.wishlistUrl) {
+			return;
+		}
+
+		$('.widget_greenpath_core_qode_wishlist .qodef-wishlist-widget-link').each(function () {
+			var $link = $(this);
+			var href = $link.attr('href') || '';
+			if (!href || href === window.location.origin + '/' || href === '/') {
+				$link.attr('href', ngFarmleyHeader.wishlistUrl);
+			}
+		});
+	}
+
 	$(function () {
+		fixWishlistLinks();
+
 		var $counter = getWishlistCounter();
 		if ($counter.length) {
 			setWishlistCount($counter.text());

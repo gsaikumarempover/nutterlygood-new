@@ -111,52 +111,6 @@ if ( ! function_exists( 'nuttergood_farmley_filter_home_category_carousel_widget
 	add_action( 'elementor/frontend/widget/before_render', 'nuttergood_farmley_filter_home_category_carousel_widget', 10, 1 );
 }
 
-if ( ! function_exists( 'nuttergood_farmley_filter_home_category_terms' ) ) {
-	/**
-	 * Ensure get_terms returns only allowed parent categories in the right order.
-	 *
-	 * @param array         $terms      Terms array.
-	 * @param array|string  $taxonomies Taxonomy name(s).
-	 * @param array         $args       Query args.
-	 * @param \WP_Term_Query $term_query Term query object.
-	 * @return array
-	 */
-	function nuttergood_farmley_filter_home_category_terms( $terms, $taxonomies, $args, $term_query ) {
-		if ( ! is_front_page() || is_admin() ) {
-			return $terms;
-		}
-
-		$taxonomy = is_array( $taxonomies ) ? reset( $taxonomies ) : $taxonomies;
-		if ( 'product_cat' !== $taxonomy || empty( $terms ) || is_wp_error( $terms ) ) {
-			return $terms;
-		}
-
-		$allowed_slugs = nuttergood_farmley_home_category_slugs();
-		$slug_lookup   = array_flip( $allowed_slugs );
-		$filtered      = array();
-
-		foreach ( $terms as $term ) {
-			if ( isset( $slug_lookup[ $term->slug ] ) && 0 === (int) $term->parent ) {
-				$filtered[] = $term;
-			}
-		}
-
-		if ( empty( $filtered ) ) {
-			return $terms;
-		}
-
-		usort(
-			$filtered,
-			static function ( $a, $b ) use ( $slug_lookup ) {
-				return $slug_lookup[ $a->slug ] <=> $slug_lookup[ $b->slug ];
-			}
-		);
-
-		return $filtered;
-	}
-	add_filter( 'get_terms', 'nuttergood_farmley_filter_home_category_terms', 20, 4 );
-}
-
 if ( ! function_exists( 'nuttergood_farmley_home_category_icons_data' ) ) {
 	/**
 	 * @return array<string, array{png?: string, svg?: string, bg?: string, label?: string}>
@@ -325,7 +279,15 @@ if ( ! function_exists( 'nuttergood_farmley_home_category_display_name' ) ) {
 	 * @return WP_Term
 	 */
 	function nuttergood_farmley_home_category_display_name( $term ) {
-		if ( ! is_front_page() || ! $term instanceof WP_Term || 'product_cat' !== $term->taxonomy ) {
+		if ( is_admin() || ! $term instanceof WP_Term || 'product_cat' !== $term->taxonomy ) {
+			return $term;
+		}
+
+		if ( ! function_exists( 'nuttergood_farmley_home_category_slugs' ) ) {
+			return $term;
+		}
+
+		if ( ! in_array( $term->slug, nuttergood_farmley_home_category_slugs(), true ) ) {
 			return $term;
 		}
 

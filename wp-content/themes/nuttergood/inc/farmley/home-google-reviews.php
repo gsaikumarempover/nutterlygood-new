@@ -60,9 +60,19 @@ if ( ! function_exists( 'nuttergood_farmley_google_reviews_defaults' ) ) {
 if ( ! function_exists( 'nuttergood_farmley_google_reviews_map_url' ) ) {
 	function nuttergood_farmley_google_reviews_map_url() {
 		$info = function_exists( 'nuttergood_farmley_contact_info' ) ? nuttergood_farmley_contact_info() : array();
+
+		if ( ! empty( $info['google_reviews_url'] ) ) {
+			return $info['google_reviews_url'];
+		}
+
+		if ( ! empty( $info['google_place_id'] ) ) {
+			return 'https://www.google.com/maps/place/?q=place_id:' . rawurlencode( $info['google_place_id'] );
+		}
+
 		if ( ! empty( $info['map_url'] ) ) {
 			return $info['map_url'];
 		}
+
 		return 'https://www.google.com/maps/search/?api=1&query=Nutterly+Good+Kokapet+Hyderabad';
 	}
 }
@@ -74,6 +84,10 @@ if ( ! function_exists( 'nuttergood_farmley_fetch_google_reviews_api' ) ) {
 	function nuttergood_farmley_fetch_google_reviews_api() {
 		$api_key   = (string) get_option( 'ng_farmley_google_places_api_key', '' );
 		$place_id  = (string) get_option( 'ng_farmley_google_place_id', '' );
+		if ( '' === $place_id && function_exists( 'nuttergood_farmley_contact_info' ) ) {
+			$contact   = nuttergood_farmley_contact_info();
+			$place_id  = (string) ( $contact['google_place_id'] ?? '' );
+		}
 		$cache_key = 'ng_farmley_google_reviews_' . md5( $place_id );
 
 		if ( '' === $api_key || '' === $place_id ) {
@@ -221,7 +235,7 @@ if ( ! function_exists( 'nuttergood_farmley_render_home_google_reviews' ) ) {
 							?>
 						</span>
 						<a class="ng-farmley-greviews__maps-link" href="<?php echo esc_url( $map_url ); ?>" target="_blank" rel="noopener noreferrer">
-							<?php esc_html_e( 'View on Google Maps', 'nuttergood' ); ?>
+							<?php esc_html_e( 'Read reviews on Google', 'nuttergood' ); ?>
 						</a>
 					</div>
 				</div>

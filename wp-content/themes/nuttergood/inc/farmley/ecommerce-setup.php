@@ -48,6 +48,71 @@ if ( ! function_exists( 'nuttergood_farmley_ensure_signup_page' ) ) {
 	add_action( 'after_setup_theme', 'nuttergood_farmley_ensure_signup_page', 20 );
 }
 
+if ( ! function_exists( 'nuttergood_farmley_get_wishlist_page_id' ) ) {
+	function nuttergood_farmley_get_wishlist_page_id() {
+		if ( function_exists( 'qode_wishlist_for_woocommerce_get_wishlist_page_id' ) ) {
+			$page_id = (int) qode_wishlist_for_woocommerce_get_wishlist_page_id();
+			if ( $page_id > 0 && get_post( $page_id ) ) {
+				return $page_id;
+			}
+		}
+
+		$page = get_page_by_path( 'wishlist' );
+		return $page ? (int) $page->ID : 0;
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_get_wishlist_url' ) ) {
+	function nuttergood_farmley_get_wishlist_url() {
+		if ( function_exists( 'qode_wishlist_for_woocommerce_get_wishlist_page_url' ) ) {
+			$url = qode_wishlist_for_woocommerce_get_wishlist_page_url();
+			if ( $url ) {
+				return $url;
+			}
+		}
+
+		$page_id = nuttergood_farmley_get_wishlist_page_id();
+		return $page_id ? get_permalink( $page_id ) : home_url( '/wishlist/' );
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_ensure_wishlist_page' ) ) {
+	function nuttergood_farmley_ensure_wishlist_page() {
+		if ( ! function_exists( 'qode_wishlist_for_woocommerce_get_wishlist_page_id' ) ) {
+			return;
+		}
+
+		$page_id = nuttergood_farmley_get_wishlist_page_id();
+		if ( ! $page_id ) {
+			$page_id = wp_insert_post(
+				array(
+					'post_title'   => __( 'Wishlist', 'nuttergood' ),
+					'post_name'    => 'wishlist',
+					'post_status'  => 'publish',
+					'post_type'    => 'page',
+					'post_content' => '[qode_wishlist_for_woocommerce_table]',
+				),
+				true
+			);
+
+			if ( is_wp_error( $page_id ) || ! $page_id ) {
+				return;
+			}
+		}
+
+		$opts = get_option( 'qode_wishlist_for_woocommerce_options', array() );
+		if ( ! is_array( $opts ) ) {
+			$opts = array();
+		}
+
+		if ( empty( $opts['qode_wishlist_for_woocommerce_page_template'] ) || (int) $opts['qode_wishlist_for_woocommerce_page_template'] !== (int) $page_id ) {
+			$opts['qode_wishlist_for_woocommerce_page_template'] = (string) $page_id;
+			update_option( 'qode_wishlist_for_woocommerce_options', $opts );
+		}
+	}
+	add_action( 'after_setup_theme', 'nuttergood_farmley_ensure_wishlist_page', 21 );
+}
+
 if ( ! function_exists( 'nuttergood_farmley_enable_woocommerce_registration' ) ) {
 	function nuttergood_farmley_enable_woocommerce_registration() {
 		if ( 'yes' !== get_option( 'woocommerce_enable_myaccount_registration' ) ) {

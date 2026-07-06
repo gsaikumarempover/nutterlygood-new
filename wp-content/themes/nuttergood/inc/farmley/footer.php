@@ -237,7 +237,7 @@ if ( ! function_exists( 'nuttergood_farmley_render_footer' ) ) {
 		$logo_id    = nuttergood_farmley_get_footer_logo_id();
 		$home       = home_url( '/' );
 		$contact    = function_exists( 'nuttergood_farmley_contact_info' ) ? nuttergood_farmley_contact_info() : array();
-		$email      = $contact['email'] ?? 'contact@nutterlygood.com';
+		$email      = $contact['email'] ?? 'support@nutterlygood.com';
 		$phone      = $contact['phone'] ?? '+91 74162 85566';
 		$phone_tel  = $contact['phone_tel'] ?? '+917416285566';
 		$address    = $contact['address'] ?? '';

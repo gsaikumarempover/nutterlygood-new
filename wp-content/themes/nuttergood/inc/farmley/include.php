@@ -21,6 +21,22 @@ $ng_farmley_contact_info = get_template_directory() . '/inc/farmley/contact-info
 if ( file_exists( $ng_farmley_contact_info ) ) {
 	include_once $ng_farmley_contact_info;
 }
+$ng_farmley_email_config = get_template_directory() . '/inc/farmley/email-config.php';
+if ( file_exists( $ng_farmley_email_config ) ) {
+	include_once $ng_farmley_email_config;
+}
+$ng_farmley_mail = get_template_directory() . '/inc/farmley/mail.php';
+if ( file_exists( $ng_farmley_mail ) ) {
+	include_once $ng_farmley_mail;
+}
+$ng_farmley_account_menu = get_template_directory() . '/inc/farmley/account-menu.php';
+if ( file_exists( $ng_farmley_account_menu ) ) {
+	include_once $ng_farmley_account_menu;
+}
+$ng_farmley_checkout_fields = get_template_directory() . '/inc/farmley/checkout-fields.php';
+if ( file_exists( $ng_farmley_checkout_fields ) ) {
+	include_once $ng_farmley_checkout_fields;
+}
 $ng_farmley_meta_file = get_template_directory() . '/inc/farmley/product-meta.php';
 if ( file_exists( $ng_farmley_meta_file ) ) {
 	include_once $ng_farmley_meta_file;
@@ -238,7 +254,8 @@ if ( ! function_exists( 'nuttergood_farmley_enqueue_assets' ) ) {
 				'nuttergood-farmley-header',
 				'ngFarmleyHeader',
 				array(
-					'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+					'ajaxUrl'     => admin_url( 'admin-ajax.php' ),
+					'wishlistUrl' => function_exists( 'nuttergood_farmley_get_wishlist_url' ) ? nuttergood_farmley_get_wishlist_url() : '',
 				)
 			);
 		}
@@ -346,13 +363,14 @@ if ( ! function_exists( 'nuttergood_farmley_home_assets' ) ) {
 
 if ( ! function_exists( 'nuttergood_farmley_blog_assets' ) ) {
 	function nuttergood_farmley_blog_assets() {
-		if ( ! is_home() && ! is_singular( 'post' ) && ! is_category() && ! is_tag() && ! is_author() && ! is_date() ) {
+		if ( ! function_exists( 'nuttergood_farmley_is_blog_context' ) || ! nuttergood_farmley_is_blog_context() ) {
 			return;
 		}
 
 		$dir = get_template_directory();
 		$uri = get_template_directory_uri();
 		$css = $dir . '/assets/css/farmley-blog.css';
+		$js  = $dir . '/assets/js/farmley-blog.js';
 
 		if ( file_exists( $css ) ) {
 			wp_enqueue_style(
@@ -360,6 +378,16 @@ if ( ! function_exists( 'nuttergood_farmley_blog_assets' ) ) {
 				$uri . '/assets/css/farmley-blog.css',
 				array( 'greenpath-style', 'nuttergood-farmley-header' ),
 				filemtime( $css )
+			);
+		}
+
+		if ( file_exists( $js ) && ! is_singular( 'post' ) ) {
+			wp_enqueue_script(
+				'nuttergood-farmley-blog',
+				$uri . '/assets/js/farmley-blog.js',
+				array( 'jquery' ),
+				filemtime( $js ),
+				true
 			);
 		}
 	}
@@ -422,4 +450,69 @@ body.qodef-top-area--enabled { padding-top: 0 !important; }
 		return $style;
 	}
 	add_filter( 'greenpath_filter_add_inline_style', 'nuttergood_farmley_inline_css' );
+}
+
+if ( ! function_exists( 'nuttergood_farmley_page_loader_assets' ) ) {
+	function nuttergood_farmley_page_loader_assets() {
+		if ( is_admin() ) {
+			return;
+		}
+
+		$dir = get_template_directory();
+		$uri = get_template_directory_uri();
+		$css = $dir . '/assets/css/nuttergood-page-loader.css';
+		$js  = $dir . '/assets/js/nuttergood-page-loader.js';
+
+		if ( file_exists( $css ) ) {
+			wp_enqueue_style(
+				'nuttergood-page-loader',
+				$uri . '/assets/css/nuttergood-page-loader.css',
+				array(),
+				filemtime( $css )
+			);
+		}
+
+		if ( file_exists( $js ) ) {
+			wp_enqueue_script(
+				'nuttergood-page-loader',
+				$uri . '/assets/js/nuttergood-page-loader.js',
+				array(),
+				filemtime( $js ),
+				true
+			);
+		}
+	}
+	add_action( 'wp_enqueue_scripts', 'nuttergood_farmley_page_loader_assets', 5 );
+}
+
+if ( ! function_exists( 'nuttergood_farmley_render_page_loader' ) ) {
+	function nuttergood_farmley_render_page_loader() {
+		if ( is_admin() ) {
+			return;
+		}
+
+		$frames_uri = get_template_directory_uri() . '/assets/images/nuttergood-loader-frames/';
+		?>
+		<div
+			class="ng-page-loader"
+			role="status"
+			aria-live="polite"
+			aria-label="<?php esc_attr_e( 'Loading Nutterly Good', 'nuttergood' ); ?>"
+			data-frames-base="<?php echo esc_url( $frames_uri ); ?>"
+			data-frame-count="80"
+			data-fps="10"
+			data-canvas-width="1026"
+			data-canvas-height="636"
+		>
+			<div class="ng-page-loader__inner">
+				<div class="ng-page-loader__canvas-wrap">
+					<canvas class="ng-page-loader__canvas" width="1026" height="636" aria-hidden="true"></canvas>
+				</div>
+				<p class="ng-page-loader__text"><?php esc_html_e( 'Loading fresh goodness', 'nuttergood' ); ?></p>
+				<div class="ng-page-loader__bar" aria-hidden="true"><span></span></div>
+			</div>
+		</div>
+		<?php
+	}
+	add_action( 'wp_body_open', 'nuttergood_farmley_render_page_loader', 1 );
 }

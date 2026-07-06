@@ -139,19 +139,33 @@ body.qodef-woo-side-area-cart--opened {
 /* ── Progress ── */
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress {
 	margin: 12px 18px;
-	padding: 14px 16px;
-	border-radius: 14px;
-	background: #f5f5f5;
-	border: 1px solid rgba(12, 83, 61, 0.06);
+	padding: 12px 16px 14px;
+	border-radius: 16px;
+	background:
+		radial-gradient(circle at 10% 0%, rgba(185, 149, 49, 0.12), transparent 30%),
+		linear-gradient(180deg, #ffffff 0%, #f8faf8 100%);
+	border: 1px solid rgba(12, 83, 61, 0.08);
+	box-shadow: 0 8px 22px rgba(12, 83, 61, 0.06);
+	overflow: hidden;
 }
 
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__msg {
-	margin: 0 0 14px;
+	margin: 0;
 	font-family: "Manrope", sans-serif;
-	font-size: 13px;
-	line-height: 1.45;
-	font-weight: 600;
-	color: #2563eb;
+	font-size: 12.5px;
+	line-height: 1.35;
+	font-weight: 700;
+	color: #0c533d;
+	text-align: center;
+	text-wrap: balance;
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__msg > span[aria-hidden="true"] {
+	display: inline-flex;
+	margin-right: 5px;
+	line-height: 1;
+	font-size: 14px;
+	vertical-align: -1px;
 }
 
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__msg--done {
@@ -160,45 +174,81 @@ body.qodef-woo-side-area-cart--opened {
 
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__track {
 	position: relative;
+	margin: 0;
+	padding: 0;
+	height: auto;
+	background: transparent;
+	border-radius: 0;
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__rail {
+	position: relative;
 	height: 8px;
-	margin: 28px 12px 36px;
+	margin: 24px 32px 24px;
 	border-radius: 999px;
-	background: #e5e7eb;
+	background: #e7ece8;
+	box-shadow: inset 0 1px 2px rgba(12, 83, 61, 0.09);
 }
 
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__fill {
+	position: absolute;
+	left: 0;
+	top: 0;
 	height: 100%;
 	border-radius: 999px;
-	background: linear-gradient(90deg, #6b7280, #374151);
+	background: linear-gradient(90deg, #0c533d, #88a842, #b99531);
 	width: 0;
+	z-index: 1;
+	box-shadow: 0 0 12px rgba(136, 168, 66, 0.32);
 }
 
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__pin {
 	position: absolute;
 	top: 50%;
+	left: var(--pin-left, 0%);
 	transform: translate(-50%, -50%);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 5px;
+	z-index: 2;
+	width: 0;
+	height: 0;
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__pin.is-end {
+	left: 100%;
+	transform: translate(-50%, -50%);
 }
 
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__pin-icon {
-	width: 32px;
-	height: 32px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 34px;
+	height: 34px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 8px;
+	border-radius: 12px;
 	background: #fff;
-	border: 1px solid #e5e7eb;
-	font-size: 14px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+	border: 1px solid rgba(12, 83, 61, 0.12);
+	font-size: 15px;
+	line-height: 1;
+	box-shadow: 0 6px 16px rgba(12, 83, 61, 0.13);
+	transform: translate(-50%, -50%);
+	animation: ng-farmley-sc-icon-float 2.8s ease-in-out infinite;
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__pin.is-end .ng-farmley-sc-progress__pin-icon {
+	transform: translate(-50%, -50%);
 }
 
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__pin.is-on .ng-farmley-sc-progress__pin-icon {
 	border-color: #0c533d;
-	background: #e8f3ee;
+	background: linear-gradient(180deg, #eff8f2, #ffffff);
+	box-shadow: 0 6px 18px rgba(12, 83, 61, 0.2);
+}
+
+@keyframes ng-farmley-sc-icon-float {
+	0%, 100% { margin-top: 0; }
+	50% { margin-top: -3px; }
 }
 
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__pin.is-on.ng-farmley-sc-progress__pin--just-unlocked .ng-farmley-sc-progress__pin-icon {
@@ -206,20 +256,42 @@ body.qodef-woo-side-area-cart--opened {
 }
 
 @keyframes ng-farmley-sc-pin-pop {
-	0% { transform: scale(1); }
-	40% { transform: scale(1.18); }
-	100% { transform: scale(1); }
+	0% { transform: translate(-50%, -50%) scale(1); }
+	40% { transform: translate(-50%, -50%) scale(1.18); }
+	100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__pin.is-end.is-on.ng-farmley-sc-progress__pin--just-unlocked .ng-farmley-sc-progress__pin-icon {
+	animation: ng-farmley-sc-pin-pop-end 0.55s ease-out;
+}
+
+@keyframes ng-farmley-sc-pin-pop-end {
+	0% { transform: translate(-50%, -50%) scale(1); }
+	40% { transform: translate(-50%, -50%) scale(1.18); }
+	100% { transform: translate(-50%, -50%) scale(1); }
 }
 
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__pin-label {
-	width: 76px;
+	position: absolute;
+	top: 21px;
+	left: 0;
+	transform: translateX(-50%);
+	width: 88px;
 	font-family: "Manrope", sans-serif;
 	font-size: 9px;
-	font-weight: 700;
+	font-weight: 800;
 	text-transform: uppercase;
 	text-align: center;
 	line-height: 1.2;
-	color: #6b7280;
+	color: #50615a;
+	letter-spacing: 0.02em;
+	white-space: normal;
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__pin.is-end .ng-farmley-sc-progress__pin-label {
+	left: 0;
+	transform: translateX(-50%);
+	text-align: center;
 }
 
 .widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-progress__count {
@@ -902,10 +974,70 @@ body.qodef-woo-side-area-cart--opened {
 	top: 0;
 	left: 0;
 	right: 0;
-	height: 160px;
-	z-index: 6;
+	height: 170px;
+	z-index: 12;
 	pointer-events: none;
 	overflow: hidden;
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-burst::before {
+	content: "";
+	position: absolute;
+	top: -34px;
+	left: 50%;
+	width: 120px;
+	height: 70px;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(185, 149, 49, 0.2), transparent 68%);
+	transform: translateX(-50%) scale(0);
+	opacity: 0;
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-burst.is-active::before {
+	animation: ng-farmley-sc-burst-glow 0.75s ease-out both;
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-burst__piece {
+	position: absolute;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	will-change: transform, opacity;
+	animation: ng-farmley-sc-flower-fall 1.25s cubic-bezier(0.17, 0.84, 0.44, 1) forwards;
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-burst__piece--flower {
+	color: #b99531;
+	filter: drop-shadow(0 3px 5px rgba(12, 83, 61, 0.14));
+}
+
+.widget_greenpath_core_woo_side_area_cart .ng-farmley-sc-burst__piece--paper {
+	border-radius: 70% 40% 70% 35%;
+	box-shadow: 0 4px 10px rgba(12, 83, 61, 0.12);
+}
+
+@keyframes ng-farmley-sc-burst-glow {
+	0% { opacity: 0; transform: translateX(-50%) scale(0.3); }
+	35% { opacity: 1; transform: translateX(-50%) scale(1); }
+	100% { opacity: 0; transform: translateX(-50%) scale(1.2); }
+}
+
+@keyframes ng-farmley-sc-flower-fall {
+	0% {
+		opacity: 0;
+		transform: translate3d(0, 0, 0) rotate(0deg) scale(0.55);
+	}
+	14% {
+		opacity: 1;
+	}
+	72% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		transform: translate3d(var(--ng-burst-x, 0), var(--ng-burst-y, 100px), 0) rotate(var(--ng-burst-r, 180deg)) scale(1);
+	}
 }
 
 @media (max-width: 480px) {

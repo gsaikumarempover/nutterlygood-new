@@ -358,7 +358,7 @@ if ( ! function_exists( 'nuttergood_farmley_main_menu_use_main_nav' ) ) {
 
 		return $args;
 	}
-	add_filter( 'wp_nav_menu_args', 'nuttergood_farmley_main_menu_use_main_nav' );
+	add_filter( 'wp_nav_menu_args', 'nuttergood_farmley_main_menu_use_main_nav', 99 );
 }
 
 if ( ! function_exists( 'nuttergood_farmley_mark_main_hamburger_menu' ) ) {
@@ -373,6 +373,35 @@ if ( ! function_exists( 'nuttergood_farmley_mark_main_hamburger_menu' ) ) {
 		return '<div class="ng-farmley-main-menu" data-ng-farmley-menu="1">' . $nav_menu . '</div>';
 	}
 	add_filter( 'wp_nav_menu', 'nuttergood_farmley_mark_main_hamburger_menu', 10, 2 );
+}
+
+if ( ! function_exists( 'nuttergood_farmley_fix_menu_localhost_urls' ) ) {
+	/**
+	 * Rewrite leftover local dev URLs in nav menus (custom link items).
+	 *
+	 * @param WP_Post[] $items Menu items.
+	 */
+	function nuttergood_farmley_fix_menu_localhost_urls( $items ) {
+		$live = untrailingslashit( home_url() );
+		$from = array(
+			'http://localhost/nutterlyGood',
+			'https://localhost/nutterlyGood',
+			'http://nutterlygood.free.nf',
+			'https://nutterlygood.free.nf',
+			'http://a1irwktt.infinityfree.com',
+			'https://a1irwktt.infinityfree.com',
+		);
+
+		foreach ( $items as $item ) {
+			if ( empty( $item->url ) ) {
+				continue;
+			}
+			$item->url = str_replace( $from, $live, $item->url );
+		}
+
+		return $items;
+	}
+	add_filter( 'wp_nav_menu_objects', 'nuttergood_farmley_fix_menu_localhost_urls', 20 );
 }
 
 if ( ! function_exists( 'nuttergood_farmley_sync_mobile_header_widgets' ) ) {

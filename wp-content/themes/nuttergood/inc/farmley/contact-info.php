@@ -10,7 +10,12 @@ if ( ! function_exists( 'nuttergood_farmley_contact_info' ) ) {
 	function nuttergood_farmley_contact_info() {
 		return array(
 			'company'       => 'Nutterly Good',
-			'email'         => 'contact@nutterlygood.com',
+			'email'         => 'support@nutterlygood.com',
+			'email_support' => 'support@nutterlygood.com',
+			'email_hello'   => 'hello@nutterlygood.com',
+			'email_offers'  => 'offers@nutterlygood.com',
+			'email_orders'  => 'orders@nutterlygood.com',
+			'email_noreply' => 'noreply@nutterlygood.com',
 			'phone'         => '+91 74162 85566',
 			'phone_tel'     => '+917416285566',
 			'address_line1' => 'CS-09, Etna Block, Rajapushpa Atria',
@@ -18,9 +23,11 @@ if ( ! function_exists( 'nuttergood_farmley_contact_info' ) ) {
 			'address_city'  => 'Hyderabad, Telangana 500075',
 			'address'       => 'CS-09, Etna Block, Rajapushpa Atria, Golden Mile Road, Kokapet, Hyderabad, Telangana 500075',
 			'packed_by'     => 'Nutterly Good, CS-09, Etna Block, Rajapushpa Atria, Golden Mile Road, Kokapet, Hyderabad, Telangana 500075',
-			'map_lat'       => '17.3921',
-			'map_lng'       => '78.3396',
-			'map_url'       => 'https://www.google.com/maps/search/?api=1&query=Rajapushpa+Atria+Kokapet+Hyderabad',
+			'map_lat'            => '17.3902635',
+			'map_lng'            => '78.3395592',
+			'google_place_id'    => 'ChIJdxpwMV-UyzsRHu8K3_9kVXY',
+			'map_url'            => 'https://www.google.com/maps/place/?q=place_id:ChIJdxpwMV-UyzsRHu8K3_9kVXY',
+			'google_reviews_url' => 'https://www.google.com/maps/place/?q=place_id:ChIJdxpwMV-UyzsRHu8K3_9kVXY',
 			'hours'         => 'All Days: 11:00 AM – 9:00 PM IST',
 		);
 	}
@@ -56,6 +63,18 @@ if ( ! function_exists( 'nuttergood_farmley_contact_whatsapp_url' ) ) {
 		}
 
 		return $url;
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_contact_email' ) ) {
+	function nuttergood_farmley_contact_email( $purpose = 'support' ) {
+		if ( function_exists( 'nuttergood_farmley_email_address' ) ) {
+			return nuttergood_farmley_email_address( $purpose );
+		}
+
+		$info = nuttergood_farmley_contact_info();
+
+		return $info['email'] ?? 'support@nutterlygood.com';
 	}
 }
 

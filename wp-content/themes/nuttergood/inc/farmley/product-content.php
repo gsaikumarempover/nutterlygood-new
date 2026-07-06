@@ -8,8 +8,14 @@ if ( ! function_exists( 'nuttergood_farmley_clean_product_html' ) ) {
 	 * @param string $content Raw HTML.
 	 */
 	function nuttergood_farmley_clean_product_html( $content ) {
-		if ( '' === trim( (string) $content ) ) {
+		$content = (string) $content;
+		if ( '' === trim( $content ) ) {
 			return '';
+		}
+
+		// Skip expensive regex on very large imported HTML blobs (shared hosting timeouts).
+		if ( strlen( $content ) > 12000 ) {
+			return wp_trim_words( wp_strip_all_tags( $content ), 120, '…' );
 		}
 
 		$patterns = array(

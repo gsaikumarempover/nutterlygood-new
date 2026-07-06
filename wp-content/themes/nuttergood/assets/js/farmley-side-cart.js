@@ -829,11 +829,21 @@
 	}
 
 	function paperBurst() {
-		if ( burstDoneThisOpen || reducedMotion() || typeof gsap === 'undefined' ) {
+		if ( burstDoneThisOpen || reducedMotion() ) {
 			return;
 		}
 		if ( ! $widget().hasClass( 'qodef--opened' ) ) {
 			return;
+		}
+		try {
+			if ( window.sessionStorage && sessionStorage.getItem( 'ngFarmleyCartFlowerBurstShown' ) ) {
+				return;
+			}
+			if ( window.sessionStorage ) {
+				sessionStorage.setItem( 'ngFarmleyCartFlowerBurstShown', '1' );
+			}
+		} catch ( err ) {
+			// Storage can be blocked in private browsers; the per-open guard still applies.
 		}
 
 		burstDoneThisOpen = true;
@@ -848,54 +858,44 @@
 		var w = $layer.width() || 420;
 		var cx = w * 0.5;
 
-		for ( var i = 0; i < 12; i++ ) {
+		$layer.empty().addClass( 'is-active' );
+
+		for ( var i = 0; i < 18; i++ ) {
 			( function ( idx ) {
-				var isFlower = idx % 5 === 0;
+				var isFlower = idx % 3 === 0;
 				var $el = $( '<span class="ng-farmley-sc-burst__piece"></span>' );
 				var rot = Math.random() * 360;
-				var x0 = cx + ( Math.random() - 0.5 ) * w * 0.4;
-				var drift = ( Math.random() - 0.5 ) * w * 0.18;
-				var fall = 30 + Math.random() * 100;
+				var x0 = cx + ( Math.random() - 0.5 ) * w * 0.34;
+				var drift = ( Math.random() - 0.5 ) * w * 0.42;
+				var fall = 58 + Math.random() * 92;
+				var delay = Math.random() * 120;
 
 				if ( isFlower ) {
-					$el.addClass( 'ng-farmley-sc-burst__piece--flower' ).text( '🌸' ).css( 'font-size', 9 + Math.random() * 4 + 'px' );
+					$el.addClass( 'ng-farmley-sc-burst__piece--flower' ).text( idx % 2 ? '✿' : '🌸' ).css( 'font-size', 11 + Math.random() * 6 + 'px' );
 				} else {
 					$el.addClass( 'ng-farmley-sc-burst__piece--paper' ).css( {
-						width: 5 + Math.random() * 5 + 'px',
-						height: 7 + Math.random() * 7 + 'px',
+						width: 6 + Math.random() * 7 + 'px',
+						height: 8 + Math.random() * 8 + 'px',
 						background: PAPER_COLORS[ idx % PAPER_COLORS.length ],
-						borderRadius: '50% 50% 50% 0',
 					} );
 				}
 
-				$el.css( { left: x0 + 'px', top: '6px', transform: 'rotate(' + rot + 'deg)' } );
+				$el.css( {
+					left: x0 + 'px',
+					top: '-10px',
+					'--ng-burst-x': drift + 'px',
+					'--ng-burst-y': fall + 'px',
+					'--ng-burst-r': rot + 140 + Math.random() * 180 + 'deg',
+					'animation-delay': delay + 'ms',
+					transform: 'rotate(' + rot + 'deg)',
+				} );
 				$layer.append( $el );
-
-				gsap.fromTo(
-					$el[0],
-					{ opacity: 0, y: 0, x: 0, scale: 0.5, rotation: rot },
-					{
-						opacity: 1,
-						y: fall,
-						x: drift,
-						scale: 1,
-						rotation: rot + 120 + Math.random() * 120,
-						duration: 0.8 + Math.random() * 0.4,
-						delay: Math.random() * 0.06,
-						ease: 'power2.out',
-						onComplete: function () {
-							gsap.to( $el[0], {
-								opacity: 0,
-								duration: 0.2,
-								onComplete: function () {
-									$el.remove();
-								},
-							} );
-						},
-					}
-				);
 			} )( i );
 		}
+
+		window.setTimeout( function () {
+			$layer.removeClass( 'is-active' ).empty();
+		}, 1600 );
 	}
 
 	function onCartOpened() {
@@ -904,7 +904,6 @@
 		}
 
 		cartIsOpen = true;
-		burstDoneThisOpen = false;
 
 		buildLayout();
 
@@ -921,7 +920,6 @@
 
 	function onCartClosed() {
 		cartIsOpen = false;
-		burstDoneThisOpen = false;
 	}
 
 	function watchOpen() {

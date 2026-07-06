@@ -197,6 +197,59 @@
 		$button.toggleClass('is-active', !!active).attr('aria-checked', active ? 'true' : 'false');
 	}
 
+	function syncSortDropdownLabel($list) {
+		var options = $list.data('options') || {};
+		var orderby = options.orderby || 'popularity';
+		var $ordering = $list.find('.qodef-product-list-ordering').first();
+
+		if (!$ordering.length) {
+			return;
+		}
+
+		var $active = $ordering.find('.qodef-e-order-link[data-value="' + orderby + '"], .qodef-e-order-link.qodef--active').first();
+		var label = $active.find('.qodef-e-label').text() || $active.text() || '';
+
+		if (!label) {
+			var labels = {
+				popularity: 'Sort by popularity',
+				'price-range-low': 'Sort by price: low to high',
+				'price-range-high': 'Sort by price: high to low',
+				price: 'Sort by price: low to high',
+				'price-desc': 'Sort by price: high to low'
+			};
+			label = labels[orderby] || 'Sort by popularity';
+		}
+
+		$ordering.find('.qodef-current-value .qodef-e-text').text($.trim(label));
+		$ordering.find('.qodef-e-order-link').removeClass('qodef--active').attr('aria-selected', 'false');
+		$ordering.find('.qodef-e-order-link[data-value="' + orderby + '"]').addClass('qodef--active').attr('aria-selected', 'true');
+	}
+
+	function initSortDropdown() {
+		var $list = getShopList();
+		if (!$list.length) {
+			return;
+		}
+
+		syncSortDropdownLabel($list);
+
+		$list.off('click.ngFarmleySort').on('click.ngFarmleySort', '.qodef-e-order-link', function () {
+			var $link = $(this);
+			var value = $link.data('value');
+			var label = $.trim($link.find('.qodef-e-label').text() || $link.text());
+
+			if (value) {
+				var options = $.extend({}, $list.data('options') || {});
+				options.orderby = value;
+				$list.data('options', options);
+			}
+
+			if (label) {
+				$list.find('.qodef-product-list-ordering .qodef-current-value .qodef-e-text').text(label);
+			}
+		});
+	}
+
 	function initCatalogToolbar() {
 		$('.qodef-woo-product-list .qodef-filter-top-bar .qodef-e-info-right').each(function () {
 			var $right = $(this);
@@ -305,6 +358,7 @@
 		patchCategoryFilter();
 		initPriceSlider();
 		initCatalogToolbar();
+		initSortDropdown();
 		cleanPopularCardButtons();
 		setTimeout(cleanPopularCardButtons, 400);
 	});
@@ -326,6 +380,7 @@
 			enforceShopSidebarLayout();
 			initPriceSlider();
 			initCatalogToolbar();
+			initSortDropdown();
 			cleanPopularCardButtons();
 		}, 350);
 	});

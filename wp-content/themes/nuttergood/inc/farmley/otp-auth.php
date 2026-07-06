@@ -152,12 +152,21 @@ if ( ! function_exists( 'nuttergood_farmley_otp_deliver_code' ) ) {
 		);
 
 		if ( 'email' === $identifier['type'] ) {
-			wp_mail(
-				$identifier['value'],
-				sprintf( __( '%s — your verification code', 'nuttergood' ), get_bloginfo( 'name' ) ),
-				$message,
-				array( 'Content-Type: text/plain; charset=UTF-8' )
-			);
+			if ( function_exists( 'nuttergood_farmley_send_mail' ) ) {
+				nuttergood_farmley_send_mail(
+					$identifier['value'],
+					sprintf( __( '%s — your verification code', 'nuttergood' ), get_bloginfo( 'name' ) ),
+					$message,
+					array(),
+					'noreply'
+				);
+			} else {
+				wp_mail(
+					$identifier['value'],
+					sprintf( __( '%s — your verification code', 'nuttergood' ), get_bloginfo( 'name' ) ),
+					$message
+				);
+			}
 			return true;
 		}
 
@@ -401,7 +410,7 @@ if ( ! function_exists( 'nuttergood_farmley_otp_ajax_verify' ) ) {
 
 		nuttergood_farmley_otp_delete_store( $purpose, $identifier['value'] );
 		nuttergood_farmley_otp_login_user( $user, true );
-		$redirect = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/' );
+		$redirect = home_url( '/' );
 		nuttergood_farmley_otp_json( true, __( 'Account created successfully.', 'nuttergood' ), array( 'redirect' => $redirect ) );
 	}
 	add_action( 'wp_ajax_nopriv_ng_farmley_otp_verify', 'nuttergood_farmley_otp_ajax_verify' );

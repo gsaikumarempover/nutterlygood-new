@@ -501,6 +501,43 @@ if ( ! function_exists( 'nuttergood_farmley_render_product_card_media' ) ) {
 	}
 }
 
+if ( ! function_exists( 'nuttergood_farmley_extract_weight_from_text' ) ) {
+	/**
+	 * Pull a weight/volume token from product title or description (e.g. "Cashews 2kg").
+	 *
+	 * @param string $text Free text.
+	 */
+	function nuttergood_farmley_extract_weight_from_text( $text ) {
+		$text = trim( (string) $text );
+		if ( '' === $text ) {
+			return '';
+		}
+
+		if ( preg_match( '/(\d+(?:\.\d+)?)\s*(kg|g|gm|ml|l)\b/i', $text, $matches ) ) {
+			return nuttergood_farmley_format_weight_label( $matches[1] . $matches[2] );
+		}
+
+		return '';
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_is_main_single_product_price' ) ) {
+	/**
+	 * True when price HTML belongs to the main product on a single product page (not related/upsell cards).
+	 *
+	 * @param WC_Product $product Product object.
+	 */
+	function nuttergood_farmley_is_main_single_product_price( $product ) {
+		if ( ! function_exists( 'is_product' ) || ! is_product() || ! $product instanceof WC_Product ) {
+			return false;
+		}
+
+		$queried_id = (int) get_queried_object_id();
+
+		return $queried_id > 0 && $queried_id === (int) $product->get_id();
+	}
+}
+
 if ( ! function_exists( 'nuttergood_farmley_parse_weight_grams' ) ) {
 	/**
 	 * @param string $raw Weight label.
@@ -516,6 +553,131 @@ if ( ! function_exists( 'nuttergood_farmley_parse_weight_grams' ) ) {
 			return (int) round( $num );
 		}
 		return 0;
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_parse_volume_ml' ) ) {
+	/**
+	 * @param string $raw Volume label e.g. 250 ml, 1 l.
+	 */
+	function nuttergood_farmley_parse_volume_ml( $raw ) {
+		$raw = trim( (string) $raw );
+		if ( preg_match( '/(\d+(?:\.\d+)?)\s*(l|ml)\b/i', $raw, $matches ) ) {
+			$num  = (float) $matches[1];
+			$unit = strtolower( $matches[2] );
+			if ( 'l' === $unit ) {
+				return (int) round( $num * 1000 );
+			}
+			return (int) round( $num );
+		}
+		return 0;
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_get_unit_selling_price' ) ) {
+	/**
+	 * Unit selling price (USP) from pack price and size label.
+	 *
+	 * @param float  $price        Offer/sale price for the selected pack.
+	 * @param string $weight_label Size label e.g. 250 g, 1 kg, 500 ml.
+	 *
+	 * @return array{amount:float,unit_label:string}|null
+	 */
+	function nuttergood_farmley_get_unit_selling_price( $price, $weight_label ) {
+		$price = (float) $price;
+		if ( $price <= 0 ) {
+			return null;
+		}
+
+		$grams = nuttergood_farmley_parse_weight_grams( $weight_label );
+		if ( $grams > 0 ) {
+			return array(
+				'amount'     => round( ( $price / $grams ) * 100, 2 ),
+				'unit_label' => '100g',
+			);
+		}
+
+		$ml = nuttergood_farmley_parse_volume_ml( $weight_label );
+		if ( $ml > 0 ) {
+			return array(
+				'amount'     => round( ( $price / $ml ) * 100, 2 ),
+				'unit_label' => '100ml',
+			);
+		}
+
+		return null;
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_format_unit_selling_price' ) ) {
+	/**
+	 * @param float  $price        Offer/sale price for the selected pack.
+	 * @param string $weight_label Size label e.g. 250 g, 1 kg.
+	 */
+	function nuttergood_farmley_format_unit_selling_price( $price, $weight_label ) {
+		$usp = nuttergood_farmley_get_unit_selling_price( $price, $weight_label );
+		if ( null === $usp ) {
+			return '';
+		}
+
+		$formatted = wp_strip_all_tags( wc_price( $usp['amount'] ) );
+
+		return sprintf(
+			'<span class="ng-farmley-sp-usp" aria-label="%1$s"><span class="ng-farmley-sp-usp__label">%2$s</span> <span class="ng-farmley-sp-usp__value">%3$s/%4$s</span></span>',
+			esc_attr(
+				sprintf(
+					/* translators: 1: unit selling price, 2: unit label */
+					__( 'Unit selling price: %1$s per %2$s', 'nuttergood' ),
+					$formatted,
+					$usp['unit_label']
+				)
+			),
+			esc_html__( 'USP:', 'nuttergood' ),
+			esc_html( $formatted ),
+			esc_html( $usp['unit_label'] )
+		);
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_resolve_single_product_usp_context' ) ) {
+	/**
+	 * Price + size label used to compute USP on the single product page.
+	 *
+	 * @param WC_Product $product    Product object.
+	 * @param int        $size_index Selected size index.
+	 *
+	 * @return array{price:float,weight_label:string}
+	 */
+	function nuttergood_farmley_resolve_single_product_usp_context( $product, $size_index = 0 ) {
+		$price        = 0.0;
+		$weight_label = '';
+
+		if ( $product instanceof WC_Product && ! $product->is_type( 'variable' ) ) {
+			$sizes = nuttergood_farmley_get_product_size_options( $product );
+			if ( ! empty( $sizes[ $size_index ] ) && is_array( $sizes[ $size_index ] ) ) {
+				$row          = $sizes[ $size_index ];
+				$prices       = nuttergood_farmley_resolve_size_prices( $row, $product );
+				$price        = (float) $prices['offer'];
+				$weight_label = nuttergood_farmley_format_weight_label( $row['weight'] ?? $row['label'] ?? '' );
+			}
+		}
+
+		if ( $price <= 0 && $product instanceof WC_Product ) {
+			$price = (float) $product->get_price();
+		}
+
+		if ( '' === $weight_label && $product instanceof WC_Product ) {
+			$weight_label = nuttergood_farmley_get_product_weight_label( $product );
+		}
+
+		if ( '' === $weight_label && $product instanceof WC_Product ) {
+			$weight_label = nuttergood_farmley_extract_weight_from_text( $product->get_name() );
+		}
+
+		return array(
+			'price'        => $price,
+			'weight_label' => $weight_label,
+		);
 	}
 }
 

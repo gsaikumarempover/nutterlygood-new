@@ -1,11 +1,11 @@
 <?php
 /**
- * Shop sidebar categories — same five parents + labels as the homepage row.
+ * Storefront category lists — same five parents + labels as the homepage row.
  */
 
 if ( ! function_exists( 'nuttergood_farmley_get_shop_category_terms' ) ) {
 	/**
-	 * Homepage-aligned parent categories for the shop filter.
+	 * Homepage-aligned parent categories for menus, filters, and widgets.
 	 *
 	 * @return WP_Term[]
 	 */
@@ -36,13 +36,19 @@ if ( ! function_exists( 'nuttergood_farmley_get_shop_category_terms' ) ) {
 	}
 }
 
-if ( ! function_exists( 'nuttergood_farmley_is_shop_category_terms_query' ) ) {
+if ( ! function_exists( 'nuttergood_farmley_is_storefront_category_context' ) ) {
+	function nuttergood_farmley_is_storefront_category_context() {
+		return ! is_admin() && ! wp_doing_ajax() && ! wp_doing_cron();
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_should_align_product_cat_terms_query' ) ) {
 	/**
-	 * @param array         $args       get_terms() args.
-	 * @param array|string  $taxonomies Taxonomy name(s).
+	 * @param array        $args       get_terms() args.
+	 * @param array|string $taxonomies Taxonomy name(s).
 	 */
-	function nuttergood_farmley_is_shop_category_terms_query( $args, $taxonomies ) {
-		if ( ! nuttergood_farmley_is_main_shop_page() ) {
+	function nuttergood_farmley_should_align_product_cat_terms_query( $args, $taxonomies ) {
+		if ( ! nuttergood_farmley_is_storefront_category_context() ) {
 			return false;
 		}
 
@@ -51,20 +57,27 @@ if ( ! function_exists( 'nuttergood_farmley_is_shop_category_terms_query' ) ) {
 			return false;
 		}
 
-		if ( ! empty( $args['child_of'] ) || ! empty( $args['slug'] ) ) {
+		if ( ! empty( $args['slug'] ) || ! empty( $args['name'] ) ) {
 			return false;
 		}
 
-		// Product list shortcode category checkboxes (no parent/include restriction).
-		if ( ! empty( $args['hide_empty'] ) && empty( $args['include'] ) && empty( $args['exclude'] ) ) {
-			return true;
+		if ( ! empty( $args['child_of'] ) ) {
+			return false;
 		}
 
-		return false;
+		if ( ! empty( $args['object_ids'] ) ) {
+			return false;
+		}
+
+		if ( isset( $args['parent'] ) && (int) $args['parent'] > 0 ) {
+			return false;
+		}
+
+		return true;
 	}
 }
 
-if ( ! function_exists( 'nuttergood_farmley_filter_shop_category_terms' ) ) {
+if ( ! function_exists( 'nuttergood_farmley_filter_aligned_product_cat_terms' ) ) {
 	/**
 	 * @param array         $terms      Terms array.
 	 * @param array|string  $taxonomies Taxonomy name(s).
@@ -72,8 +85,8 @@ if ( ! function_exists( 'nuttergood_farmley_filter_shop_category_terms' ) ) {
 	 * @param WP_Term_Query $term_query Term query object.
 	 * @return array
 	 */
-	function nuttergood_farmley_filter_shop_category_terms( $terms, $taxonomies, $args, $term_query ) {
-		if ( is_admin() || ! nuttergood_farmley_is_shop_category_terms_query( $args, $taxonomies ) ) {
+	function nuttergood_farmley_filter_aligned_product_cat_terms( $terms, $taxonomies, $args, $term_query ) {
+		if ( ! nuttergood_farmley_should_align_product_cat_terms_query( $args, $taxonomies ) ) {
 			return $terms;
 		}
 
@@ -81,7 +94,32 @@ if ( ! function_exists( 'nuttergood_farmley_filter_shop_category_terms' ) ) {
 
 		return ! empty( $aligned ) ? $aligned : $terms;
 	}
-	add_filter( 'get_terms', 'nuttergood_farmley_filter_shop_category_terms', 25, 4 );
+	add_filter( 'get_terms', 'nuttergood_farmley_filter_aligned_product_cat_terms', 20, 4 );
+}
+
+if ( ! function_exists( 'nuttergood_farmley_is_shop_category_terms_query' ) ) {
+	/**
+	 * @deprecated Use nuttergood_farmley_should_align_product_cat_terms_query().
+	 * @param array        $args       get_terms() args.
+	 * @param array|string $taxonomies Taxonomy name(s).
+	 */
+	function nuttergood_farmley_is_shop_category_terms_query( $args, $taxonomies ) {
+		return nuttergood_farmley_should_align_product_cat_terms_query( $args, $taxonomies );
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_should_align_category_filter_items' ) ) {
+	function nuttergood_farmley_should_align_category_filter_items() {
+		if ( ! nuttergood_farmley_is_storefront_category_context() ) {
+			return false;
+		}
+
+		if ( function_exists( 'is_woocommerce' ) && is_woocommerce() ) {
+			return true;
+		}
+
+		return function_exists( 'is_front_page' ) && is_front_page();
+	}
 }
 
 if ( ! function_exists( 'nuttergood_farmley_filter_shop_category_filter_items' ) ) {
@@ -91,7 +129,11 @@ if ( ! function_exists( 'nuttergood_farmley_filter_shop_category_filter_items' )
 	 * @return array|string
 	 */
 	function nuttergood_farmley_filter_shop_category_filter_items( $items, $params ) {
-		if ( ! nuttergood_farmley_is_main_shop_page() || ! is_array( $items ) ) {
+		if ( ! nuttergood_farmley_should_align_category_filter_items() || ! is_array( $items ) ) {
+			return $items;
+		}
+
+		if ( empty( $params['tax'] ) || 'product_cat' !== $params['tax'] ) {
 			return $items;
 		}
 
@@ -100,4 +142,72 @@ if ( ! function_exists( 'nuttergood_farmley_filter_shop_category_filter_items' )
 		return ! empty( $aligned ) ? $aligned : $items;
 	}
 	add_filter( 'greenpath_filter_get_filter_items', 'nuttergood_farmley_filter_shop_category_filter_items', 25, 2 );
+}
+
+if ( ! function_exists( 'nuttergood_farmley_build_aligned_category_menu_items' ) ) {
+	/**
+	 * Build nav menu items for the five aligned parent categories.
+	 *
+	 * @param WP_Post[]    $items Existing menu items (used for menu/order metadata).
+	 * @param stdClass|array|null $args  wp_nav_menu() args.
+	 *
+	 * @return WP_Post[]
+	 */
+	function nuttergood_farmley_build_aligned_category_menu_items( $items, $args = null ) {
+		$terms = nuttergood_farmley_get_shop_category_terms();
+		if ( empty( $terms ) ) {
+			return $items;
+		}
+
+		$template = ! empty( $items[0] ) ? $items[0] : null;
+		$menu_id  = $template instanceof WP_Post ? (int) $template->menu_order : 0;
+		$aligned  = array();
+
+		foreach ( $terms as $index => $term ) {
+			$link = get_term_link( $term );
+			if ( is_wp_error( $link ) ) {
+				continue;
+			}
+
+			$item                   = new stdClass();
+			$item->ID               = 900000 + (int) $term->term_id;
+			$item->db_id            = $item->ID;
+			$item->title            = $term->name;
+			$item->url              = $link;
+			$item->menu_order       = $menu_id + $index + 1;
+			$item->menu_item_parent = 0;
+			$item->type             = 'taxonomy';
+			$item->object           = 'product_cat';
+			$item->object_id        = (int) $term->term_id;
+			$item->classes          = array();
+			$item->target           = '';
+			$item->attr_title       = '';
+			$item->xfn              = '';
+
+			$aligned[] = $item;
+		}
+
+		return $aligned;
+	}
+}
+
+if ( ! function_exists( 'nuttergood_farmley_align_extended_category_nav_menu' ) ) {
+	/**
+	 * Replace legacy "Categories" nav (with dry-fruit children) with five parent categories.
+	 *
+	 * @param WP_Post[] $items Menu items.
+	 * @param stdClass  $args  wp_nav_menu() args.
+	 *
+	 * @return WP_Post[]
+	 */
+	function nuttergood_farmley_align_extended_category_nav_menu( $items, $args ) {
+		if ( empty( $args->theme_location ) || 'extended-dropdown-menu' !== $args->theme_location ) {
+			return $items;
+		}
+
+		$aligned = nuttergood_farmley_build_aligned_category_menu_items( $items, $args );
+
+		return ! empty( $aligned ) ? $aligned : $items;
+	}
+	add_filter( 'wp_nav_menu_objects', 'nuttergood_farmley_align_extended_category_nav_menu', 25, 2 );
 }

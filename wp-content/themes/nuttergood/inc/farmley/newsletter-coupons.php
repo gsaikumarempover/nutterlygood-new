@@ -140,12 +140,25 @@ if ( ! function_exists( 'nuttergood_farmley_newsletter_suppress_wc_account_email
 }
 
 if ( ! function_exists( 'nuttergood_farmley_newsletter_success_message' ) ) {
-	function nuttergood_farmley_newsletter_success_message( $email ) {
-		return sprintf(
-			/* translators: %s: customer email address */
-			__( 'Thank you! We have shared your 20%% off coupon and login details with %s. Please check your inbox and spam folder.', 'nuttergood' ),
-			$email
-		);
+	function nuttergood_farmley_newsletter_success_message( $email, $email_sent = true, $coupon_code = '' ) {
+		if ( $email_sent ) {
+			return sprintf(
+				/* translators: %s: customer email address */
+				__( 'Thank you! We have shared your 20%% off coupon and login details with %s. Please check your inbox and spam folder.', 'nuttergood' ),
+				$email
+			);
+		}
+
+		if ( $coupon_code ) {
+			return sprintf(
+				/* translators: 1: coupon code, 2: customer email address */
+				__( 'Thank you! Your 20%% off coupon code is %1$s. We could not deliver email to %2$s — please save this code and sign in with OTP to use it.', 'nuttergood' ),
+				$coupon_code,
+				$email
+			);
+		}
+
+		return __( 'Thank you for signing up. Please contact us if you do not receive your coupon email within a few minutes.', 'nuttergood' );
 	}
 }
 
@@ -266,12 +279,13 @@ if ( ! function_exists( 'nuttergood_farmley_newsletter_send_welcome_email' ) ) {
 			$site_name
 		);
 
-		return wp_mail(
-			$email,
-			$subject,
-			implode( "\n", $lines ),
-			array( 'Content-Type: text/plain; charset=UTF-8' )
-		);
+		$mailer = function_exists( 'nuttergood_farmley_send_mail' ) ? 'nuttergood_farmley_send_mail' : 'wp_mail';
+
+		if ( 'nuttergood_farmley_send_mail' === $mailer ) {
+			return (bool) nuttergood_farmley_send_mail( $email, $subject, implode( "\n", $lines ), array(), 'offers' );
+		}
+
+		return (bool) call_user_func( $mailer, $email, $subject, implode( "\n", $lines ) );
 	}
 }
 
@@ -303,6 +317,15 @@ if ( ! function_exists( 'nuttergood_farmley_newsletter_setup_account_and_email' 
 				! empty( $account['created'] ),
 				! empty( $account['password'] ) ? (string) $account['password'] : ''
 			);
+
+			if ( ! $email_sent ) {
+				$email_sent = nuttergood_farmley_newsletter_send_welcome_email(
+					$email,
+					$coupon_code,
+					! empty( $account['created'] ),
+					! empty( $account['password'] ) ? (string) $account['password'] : ''
+				);
+			}
 		}
 
 		if ( ! empty( $account['error'] ) && empty( $account['user_id'] ) ) {
@@ -316,7 +339,7 @@ if ( ! function_exists( 'nuttergood_farmley_newsletter_setup_account_and_email' 
 
 		return array(
 			'success'     => true,
-			'message'     => nuttergood_farmley_newsletter_success_message( $email ),
+			'message'     => nuttergood_farmley_newsletter_success_message( $email, $email_sent, $coupon_code ),
 			'coupon_code' => $coupon_code,
 			'email_sent'  => $email_sent,
 		);

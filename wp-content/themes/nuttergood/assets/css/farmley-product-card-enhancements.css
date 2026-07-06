@@ -256,31 +256,33 @@
 /* Price + cart row — price left, buttons beside on the right */
 .ng-farmley-card-footer {
 	display: flex;
-	flex-flow: row nowrap;
+	flex-flow: row wrap;
 	align-items: center;
 	justify-content: space-between;
-	gap: 8px;
+	gap: 8px 6px;
 	margin-top: 0;
 	padding-top: 10px;
 	border-top: 1px solid rgba(12, 83, 61, 0.07);
 }
 
 .ng-farmley-card-footer__price {
-	flex: 0 1 auto;
+	flex: 1 1 42%;
 	width: auto;
 	min-width: 0;
+	max-width: 52%;
 	margin: 0;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 	text-align: left !important;
+	overflow: hidden;
 }
 
 .ng-farmley-card-footer__cart {
-	flex: 1 1 auto;
+	flex: 1 1 46%;
 	width: auto;
 	min-width: 0;
-	max-width: 64%;
+	max-width: 56%;
 	margin: 0 0 0 auto;
 	display: block;
 }
@@ -298,12 +300,15 @@
 
 .ng-farmley-card-price .price ins {
 	text-decoration: none;
-	font-size: 18px;
+	font-size: clamp(14px, 2.4vw, 18px);
 	font-weight: 700;
 	line-height: 1.15;
 	color: var(--ng-brand-green, #0c533d);
 	letter-spacing: -0.02em;
 	order: 1;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .ng-farmley-card-price .price ins .woocommerce-Price-amount {

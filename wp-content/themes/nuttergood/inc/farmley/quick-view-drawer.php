@@ -82,6 +82,33 @@ if ( ! function_exists( 'nuttergood_farmley_qv_render_buy_now_button' ) ) {
 	}
 }
 
+if ( ! function_exists( 'nuttergood_farmley_qv_prepare_description' ) ) {
+	/**
+	 * Light description cleanup for quick view (avoids heavy regex on shared hosting).
+	 *
+	 * @param string $description Raw product description HTML.
+	 */
+	function nuttergood_farmley_qv_prepare_description( $description ) {
+		$description = trim( (string) $description );
+		if ( '' === $description ) {
+			return '';
+		}
+
+		$is_rest = ( defined( 'REST_REQUEST' ) && REST_REQUEST ) || ( function_exists( 'wp_is_json_request' ) && wp_is_json_request() );
+
+		if ( $is_rest || strlen( $description ) > 12000 ) {
+			$description = wp_strip_all_tags( $description );
+			return wp_trim_words( $description, 80, '…' );
+		}
+
+		if ( function_exists( 'nuttergood_farmley_clean_product_html' ) ) {
+			return nuttergood_farmley_clean_product_html( $description );
+		}
+
+		return $description;
+	}
+}
+
 if ( ! function_exists( 'nuttergood_farmley_qv_render_description' ) ) {
 	/**
 	 * @param WC_Product $product Product object.
@@ -91,10 +118,7 @@ if ( ! function_exists( 'nuttergood_farmley_qv_render_description' ) ) {
 			return;
 		}
 
-		$description = $product->get_description();
-		if ( $description && function_exists( 'nuttergood_farmley_clean_product_html' ) ) {
-			$description = nuttergood_farmley_clean_product_html( $description );
-		}
+		$description = nuttergood_farmley_qv_prepare_description( $product->get_description() );
 		if ( ! $description ) {
 			return;
 		}
