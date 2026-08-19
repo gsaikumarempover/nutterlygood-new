@@ -19,7 +19,7 @@ if ( ! function_exists( 'nuttergood_farmley_otp_config' ) ) {
 	 */
 	function nuttergood_farmley_otp_config() {
 		$config = array(
-			'mode'               => 'test',
+			'mode'               => 'live',
 			'test_otp'           => '123456',
 			'otp_length'         => 6,
 			'otp_ttl'            => 600,
