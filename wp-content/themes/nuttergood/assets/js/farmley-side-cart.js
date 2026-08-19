@@ -13,21 +13,188 @@
 	var fragmentUpdateTimer = null;
 	var fragmentUpdatePending = false;
 	var updatingCount = 0;
+	var openAssistTimer = null;
 
 	function $widgets() {
 		return $( '.widget_greenpath_core_woo_side_area_cart' );
 	}
 
 	function $widget() {
-		return $widgets().first();
+		var $all = $widgets().not( '.ng-farmley-sc-portal' );
+		if ( ! $all.length ) {
+			return $widgets();
+		}
+
+		var $opened = $all.filter( '.qodef--opened' );
+		if ( $opened.length ) {
+			return $opened.first();
+		}
+
+		if ( window.matchMedia( '(max-width: 1200px)' ).matches ) {
+			var $mobile = $( '#qodef-page-mobile-header .widget_greenpath_core_woo_side_area_cart, #qodef-side-area-mobile-header .widget_greenpath_core_woo_side_area_cart' ).filter( ':visible' );
+			if ( $mobile.length ) {
+				return $mobile.first();
+			}
+		}
+
+		var $visible = $all.filter( function () {
+			return $( this ).is( ':visible' );
+		} );
+
+		return $visible.length ? $visible.first() : $all.first();
 	}
 
 	function $panel() {
+		var $ported = $( '.ng-farmley-sc-portal .qodef-widget-side-area-cart-content' ).first();
+		if ( $ported.length ) {
+			return $ported;
+		}
+
 		return $widget().find( '.qodef-widget-side-area-cart-content' ).first();
 	}
 
 	function $scroll() {
 		return $panel().children( '.ng-farmley-sc-scroll' ).first();
+	}
+
+	/**
+	 * Mobile headers are ~58px tall. A position:fixed drawer still lives in that
+	 * stacking / hit-test context, so the dimming cover steals touch scroll below
+	 * the header bar. Port the panel onto body while open so touches hit the drawer.
+	 */
+	function portalSideCartPanel() {
+		// Never portal a closed cart — the open-assist timeout used to fall back to
+		// any widget and re-open the drawer after the X was clicked.
+		if ( ! $( 'body' ).hasClass( 'qodef-woo-side-area-cart--opened' ) ) {
+			return;
+		}
+
+		var $opened = $( '.widget_greenpath_core_woo_side_area_cart.qodef--opened' ).not( '.ng-farmley-sc-portal' ).first();
+		if ( ! $opened.length ) {
+			return;
+		}
+
+		var $content = $opened.find( '.qodef-widget-side-area-cart-content' ).first();
+		if ( ! $content.length || $content.closest( '.ng-farmley-sc-portal' ).length ) {
+			return;
+		}
+
+		$content.data( 'ngScHome', $content.parent() );
+		$content.data( 'ngScSourceWidget', $opened );
+
+		var $portal = $( '<div class="widget_greenpath_core_woo_side_area_cart ng-farmley-sc-ready qodef--opened ng-farmley-sc-portal"></div>' );
+		var $inner = $( '<div class="qodef-widget-side-area-cart-inner"></div>' );
+		$portal.data( 'ngScSourceWidget', $opened );
+		$portal.append( $inner );
+		$inner.append( $content );
+		$( document.body ).append( $portal );
+	}
+
+	function unportalSideCartPanel() {
+		$( '.ng-farmley-sc-portal' ).each( function () {
+			var $portal = $( this );
+			var $content = $portal.find( '.qodef-widget-side-area-cart-content' ).first();
+			var $home = $content.data( 'ngScHome' );
+
+			if ( $content.length && $home && $home.length ) {
+				$home.append( $content );
+			}
+
+			$portal.remove();
+		} );
+	}
+
+	function getSourceSideCartWidget() {
+		var $portal = $( '.ng-farmley-sc-portal' ).first();
+		if ( $portal.length ) {
+			var $fromPortal = $portal.data( 'ngScSourceWidget' );
+			if ( $fromPortal && $fromPortal.length ) {
+				return $fromPortal;
+			}
+
+			var $fromPanel = $portal.find( '.qodef-widget-side-area-cart-content' ).first().data( 'ngScSourceWidget' );
+			if ( $fromPanel && $fromPanel.length ) {
+				return $fromPanel;
+			}
+		}
+
+		return $( '.widget_greenpath_core_woo_side_area_cart.qodef--opened' ).not( '.ng-farmley-sc-portal' ).first();
+	}
+
+	function closeSideCart( event ) {
+		if ( event ) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+
+		if ( openAssistTimer ) {
+			window.clearTimeout( openAssistTimer );
+			openAssistTimer = null;
+		}
+
+		cartIsOpen = false;
+
+		var $source = getSourceSideCartWidget();
+
+		unportalSideCartPanel();
+
+		if ( $source && $source.length ) {
+			$source.removeClass( 'qodef--opened' );
+		}
+
+		$( '.widget_greenpath_core_woo_side_area_cart' ).removeClass( 'qodef--opened' );
+		$( 'body' ).removeClass( 'qodef-woo-side-area-cart--opened' );
+
+		if ( window.qodefCore && qodefCore.qodefScroll && typeof qodefCore.qodefScroll.enable === 'function' ) {
+			try {
+				qodefCore.qodefScroll.enable();
+			} catch ( err ) {
+				// Ignore.
+			}
+		}
+
+		$( '#qodef-page-mobile-header, #qodef-page-header, .qodef-header-sticky' ).css( 'z-index', '' );
+		unlockPageScroll();
+	}
+
+	function bindCloseHandlers() {
+		if ( document.body._ngScCloseBound ) {
+			return;
+		}
+
+		document.body._ngScCloseBound = true;
+
+		function onCloseTrigger( event ) {
+			var target = event.target;
+			if ( ! target || ! target.closest ) {
+				return;
+			}
+
+			var closeBtn = target.closest(
+				'.qodef-widget-side-area-cart-content .qodef-m-close, .ng-farmley-sc-portal .qodef-m-close'
+			);
+			if ( ! closeBtn ) {
+				return;
+			}
+
+			closeSideCart( event );
+		}
+
+		// Capture phase so theme handlers / overlays cannot swallow the X click.
+		document.addEventListener( 'click', onCloseTrigger, true );
+
+		$( document.body ).on( 'click.ngScCoverClose', '.qodef-woo-side-area-cart-cover', function ( event ) {
+			if ( ! $( 'body' ).hasClass( 'qodef-woo-side-area-cart--opened' ) && ! $( '.ng-farmley-sc-portal' ).length ) {
+				return;
+			}
+			closeSideCart( event );
+		} );
+
+		$( document ).on( 'keyup.ngScClose', function ( event ) {
+			if ( event.keyCode === 27 && ( cartIsOpen || $( 'body' ).hasClass( 'qodef-woo-side-area-cart--opened' ) || $( '.ng-farmley-sc-portal' ).length ) ) {
+				closeSideCart( event );
+			}
+		} );
 	}
 
 	function reducedMotion() {
@@ -94,30 +261,401 @@
 	}
 
 	function destroyPerfectScrollbar() {
-		$panel().find( '.qodef-woo-side-area-cart' ).each( function () {
+		var $roots = $widgets().add( '.ng-farmley-sc-portal' );
+
+		// Replace PS-marked lists so orphaned click-drag handlers cannot survive.
+		$roots.find( '.qodef-woo-side-area-cart.ps' ).each( function () {
+			var clean = this.cloneNode( true );
+			clean.classList.remove( 'ps', 'ps--active-y', 'ps--active-x', 'ps--scrolling-y', 'ps--scrolling-x' );
+			$( clean ).children( '.ps__rail-x, .ps__rail-y' ).remove();
+			if ( this.parentNode ) {
+				this.parentNode.replaceChild( clean, this );
+			}
+		} );
+
+		$roots.find( '.ps, .qodef-woo-side-area-cart, .ng-farmley-sc-scroll' ).each( function () {
+			var el = this;
+			var instance = el._ps || el.perfectScrollbar || el.__perfectScrollbar || null;
+
 			try {
-				if ( this._ps ) {
-					this._ps.destroy();
-					delete this._ps;
+				if ( instance && typeof instance.destroy === 'function' ) {
+					instance.destroy();
 				}
 			} catch ( err ) {
 				// Ignore teardown errors from stale instances.
 			}
 
-			$( this ).removeClass( 'ps ps--active-y ps--active-x' );
+			delete el._ps;
+			delete el.perfectScrollbar;
+			delete el.__perfectScrollbar;
+
+			el.classList.remove( 'ps', 'ps--active-y', 'ps--active-x', 'ps--scrolling-y', 'ps--scrolling-x' );
+			if ( el.style ) {
+				el.style.overflow = '';
+				el.style.overflowX = '';
+				el.style.overflowY = '';
+			}
 		} );
 
-		$panel().find( '.qodef-woo-side-area-cart .ps__rail-x, .qodef-woo-side-area-cart .ps__rail-y' ).remove();
+		$roots.find( '.ps__rail-x, .ps__rail-y, .ps__thumb-x, .ps__thumb-y' ).remove();
+	}
+
+	function unlockPageScroll() {
+		$( 'html, body' ).css( {
+			overflow: '',
+			touchAction: '',
+			position: '',
+			height: '',
+			top: '',
+			width: ''
+		} );
+
+		$( '.qodef-woo-side-area-cart-cover' ).css( 'pointer-events', '' );
+
+		if ( window.qodefCore && qodefCore.qodefScroll && typeof qodefCore.qodefScroll.enable === 'function' ) {
+			try {
+				qodefCore.qodefScroll.enable();
+			} catch ( err ) {
+				// Ignore.
+			}
+		}
+	}
+
+	function isCartCheckoutPage() {
+		return document.body.classList.contains( 'woocommerce-cart' )
+			|| document.body.classList.contains( 'woocommerce-checkout' );
+	}
+
+	function patchCartPageScrollLock() {
+		if ( ! isCartCheckoutPage() || ! window.qodefCore || ! qodefCore.qodefScroll ) {
+			return;
+		}
+
+		if ( qodefCore.qodefScroll._ngCartScrollPatched ) {
+			return;
+		}
+
+		var originalDisable = qodefCore.qodefScroll.disable;
+
+		qodefCore.qodefScroll.disable = function () {
+			if ( isCartCheckoutPage() ) {
+				purgeCartPageWheelBlockers();
+				return;
+			}
+
+			return originalDisable.apply( this, arguments );
+		};
+
+		qodefCore.qodefScroll._ngCartScrollPatched = true;
+	}
+
+	function purgeCartPageWheelBlockers() {
+		if ( ! isCartCheckoutPage() ) {
+			return;
+		}
+
+		document.documentElement.classList.add( 'ng-farmley-cart-scroll' );
+
+		var i;
+
+		if ( window.qodefCore && qodefCore.qodefScroll && typeof qodefCore.qodefScroll.enable === 'function' ) {
+			for ( i = 0; i < 10; i++ ) {
+				try {
+					qodefCore.qodefScroll.enable();
+				} catch ( err ) {
+					// Ignore.
+				}
+			}
+		}
+
+		$( 'html, body' ).css( {
+			overflow: '',
+			overflowY: '',
+			touchAction: '',
+			position: '',
+			height: '',
+			top: '',
+			width: ''
+		} );
+
+		$( '.qodef-woo-side-area-cart-cover, .qodef-woo-side-area-menu-cover' ).css( {
+			pointerEvents: 'none',
+			zIndex: -1
+		} );
+
+		if ( ! $( 'body' ).hasClass( 'qodef-woo-side-area-cart--opened' ) ) {
+			$( '.qodef-woo-side-area-cart-cover' ).css( {
+				opacity: 0,
+				visibility: 'hidden'
+			} );
+		}
+
+		if ( ! $( 'body' ).hasClass( 'qodef-woo-side-area-menu--opened' ) ) {
+			$( '.qodef-woo-side-area-menu-cover' ).css( {
+				opacity: 0,
+				visibility: 'hidden'
+			} );
+		}
+	}
+
+	function ensureCartCheckoutScrollUnlock() {
+		if ( ! isCartCheckoutPage() ) {
+			return;
+		}
+
+		patchCartPageScrollLock();
+		purgeCartPageWheelBlockers();
+		unlockPageScroll();
+	}
+
+	function ensureCartCheckoutScroll() {
+		if ( ! isCartCheckoutPage() ) {
+			return;
+		}
+
+		$( 'body' ).removeClass( 'qodef-woo-side-area-cart--opened qqvfw-quick-view--opened ng-farmley-qv-open' );
+		getQuickViewDrawer().removeClass( 'qqvfw--opened ng-farmley-qv--ready ng-farmley-qv--enhanced ng-farmley-qv--closing' );
+		$widgets().removeClass( 'qodef--opened' );
+		unportalSideCartPanel();
+		cartIsOpen = false;
+
+		ensureCartCheckoutScrollUnlock();
+	}
+
+	function getQuickViewDrawer() {
+		return $( '#qode-quick-view-for-woocommerce-pop-up.ng-farmley-qv-drawer, #qode-quick-view-for-woocommerce-pop-up' ).first();
+	}
+
+	function unblockCartPageUi() {
+		if ( ! document.body.classList.contains( 'woocommerce-cart' ) ) {
+			return;
+		}
+
+		$( '.woocommerce-cart-form.processing, div.cart_totals.processing' ).each( function () {
+			var $el = $( this );
+
+			try {
+				if ( $el.data( 'blockUI.isBlocked' ) ) {
+					$el.removeClass( 'processing' ).unblock();
+					return;
+				}
+			} catch ( err ) {
+				// Ignore blockUI teardown errors.
+			}
+
+			$el.removeClass( 'processing' );
+		} );
+	}
+
+	function isFarmleyCartPage() {
+		if ( window.ngFarmleySideCart && ngFarmleySideCart.isCartPage ) {
+			return true;
+		}
+
+		if ( document.body.classList.contains( 'woocommerce-cart' ) ) {
+			return true;
+		}
+
+		if ( document.querySelector( '.woocommerce-cart-form' ) ) {
+			return true;
+		}
+
+		var path = ( window.location.pathname || '' ).toLowerCase();
+
+		return path.indexOf( 'cart-2' ) !== -1 || /(?:^|\/)cart(?:\/|$)/.test( path );
+	}
+
+	function farmleyCartAjaxNonce() {
+		if ( window.ngFarmleySideCart && ngFarmleySideCart.nonce ) {
+			return ngFarmleySideCart.nonce;
+		}
+
+		if ( window.ngFarmleyCart && ngFarmleyCart.nonce ) {
+			return ngFarmleyCart.nonce;
+		}
+
+		return '';
+	}
+
+	function farmleyWcAjaxUrl( endpoint ) {
+		var template = '';
+
+		if ( typeof wc_cart_params !== 'undefined' && wc_cart_params.wc_ajax_url ) {
+			template = wc_cart_params.wc_ajax_url;
+		} else if ( typeof wc_add_to_cart_params !== 'undefined' && wc_add_to_cart_params.wc_ajax_url ) {
+			template = wc_add_to_cart_params.wc_ajax_url;
+		} else if ( window.ngFarmleySideCart && ngFarmleySideCart.wcAjaxUrl ) {
+			template = ngFarmleySideCart.wcAjaxUrl;
+		} else if ( window.ngFarmleyCart && ngFarmleyCart.wcAjaxUrl ) {
+			template = ngFarmleyCart.wcAjaxUrl;
+		}
+
+		if ( template ) {
+			return template.toString().replace( '%%endpoint%%', endpoint );
+		}
+
+		return ( window.location.origin || '' ) + '/?wc-ajax=' + endpoint;
+	}
+
+	var farmleyCartPageRefreshTimer = null;
+	var farmleyCartPageRefreshBusy = false;
+	var farmleyCartPageSyncDirty = false;
+	var farmleyCartPageInitialSyncDone = false;
+
+	function markFarmleyCartPageDirty() {
+		if ( ! isFarmleyCartPage() ) {
+			return;
+		}
+
+		farmleyCartPageSyncDirty = true;
+		scheduleFarmleyCartPageRefresh( 200 );
+	}
+
+	function applyFarmleyCartPageShell( shellHtml ) {
+		if ( ! shellHtml ) {
+			return false;
+		}
+
+		var $parsed = $( '<div>' ).append( $.parseHTML( shellHtml, document, true ) );
+		var $newWooPage = $parsed.find( '#qodef-woo-page' ).first();
+		var $newShell = $parsed.find( '.ng-farmley-cart-shell' ).first();
+		var $wooPage = $( '#qodef-woo-page' ).first();
+		var $shell = $( '.ng-farmley-cart-shell' ).first();
+
+		if ( $newWooPage.length && $wooPage.length ) {
+			$wooPage.replaceWith( $newWooPage );
+			return true;
+		}
+
+		if ( $newShell.length && $wooPage.length ) {
+			$wooPage.empty().append( $newShell );
+			return true;
+		}
+
+		if ( $newShell.length && $shell.length ) {
+			$shell.replaceWith( $newShell );
+			return true;
+		}
+
+		if ( $newShell.length ) {
+			var $form = $( '.woocommerce-cart-form' ).first();
+			if ( $form.length ) {
+				$form.closest( '.woocommerce, #qodef-woo-page' ).first().empty().append( $newShell );
+				return true;
+			}
+		}
+
+		var $empty = $parsed.find( '.wc-empty-cart-message' ).closest( '.woocommerce' ).first();
+		if ( ! $empty.length ) {
+			$empty = $parsed.filter( '.woocommerce' ).first();
+		}
+		if ( ! $empty.length ) {
+			$empty = $parsed.first();
+		}
+
+		if ( $wooPage.length && $empty.length ) {
+			$wooPage.empty().append( $empty );
+			return true;
+		}
+
+		if ( $shell.length && $empty.length ) {
+			$shell.replaceWith( $empty );
+			return true;
+		}
+
+		return false;
+	}
+
+	function refreshFarmleyCartPageNow() {
+		if ( ! isFarmleyCartPage() ) {
+			return;
+		}
+
+		if ( farmleyCartPageRefreshBusy ) {
+			// Another refresh is running; mark dirty so it re-runs when done.
+			farmleyCartPageSyncDirty = true;
+			return;
+		}
+
+		var nonce = farmleyCartAjaxNonce();
+		var url = farmleyWcAjaxUrl( 'ng_farmley_cart_page_fragments' );
+
+		if ( ! nonce || ! url ) {
+			return;
+		}
+
+		farmleyCartPageRefreshBusy = true;
+		unblockCartPageUi();
+
+		$( '.woocommerce-cart-form, div.cart_totals' ).addClass( 'ng-farmley-cart-updating processing' );
+
+		$.ajax( {
+			type: 'POST',
+			url: url,
+			data: { security: nonce },
+			dataType: 'json',
+		} ).done( function ( response ) {
+			if ( ! response || ! response.success || ! response.data ) {
+				return;
+			}
+
+			if ( ! applyFarmleyCartPageShell( response.data.shell_html || '' ) ) {
+				return;
+			}
+
+			farmleyCartPageSyncDirty = false;
+			farmleyCartPageInitialSyncDone = true;
+
+			if ( typeof qodefWooQuantityButtons !== 'undefined' && qodefWooQuantityButtons.init ) {
+				qodefWooQuantityButtons.init();
+			}
+		} ).always( function () {
+			farmleyCartPageRefreshBusy = false;
+			$( '.woocommerce-cart-form, div.cart_totals' ).removeClass( 'ng-farmley-cart-updating processing' );
+			unblockCartPageUi();
+			// If another update arrived while we were busy, re-run now.
+			if ( farmleyCartPageSyncDirty ) {
+				scheduleFarmleyCartPageRefresh( 100 );
+			}
+		} );
+	}
+
+	function scheduleFarmleyCartPageRefresh( delay, force ) {
+		if ( ! isFarmleyCartPage() ) {
+			return;
+		}
+
+		if ( ! force && farmleyCartPageInitialSyncDone && ! farmleyCartPageSyncDirty ) {
+			return;
+		}
+
+		clearTimeout( farmleyCartPageRefreshTimer );
+		farmleyCartPageRefreshTimer = window.setTimeout( refreshFarmleyCartPageNow, delay || 150 );
+	}
+
+	function refreshCartPageAfterSideCartChange() {
+		markFarmleyCartPageDirty();
 	}
 
 	function cleanupDuplicates() {
 		var $footer = $panel().find( '.ng-farmley-sc-footer' ).first();
+		var $content = $panel().find( '.qodef-widget-side-area-cart-content' ).first();
 
 		$panel().find( '.ng-farmley-sc-reco' ).not( $footer.find( '.ng-farmley-sc-reco' ) ).remove();
 		$panel().find( '.ng-farmley-sc-reco-slot' ).not( $footer.find( '.ng-farmley-sc-reco-slot' ) ).remove();
 		$panel().find( '.ng-farmley-sc-coupon' ).not( $footer.find( '.ng-farmley-sc-coupon' ) ).remove();
 		$panel().find( '.ng-farmley-sc-coupon-slot' ).not( $footer.find( '.ng-farmley-sc-coupon-slot' ) ).remove();
 		$panel().find( '.ng-farmley-sc-items-scroll' ).remove();
+
+		// Orphaned reco Add buttons that leaked into the item list.
+		$panel().find( '.ng-farmley-sc-cart-slot .ng-farmley-sc-reco__add, .qodef-woo-side-area-cart > .ng-farmley-sc-reco__add' ).remove();
+
+		if ( $content.length ) {
+			var $progress = $content.children( '.ng-farmley-sc-progress' );
+			if ( $progress.length > 1 ) {
+				$progress.slice( 1 ).remove();
+			}
+		}
 
 		if ( $footer.length && $footer.find( '.ng-farmley-sc-reco' ).length > 1 ) {
 			$footer.find( '.ng-farmley-sc-reco' ).slice( 1 ).remove();
@@ -135,8 +673,12 @@
 		$heading.text( label + ' (' + count + ')' );
 	}
 
-	function ensureFooter() {
-		var $p = $panel();
+	function ensureFooter( $content ) {
+		var $p = $content && $content.length ? $content : $panel();
+		if ( ! $p.length ) {
+			return $();
+		}
+
 		var $footer = $p.find( '.ng-farmley-sc-footer' ).first();
 
 		if ( ! $footer.length ) {
@@ -172,9 +714,12 @@
 			$orderDetails.detach().appendTo( $orderSlot );
 		}
 
+		// Keep checkout buttons outside the footer so they can pin below the scroll area.
 		var $action = $p.find( '.qodef-m-action' ).first();
-		if ( $action.length && ! $.contains( $footer[0], $action[0] ) ) {
-			$action.detach().appendTo( $footer );
+		if ( $action.length && $.contains( $footer[0], $action[0] ) ) {
+			$action.detach().insertAfter( $footer );
+		} else if ( $action.length && ! $.contains( $p[0], $action[0] ) ) {
+			$action.detach().appendTo( $p );
 		}
 
 		return $footer;
@@ -449,6 +994,7 @@
 						{ animateProgress: true }
 					);
 					$( document.body ).trigger( 'removed_from_cart', [ response.fragments, response.cart_hash, $btn ] );
+					refreshCartPageAfterSideCartChange();
 				} else {
 					$btn.removeClass( 'ng-farmley-sc-removing' );
 					$item.removeClass( 'ng-farmley-sc-item--removing' );
@@ -458,6 +1004,8 @@
 				$item.removeClass( 'ng-farmley-sc-item--removing' );
 			} ).always( function () {
 				setUpdating( false );
+				ensureCartCheckoutScrollUnlock();
+				unblockCartPageUi();
 			} );
 		} );
 	}
@@ -509,6 +1057,7 @@
 			var $item = $wrap.closest( '.qodef-woo-side-area-cart-item' );
 			$wrap.addClass( 'ng-farmley-sc-qty--busy' );
 			$item.addClass( 'ng-farmley-sc-item--updating' );
+			$val.text( next );
 			setUpdating( true );
 
 			$.post(
@@ -520,13 +1069,15 @@
 				}
 			).done( function ( response ) {
 				if ( response && response.success && response.data ) {
-					finishCartUpdate( response.data, { animateProgress: true } );
-					$( document.body ).trigger( 'updated_wc_div' );
+					finishCartUpdate( response.data, { animateProgress: false } );
+					refreshCartPageAfterSideCartChange();
 				} else {
+					$val.text( current );
 					$wrap.removeClass( 'ng-farmley-sc-qty--busy' );
 					$item.removeClass( 'ng-farmley-sc-item--updating' );
 				}
 			} ).fail( function () {
+				$val.text( current );
 				$wrap.removeClass( 'ng-farmley-sc-qty--busy' );
 				$item.removeClass( 'ng-farmley-sc-item--updating' );
 			} ).always( function () {
@@ -536,43 +1087,250 @@
 	}
 
 	function ensureScrollWrap() {
-		var $p = $panel();
-		if ( ! $p.length ) {
-			return;
-		}
+		$widgets().each( function () {
+			var $p = $( this ).find( '.qodef-widget-side-area-cart-content' ).first();
+			if ( ! $p.length ) {
+				return;
+			}
 
-		var $scrollEl = $p.children( '.ng-farmley-sc-scroll' ).first();
+			ensureFooter( $p );
 
-		if ( $scrollEl.length ) {
-			attachScrollWheel( $scrollEl[0] );
-			return;
-		}
+			var $scroll = $p.children( '.ng-farmley-sc-scroll' ).first();
+			if ( ! $scroll.length ) {
+				$scroll = $( '<div class="ng-farmley-sc-scroll" tabindex="-1"></div>' );
+			}
 
-		$scrollEl = $( '<div class="ng-farmley-sc-scroll" tabindex="-1"></div>' );
-		$p.children().not( '.ng-farmley-sc-burst' ).appendTo( $scrollEl );
-		$p.append( $scrollEl );
-		attachScrollWheel( $scrollEl[0] );
+			// Only pin header + checkout. Progress, items, coupon, reco stay inside scroll
+			// so the item list never collapses to 0 height under a tall footer.
+			$scroll.find( '.qodef-side-area-cart-top, .qodef-m-action' ).each( function () {
+				$( this ).detach().appendTo( $p );
+			} );
+
+			$p.children()
+				.not( '.qodef-side-area-cart-top, .qodef-m-action, .ng-farmley-sc-burst, .ng-farmley-sc-scroll' )
+				.appendTo( $scroll );
+
+			if ( ! $scroll.parent().is( $p ) ) {
+				$p.append( $scroll );
+			}
+
+			var $top = $p.children( '.qodef-side-area-cart-top' ).first();
+			var $action = $p.children( '.qodef-m-action' ).first();
+			var $burst = $p.children( '.ng-farmley-sc-burst' ).first();
+
+			if ( $burst.length ) {
+				$burst.prependTo( $p );
+			}
+			if ( $top.length ) {
+				$top.insertBefore( $scroll );
+			}
+			if ( $action.length ) {
+				$action.insertAfter( $scroll );
+			}
+
+			attachScrollHandlers( $scroll[0] );
+
+			if ( ! $p[0]._ngPanelWheelBound ) {
+				$p[0]._ngPanelWheelBound = true;
+
+				$p[0].addEventListener(
+					'wheel',
+					function ( event ) {
+						if ( ! isSideCartOpen() || event.target.closest( '.ng-farmley-sc-scroll' ) ) {
+							return;
+						}
+
+						applyWheelToScrollEl( $scroll[0], event );
+					},
+					{ passive: false }
+				);
+			}
+		} );
 	}
 
-	function attachScrollWheel( scrollEl ) {
+	function attachScrollHandlers( scrollEl ) {
 		if ( ! scrollEl ) {
 			return;
 		}
 
-		if ( scrollEl._ngFarmleyWheelHandler ) {
-			scrollEl.removeEventListener( 'wheel', scrollEl._ngFarmleyWheelHandler );
+		scrollEl.style.webkitOverflowScrolling = 'touch';
+		scrollEl.style.overflowY = 'scroll';
+		scrollEl.style.touchAction = 'pan-y';
+		scrollEl.style.flex = '1 1 0%';
+		scrollEl.style.minHeight = '140px';
+		scrollEl.style.height = '0';
+		scrollEl.style.maxHeight = 'none';
+		scrollEl.style.pointerEvents = 'auto';
+		scrollEl.style.overscrollBehaviorY = 'contain';
+
+		// Desktop: theme qodefScroll.disable() blocks native wheel — scroll manually inside drawer.
+		if ( ! scrollEl._ngWheelScrollBound ) {
+			scrollEl._ngWheelScrollBound = true;
+
+			scrollEl.addEventListener(
+				'wheel',
+				function ( event ) {
+					if ( ! isSideCartOpen() ) {
+						return;
+					}
+
+					applyWheelToScrollEl( scrollEl, event );
+				},
+				{ passive: false }
+			);
 		}
 
-		scrollEl._ngFarmleyWheelHandler = function ( event ) {
-			if ( ! $widget().hasClass( 'qodef--opened' ) ) {
+		// Manual touch scroll only on phones — on desktop it fights the native scrollbar drag.
+		var coarsePointer = window.matchMedia && window.matchMedia( '(pointer: coarse)' ).matches;
+		if ( ! coarsePointer || scrollEl._ngTouchScrollBound ) {
+			return;
+		}
+
+		scrollEl._ngTouchScrollBound = true;
+		var startY = 0;
+		var startScroll = 0;
+
+		scrollEl.addEventListener( 'touchstart', function ( event ) {
+			if ( ! event.touches || ! event.touches.length ) {
+				return;
+			}
+			startY = event.touches[0].clientY;
+			startScroll = scrollEl.scrollTop;
+		}, { passive: true } );
+
+		scrollEl.addEventListener( 'touchmove', function ( event ) {
+			if ( ! event.touches || ! event.touches.length ) {
 				return;
 			}
 
-			event.stopPropagation();
+			var maxScroll = scrollEl.scrollHeight - scrollEl.clientHeight;
+			if ( maxScroll <= 0 ) {
+				return;
+			}
+
+			var dy = startY - event.touches[0].clientY;
+			var next = Math.max( 0, Math.min( maxScroll, startScroll + dy ) );
+			scrollEl.scrollTop = next;
+
+			if ( event.cancelable ) {
+				event.preventDefault();
+			}
+		}, { passive: false } );
+	}
+
+	function isSideCartScrollTarget( el ) {
+		if ( ! el || ! el.closest ) {
+			return false;
+		}
+		return !! el.closest( '.widget_greenpath_core_woo_side_area_cart, .ng-farmley-sc-portal' );
+	}
+
+	function isSideCartOpen() {
+		return cartIsOpen
+			|| document.body.classList.contains( 'qodef-woo-side-area-cart--opened' )
+			|| $( '.ng-farmley-sc-portal' ).length > 0;
+	}
+
+	function applyWheelToScrollEl( scrollEl, event ) {
+		if ( ! scrollEl || ! event ) {
+			return false;
+		}
+
+		var delta = event.deltaY || 0;
+
+		if ( ! delta ) {
+			return false;
+		}
+
+		var maxScroll = scrollEl.scrollHeight - scrollEl.clientHeight;
+
+		if ( maxScroll <= 0 ) {
+			return false;
+		}
+
+		var atTop = scrollEl.scrollTop <= 0;
+		var atBottom = scrollEl.scrollTop >= maxScroll - 1;
+
+		if ( ( delta < 0 && atTop ) || ( delta > 0 && atBottom ) ) {
+			return false;
+		}
+
+		scrollEl.scrollTop += delta;
+
+		if ( event.cancelable ) {
+			event.preventDefault();
+		}
+
+		event.stopPropagation();
+
+		return true;
+	}
+
+	function patchSideCartWheelScroll() {
+		if ( ! window.qodefCore || ! qodefCore.qodefScroll || qodefCore.qodefScroll._ngScWheelPatched ) {
+			return;
+		}
+
+		var originalPrevent = qodefCore.qodefScroll.preventDefaultValue;
+
+		qodefCore.qodefScroll.preventDefaultValue = function ( event ) {
+			if ( isSideCartOpen() && isSideCartScrollTarget( event.target ) ) {
+				return;
+			}
+
+			return originalPrevent.call( this, event );
 		};
 
-		scrollEl.addEventListener( 'wheel', scrollEl._ngFarmleyWheelHandler, { passive: true } );
+		qodefCore.qodefScroll._ngScWheelPatched = true;
 	}
+
+	function disableSideCartPerfectScrollbar() {
+		destroyPerfectScrollbar();
+
+		// Block PerfectScrollbar before theme can attach click-drag handlers again.
+		if ( window.PerfectScrollbar && ! window.PerfectScrollbar._ngFarmleyPatched ) {
+			var OriginalPS = window.PerfectScrollbar;
+			function PatchedPerfectScrollbar( element, options ) {
+				if ( isSideCartScrollTarget( element ) ) {
+					return {
+						update: function () {},
+						destroy: function () {},
+						element: element
+					};
+				}
+				return new OriginalPS( element, options );
+			}
+			PatchedPerfectScrollbar.prototype = OriginalPS.prototype;
+			Object.keys( OriginalPS ).forEach( function ( key ) {
+				try {
+					PatchedPerfectScrollbar[ key ] = OriginalPS[ key ];
+				} catch ( err ) {
+					// Ignore non-configurable props.
+				}
+			} );
+			PatchedPerfectScrollbar._ngFarmleyPatched = true;
+			PatchedPerfectScrollbar._ngFarmleyOriginal = OriginalPS;
+			window.PerfectScrollbar = PatchedPerfectScrollbar;
+		}
+
+		if ( window.qodefCore && qodefCore.qodefPerfectScrollbar && ! qodefCore.qodefPerfectScrollbar._ngFarmleyPatched ) {
+			var originalInit = qodefCore.qodefPerfectScrollbar.init;
+			qodefCore.qodefPerfectScrollbar.init = function ( $el ) {
+				var node = $el && $el[0] ? $el[0] : $el;
+				if ( isSideCartScrollTarget( node ) ) {
+					return;
+				}
+				if ( typeof originalInit === 'function' ) {
+					return originalInit.apply( this, arguments );
+				}
+			};
+			qodefCore.qodefPerfectScrollbar._ngFarmleyPatched = true;
+		}
+	}
+
+	// Patch as early as the file loads so theme document.ready cannot install PS first.
+	disableSideCartPerfectScrollbar();
+	patchSideCartWheelScroll();
 
 	function setRecoAddLoading( $btn, loading ) {
 		if ( ! $btn || ! $btn.length ) {
@@ -618,6 +1376,11 @@
 
 	function buildLayout( options ) {
 		options = options || {};
+
+		if ( cartIsOpen ) {
+			portalSideCartPanel();
+		}
+
 		var $p = $panel();
 
 		if ( ! $p.length ) {
@@ -626,6 +1389,7 @@
 
 		normalizeCartMarkup( $p );
 		$widgets().addClass( 'ng-farmley-sc-ready' );
+		$( '.ng-farmley-sc-portal' ).addClass( 'ng-farmley-sc-ready' );
 
 		if ( ! options.light ) {
 			cleanupDuplicates();
@@ -641,8 +1405,9 @@
 
 		ensureScrollWrap();
 		updateHeading();
-		destroyPerfectScrollbar();
+		disableSideCartPerfectScrollbar();
 		initRecoCarousels( options );
+		ensureThumbnailsVisible( $p );
 		layoutReady = true;
 	}
 
@@ -898,6 +1663,35 @@
 		}, 1600 );
 	}
 
+	function ensureThumbnailsVisible( $scope ) {
+		var $root = $scope && $scope.length ? $scope : $panel();
+		if ( ! $root.length ) {
+			return;
+		}
+
+		$root.find( '.ng-farmley-sc-item__image img, .qodef-e-image.ng-farmley-sc-item__image img' ).each( function () {
+			var img = this;
+			var $img = $( img );
+			var lazySrc = $img.attr( 'data-src' ) || $img.attr( 'data-lazy-src' ) || $img.attr( 'data-src-img' );
+
+			if ( lazySrc && ( ! img.getAttribute( 'src' ) || /placeholder|data:image\/svg|lazy/i.test( String( img.getAttribute( 'src' ) || '' ) ) ) ) {
+				img.setAttribute( 'src', lazySrc );
+			}
+
+			if ( $img.attr( 'data-srcset' ) && ! $img.attr( 'srcset' ) ) {
+				$img.attr( 'srcset', $img.attr( 'data-srcset' ) );
+			}
+
+			img.setAttribute( 'loading', 'eager' );
+			img.removeAttribute( 'data-lazy-src' );
+			$img.removeClass( 'lazyload lazyloading lazyloaded' ).css( {
+				opacity: 1,
+				visibility: 'visible',
+				display: 'block'
+			} );
+		} );
+	}
+
 	function onCartOpened() {
 		if ( cartIsOpen ) {
 			return;
@@ -905,40 +1699,74 @@
 
 		cartIsOpen = true;
 
+		patchSideCartWheelScroll();
+		$( 'html, body' ).css( { touchAction: '', overscrollBehavior: '' } );
+
+		if ( openAssistTimer ) {
+			window.clearTimeout( openAssistTimer );
+			openAssistTimer = null;
+		}
+
+		// Move drawer onto body so the full-screen cover cannot steal mobile touches.
+		portalSideCartPanel();
 		buildLayout();
+		ensureThumbnailsVisible();
+		disableSideCartPerfectScrollbar();
 
 		var target = readProgressPercent();
 		lastProgressPercent = 0;
 		animateProgressFromTo( 0, target );
 		syncUnlockedMilestones( false );
 
-		window.setTimeout( function () {
-			destroyPerfectScrollbar();
+		openAssistTimer = window.setTimeout( function () {
+			openAssistTimer = null;
+			if ( ! cartIsOpen || ! $( 'body' ).hasClass( 'qodef-woo-side-area-cart--opened' ) ) {
+				return;
+			}
+			portalSideCartPanel();
+			disableSideCartPerfectScrollbar();
+			ensureScrollWrap();
+			ensureThumbnailsVisible();
 			paperBurst();
 		}, 150 );
 	}
 
 	function onCartClosed() {
-		cartIsOpen = false;
-	}
+		if ( openAssistTimer ) {
+			window.clearTimeout( openAssistTimer );
+			openAssistTimer = null;
+		}
 
-	function watchOpen() {
-		var el = $widget()[0];
-		if ( ! el ) {
+		if ( ! cartIsOpen && ! $( '.ng-farmley-sc-portal' ).length ) {
 			return;
 		}
 
-		var obs = new MutationObserver( function () {
-			if ( $widget().hasClass( 'qodef--opened' ) ) {
-				onCartOpened();
-			} else {
-				onCartClosed();
+		cartIsOpen = false;
+		unportalSideCartPanel();
+		$( '#qodef-page-mobile-header, #qodef-page-header, .qodef-header-sticky' ).css( 'z-index', '' );
+		unlockPageScroll();
+	}
+
+	function watchOpen() {
+		$widgets().not( '.ng-farmley-sc-portal' ).each( function () {
+			var el = this;
+			if ( el._ngFarmleyOpenWatch ) {
+				return;
 			}
+			el._ngFarmleyOpenWatch = true;
+
+			var obs = new MutationObserver( function () {
+				if ( $( el ).hasClass( 'qodef--opened' ) ) {
+					onCartOpened();
+				} else if ( ! $widgets().not( '.ng-farmley-sc-portal' ).filter( '.qodef--opened' ).length ) {
+					onCartClosed();
+				}
+			} );
+
+			obs.observe( el, { attributes: true, attributeFilter: [ 'class' ] } );
 		} );
 
-		obs.observe( el, { attributes: true, attributeFilter: [ 'class' ] } );
-
-		if ( $widget().hasClass( 'qodef--opened' ) ) {
+		if ( $widgets().not( '.ng-farmley-sc-portal' ).filter( '.qodef--opened' ).length ) {
 			onCartOpened();
 		}
 	}
@@ -977,17 +1805,90 @@
 		bindCouponViewAll();
 		bindRemoveItem();
 		bindQtyStepper();
+		bindCloseHandlers();
+		disableSideCartPerfectScrollbar();
 		buildLayout();
 		setProgressInstant( readProgressPercent() );
 		syncUnlockedMilestones( false );
 		watchOpen();
+
+		if ( isFarmleyCartPage() && ! farmleyCartPageInitialSyncDone ) {
+			scheduleFarmleyCartPageRefresh( 500, true );
+		}
+
+		ensureCartCheckoutScroll();
+
+		if ( isCartCheckoutPage() ) {
+			patchCartPageScrollLock();
+			purgeCartPageWheelBlockers();
+
+			$( window ).on( 'load.ngScCartScroll', function () {
+				ensureCartCheckoutScroll();
+				purgeCartPageWheelBlockers();
+			} );
+
+			$( document.body ).on(
+				'wc_fragments_refreshed.ngScCartScroll wc_fragments_loaded.ngScCartScroll updated_cart_totals.ngScCartScroll item_removed_from_classic_cart.ngScCartScroll',
+				ensureCartCheckoutScrollUnlock
+			);
+
+			$( document.body ).on( 'item_removed_from_classic_cart.ngScCartUnblock updated_cart_totals.ngScCartUnblock wc_cart_emptied.ngScCartUnblock', unblockCartPageUi );
+
+			$( document.body ).on( 'click.ngScCartPageRemove', '.woocommerce-cart-form .product-remove > a', function () {
+				var safetyTimer = window.setTimeout( unblockCartPageUi, 15000 );
+
+				$( document.body ).one( 'item_removed_from_classic_cart.ngScCartPageRemove updated_cart_totals.ngScCartPageRemove wc_cart_emptied.ngScCartPageRemove', function () {
+					window.clearTimeout( safetyTimer );
+					unblockCartPageUi();
+					ensureCartCheckoutScrollUnlock();
+				} );
+			} );
+
+			$( document ).on( 'click.ngScCartWheelFix mouseenter.ngScCartWheelFix', function () {
+				purgeCartPageWheelBlockers();
+			} );
+
+			var wheelFixRuns = 0;
+			var wheelFixTimer = window.setInterval( function () {
+				purgeCartPageWheelBlockers();
+				wheelFixRuns += 1;
+
+				if ( wheelFixRuns >= 12 ) {
+					window.clearInterval( wheelFixTimer );
+				}
+			}, 500 );
+
+			window.setInterval( unblockCartPageUi, 10000 );
+		}
 	} );
 
 	$( document.body ).on( 'wc_fragments_refreshed wc_fragments_loaded', function () {
+		if ( isCartCheckoutPage() ) {
+			ensureCartCheckoutScrollUnlock();
+			return;
+		}
+
 		finishCartUpdate( {}, { animateProgress: true, skipFragments: true } );
 	} );
 
-	$( document.body ).on( 'added_to_cart', function () {
+	$( document.body ).on( 'added_to_cart removed_from_cart', function () {
+		if ( isCartCheckoutPage() ) {
+			ensureCartCheckoutScrollUnlock();
+			if ( isFarmleyCartPage() ) {
+				markFarmleyCartPageDirty();
+			}
+			return;
+		}
+
 		finishCartUpdate( {}, { animateProgress: true, skipFragments: true } );
 	} );
+
+	$( window ).on( 'pageshow.ngFarmleyCartSync', function ( event ) {
+		if ( isFarmleyCartPage() && event.originalEvent && event.originalEvent.persisted ) {
+			farmleyCartPageInitialSyncDone = false;
+			scheduleFarmleyCartPageRefresh( 0, true );
+		}
+	} );
+
+	window.ngFarmleyRefreshCartPage = refreshFarmleyCartPageNow;
 }( jQuery ) );
