@@ -55,34 +55,76 @@
 			});
 	}
 
-	function scheduleCartUpdate() {
-		var $form = $('.woocommerce-cart-form').first();
+	function scAjaxUrl(endpoint) {
+		var cfg = window.ngFarmleySideCart || window.ngFarmleyCart || {};
+		if (cfg.wcAjaxUrl) {
+			return cfg.wcAjaxUrl.toString().replace('%%endpoint%%', endpoint);
+		}
+		return ajaxUrl(endpoint);
+	}
 
-		if (!$form.length || $form.hasClass('ng-farmley-cart-updating')) {
+	function scheduleCartUpdate($qtyInput) {
+		var $form = $('.woocommerce-cart-form').first();
+		if (!$form.length) {
 			return;
 		}
 
-		clearTimeout($form.data('ngFarmleyCartUpdateTimer'));
+		// Identify the specific item that changed via its input name: cart[KEY][qty]
+		var inputName = $qtyInput ? ($qtyInput.attr('name') || '') : '';
+		var keyMatch  = inputName.match(/^cart\[([^\]]+)\]\[qty\]$/);
+		var itemKey   = keyMatch ? keyMatch[1] : null;
+
+		var timerKey = 'ngFarmleyCartTimer_' + (itemKey || 'all');
+		clearTimeout($form.data(timerKey));
+
 		$form.data(
-			'ngFarmleyCartUpdateTimer',
+			timerKey,
 			setTimeout(function () {
+				if ($form.hasClass('ng-farmley-cart-updating')) {
+					// Retry once WC finishes current update.
+					$form.data(timerKey, setTimeout(arguments.callee, 300));
+					return;
+				}
+
+				if (!itemKey) {
+					return;
+				}
+
+				var qty = parseInt($qtyInput.val(), 10);
+				if (isNaN(qty) || qty < 0) {
+					return;
+				}
+
+				var cfg   = window.ngFarmleySideCart || window.ngFarmleyCart || {};
+				var nonce = cfg.nonce || '';
+				if (!nonce) {
+					return;
+				}
+
 				$form.addClass('ng-farmley-cart-updating');
+				// Block the form UI the same way WC does, without triggering WC's own form-submit flow.
+				$form.find('table.cart').css('opacity', '0.6');
 
-				// Collect all qty inputs and build form data for WC's update_cart AJAX endpoint.
-				var formData = $form.find('input.qty, input[name^="cart"], input[name="update_cart"]').serialize();
-				formData += '&update_cart=Update+Cart';
-
-				$.ajax({
-					type: 'POST',
-					url: ajaxUrl('update_cart'),
-					data: formData,
-					success: function () {
-						// Tell WooCommerce to refresh its fragments (totals, mini-cart, etc).
-						$(document.body).trigger('wc_update_cart');
-					},
-					complete: function () {
-						$form.removeClass('ng-farmley-cart-updating');
+				$.post(
+					scAjaxUrl('ng_farmley_side_cart_update_qty'),
+					{
+						security:      nonce,
+						cart_item_key: itemKey,
+						quantity:      qty
 					}
+				).always(function (response) {
+					$form.removeClass('ng-farmley-cart-updating');
+					$form.find('table.cart').css('opacity', '');
+
+					// Apply WC fragments returned by the endpoint so totals update instantly.
+					if (response && response.success && response.data && response.data.fragments) {
+						$.each(response.data.fragments, function (selector, html) {
+							$(selector).replaceWith(html);
+						});
+					}
+
+					// Tell WC to refresh mini-cart and other standard fragments.
+					$(document.body).trigger('wc_fragment_refresh');
 				});
 			}, 600)
 		);
@@ -206,11 +248,12 @@
 		});
 
 		$(document.body).on('input.ngFarmleyAutoCart change.ngFarmleyAutoCart', '.woocommerce-cart-form .qty, .woocommerce-cart-form .qodef-quantity-input', function () {
-			scheduleCartUpdate();
+			scheduleCartUpdate($(this));
 		});
 
 		$(document.body).on('click.ngFarmleyAutoCart', '.woocommerce-cart-form .qodef-quantity-minus, .woocommerce-cart-form .qodef-quantity-plus', function () {
-			setTimeout(scheduleCartUpdate, 80);
+			var $qty = $(this).closest('.quantity, .qodef-quantity-holder').find('input.qty, input.qodef-quantity-input').first();
+			setTimeout(function () { scheduleCartUpdate($qty); }, 80);
 		});
 
 		$(document.body).on('updated_wc_div.ngFarmleyAutoCart wc_fragments_refreshed.ngFarmleyAutoCart', function () {

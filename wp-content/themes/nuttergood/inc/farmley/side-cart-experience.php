@@ -1378,8 +1378,9 @@ if ( ! function_exists( 'nuttergood_farmley_side_cart_assets' ) ) {
 					'couponHtml'  => $meta['couponHtml'],
 					'cartLabel'   => __( 'Your cart', 'nuttergood' ),
 					'couponCode'  => nuttergood_farmley_side_cart_coupon_code(),
-					'nonce'       => wp_create_nonce( 'ng-farmley-sc' ),
-					'i18n'        => array(
+				'nonce'       => wp_create_nonce( 'ng-farmley-sc' ),
+				'wcAjaxUrl'   => class_exists( 'WC_AJAX' ) ? WC_AJAX::get_endpoint( '%%endpoint%%' ) : admin_url( 'admin-ajax.php' ),
+				'i18n'        => array(
 						'couponApplying' => __( 'Applying…', 'nuttergood' ),
 						'couponApplied'  => __( 'Applied', 'nuttergood' ),
 						'couponFailed'   => __( 'Could not apply coupon.', 'nuttergood' ),
