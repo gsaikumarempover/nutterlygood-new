@@ -353,6 +353,37 @@
 		});
 	}
 
+	/**
+	 * On category archive pages (/product-category/mixes/ etc.),
+	 * pre-check the matching category checkbox and trigger GreenPath's
+	 * AJAX filter so only that category's products are shown.
+	 */
+	function initCategoryArchiveFilter() {
+		var $list = getShopList();
+		if (!$list.length) {
+			return;
+		}
+
+		var opts = {};
+		try {
+			opts = JSON.parse($list.attr('data-options') || '{}');
+		} catch (e) { /* ignore */ }
+
+		var taxSlug = opts.tax_slug || '';
+		if (!taxSlug || opts.tax !== 'product_cat') {
+			return;
+		}
+
+		var $boxes = $list.find('input[name="qodef-product-category"][data-id="' + taxSlug + '"]');
+		if (!$boxes.length) {
+			return;
+		}
+
+		$list.find('input[name="qodef-product-category"]').not($boxes).prop('checked', false);
+		$boxes.prop('checked', true);
+		$boxes.first().trigger('change');
+	}
+
 	$(document).ready(function () {
 		enforceShopSidebarLayout();
 		patchCategoryFilter();
@@ -361,6 +392,8 @@
 		initSortDropdown();
 		cleanPopularCardButtons();
 		setTimeout(cleanPopularCardButtons, 400);
+		// Must run after patchCategoryFilter so the change handler is already bound.
+		setTimeout(initCategoryArchiveFilter, 0);
 	});
 
 	$(window).on('load resize', function () {
