@@ -57,9 +57,8 @@
 
 	function scheduleCartUpdate() {
 		var $form = $('.woocommerce-cart-form').first();
-		var $button = $form.find('button[name="update_cart"], input[name="update_cart"]').first();
 
-		if (!$form.length || !$button.length || $form.hasClass('ng-farmley-cart-updating')) {
+		if (!$form.length || $form.hasClass('ng-farmley-cart-updating')) {
 			return;
 		}
 
@@ -67,10 +66,25 @@
 		$form.data(
 			'ngFarmleyCartUpdateTimer',
 			setTimeout(function () {
-				$button.prop('disabled', false).removeAttr('disabled aria-disabled');
 				$form.addClass('ng-farmley-cart-updating');
-				$button.trigger('click');
-			}, 650)
+
+				// Collect all qty inputs and build form data for WC's update_cart AJAX endpoint.
+				var formData = $form.find('input.qty, input[name^="cart"], input[name="update_cart"]').serialize();
+				formData += '&update_cart=Update+Cart';
+
+				$.ajax({
+					type: 'POST',
+					url: ajaxUrl('update_cart'),
+					data: formData,
+					success: function () {
+						// Tell WooCommerce to refresh its fragments (totals, mini-cart, etc).
+						$(document.body).trigger('wc_update_cart');
+					},
+					complete: function () {
+						$form.removeClass('ng-farmley-cart-updating');
+					}
+				});
+			}, 600)
 		);
 	}
 
@@ -201,11 +215,6 @@
 
 		$(document.body).on('updated_wc_div.ngFarmleyAutoCart wc_fragments_refreshed.ngFarmleyAutoCart', function () {
 			$('.woocommerce-cart-form').removeClass('ng-farmley-cart-updating');
-			// After WC finishes its own fragment update on cart-2, refresh our shell.
-			// Use a short delay to let WC settle its blockUI / totals before we replace HTML.
-			if (isFarmleyCustomCartPage() && typeof window.ngFarmleyRefreshCartPage === 'function') {
-				setTimeout(window.ngFarmleyRefreshCartPage, 250);
-			}
 		});
 
 		$(document.body).on('ng_farmley_refresh_cart_page.ngFarmleyAutoCart', refreshFullCartPage);
